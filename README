@@ -1,0 +1,1 @@
+LIDARconverter is a tool to convert LIDAR slices into files that are compatible with Google Earth.  This is a rewrite of the MATLAB Geometric PArameter Calculator in C++.

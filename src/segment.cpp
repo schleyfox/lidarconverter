@@ -165,7 +165,7 @@ const double Segment::segWidth() {
  * returned.  Otherwise, dp is appended with the return value true.  The first
  * two DataPoints are always appended to seed the heading.
  */
-bool appendOrStop(DataPoint* dp) {
+bool Segment::appendOrStop(DataPoint* dp) {
 	if( length() > 1) {
 		heading1 = heading();
 		append(dp);
@@ -179,3 +179,4 @@ bool appendOrStop(DataPoint* dp) {
 		append(dp);
 	}
 }
+

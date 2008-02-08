@@ -1,4 +1,8 @@
+#ifndef SEGMENT_H
+#define SEGMENT_H
 #include "common.h"
+
+class DataSource;
 
 /**
  * The Segment class is an abstract class representing a segment of a 
@@ -10,36 +14,35 @@
  */
 class Segment : public QVector<DataPoint*> {
 	public:
-	Segment(DataSource* datasource);
-	virtual ~Segment();
+	Segment(DataSource* datasource = 0);
 	
-	const DataSource* dataSource() {
+	DataSource* dataSource() const {
 		return m_datasource;
 	}
 
 	//CTM Section 2.1.2
-	const Angle heading();
+	Angle heading() const;
 	bool appendOrStop(DataPoint* dp);  //partitions
 	
 	//CTM Section 2.1.3: Segment Geometry
-	const Angle fullAngle(); //theta_1
-	const Angle halfAngle(); //theta_2
-	const double fullAngleChord(); //chord_1
-	const double halfAngleChord(); //chord_2
-	const double base(); //base
-	const double droppingDistance(); //distance_dropping
+	Angle fullAngle() const; //theta_1
+	Angle halfAngle() const; //theta_2
+	double fullAngleChord() const; //chord_1
+	double halfAngleChord() const; //chord_2
+	double base() const; //base
+	double droppingDistance() const; //distance_dropping
 
 	//CTM Section 2.1.4: Dimensions
-	const Angle externalAngle(); //theta_3
-	const double leftoverLength();  //length_leftover
-	const double segLength(); //length, naming conflict :(
-	const double segWidth(); //width
+	Angle externalAngle() const; //theta_3
+	double leftoverLength() const;  //length_leftover
+	double segLength() const; //length, naming conflict :(
+	double segWidth() const ; //width
 	
 
 	protected:
 	DataSource* m_datasource;
 	double partition_threshold;
 
-	double findChord(Angle theta);
-}
-
+	double findChord(Angle theta) const;
+};
+#endif

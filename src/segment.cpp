@@ -1,11 +1,12 @@
 #include "segment.h"
+#include "datasource.h"
 
 /**
  * Must be instantiated with a datasource
  * 
  * properties of data are discovered through this interface
  */
-virtual Segment::Segment(DataSource* datasource) : QVector<DataPoint>() {
+Segment::Segment(DataSource* datasource) : QVector<DataPoint*>() {
 	m_datasource = datasource;
 	partition_threshold = 0.1;
 }
@@ -20,35 +21,35 @@ virtual Segment::Segment(DataSource* datasource) : QVector<DataPoint>() {
  * heading (angle B) is calculated in Eq. 2.1 where A is the longitude 
  * difference
  */ 
-const Angle Segment::heading() {
-	if(length() == 0) {
+Angle Segment::heading() const {
+	if(size() == 0) {
 		return Angle::Radians(0);
 	}
 	Angle A, C, a, b, c;
 
 	//Calipso Technical Manual Equation 2.1
 	//Add or subtract longitude depending on relationship to prime meridian
-	if( && first().lon().degrees() > 0.0 && last().lon().degrees() > 0.0) {
-		A = Angle::Degrees( first().lon().degs()
-			      	- last().lon().degs() 
+	if( first()->lon().degs() > 0.0 && last()->lon().degs() > 0.0) {
+		A = Angle::Degrees( first()->lon().degs()
+			      	- last()->lon().degs() 
 				); //same side of meridian
 	} else {
-		A = Angle::Degrees( first().lon().degs()
-			      	+ last().lon().degs() 
+		A = Angle::Degrees( first()->lon().degs()
+			      	+ last()->lon().degs() 
 				); //opposite sides of meridian
 	}
 	
-	c = Angle::Degrees( 90.0 - abs(last().lon().degs())
+	c = Angle::Degrees( 90.0 - last()->lat().degs()
 			); //Polar Distance of end point
 
-	b = Angle::Degrees( 90.0 - abs(first().lon().degs())
+	b = Angle::Degrees( 90.0 - first()->lat().degs()
 			); //Polar Distance of start point
 
-	a = Angle::Radians( arccos(cos(b.rads()) * cos(c.rads())
+	a = Angle::Radians( acos(cos(b.rads()) * cos(c.rads())
 			       	+ sin(b.rads()) * sin(c.rads()) * cos(A.rads()))
 			); //cosine rule
 
-	C = Angle::Radians( arcsin(sin(A.rads()) * sin(c.rads())
+	C = Angle::Radians( asin(sin(A.rads()) * sin(c.rads())
 			       	/ sin(a.rads())) ); //sine rule
 	return C;
 }
@@ -63,17 +64,17 @@ const Angle Segment::heading() {
  * as base_horiz_res.  The radius of the Earth is assumed to be a constant
  * 63781000 meters
  */
-const Angle Segment::fullAngle() {
+Angle Segment::fullAngle() const {
 	double horizontal_resolution = 
-		dataSource().dataProperties().base_horiz_res;
+		dataSource()->dataProperties().base_horiz_res;
 	//CTM Eq. 2.2
-	return Angle::Radians((length() * horizontal_resolution)/RADIUS);
+	return Angle::Radians((size() * horizontal_resolution)/RADIUS);
 }
 
 /** 
  * Half of fullAngle or Theta2 = (Theta1)/2
  */
-const Angle Segment::halfAngle() {
+Angle Segment::halfAngle() const {
 	return Angle::Radians(fullAngle().rads()/2.0);
 }
 
@@ -81,7 +82,7 @@ const Angle Segment::halfAngle() {
  * fullAngleChord() or Chord1 is the chord formed by the straight line passing
  * through the end points of the segment as calculated in Eq. 2.2
  */
-const double Segment::fullAngleChord() {
+double Segment::fullAngleChord() const {
 	return findChord(fullAngle());
 }
 
@@ -89,14 +90,14 @@ const double Segment::fullAngleChord() {
  * halfAngleChord() or Chord2 is the chord formed by the straight line passing
  * through one end point and the midpoint of the segment via Eq. 2.4
  */
-const double Segment::halfAngleChord() {
+double Segment::halfAngleChord() const {
 	return findChord(halfAngle());
 }
 
 /**
  * Helper implementation of Eq. 2.4
  */
-const double Segment::findChord(Angle theta) {
+double Segment::findChord(Angle theta) const {
 	//CTM Eq. 2.4
 	return 2.0 * sin(theta.rads() / 2.0) * RADIUS;
 }
@@ -104,7 +105,7 @@ const double Segment::findChord(Angle theta) {
 /**
  * Base is half of Chord1
  */
-const double Segment::base() {
+double Segment::base() const {
 	return fullAngleChord() / 2.0;
 }
 
@@ -113,7 +114,7 @@ const double Segment::base() {
  * flush with the Earth's surface.  It can be found via the Pythagorean Theorem
  * as show in Eq. 2.3
  */
-const double Segment::droppingDistance() {
+double Segment::droppingDistance() const {
 	//CTM Eq. 2.3
 	return sqrt(pow(halfAngleChord(), 2) - pow(base(), 2));
 }
@@ -122,7 +123,7 @@ const double Segment::droppingDistance() {
  * externalAngle() or Theta3 is the angle between the "fanned-out" LIDAR data
  * and the line that forms Chord1.  Eq. 2.5
  */
-const Angle Segment::externalAngle() {
+Angle Segment::externalAngle() const {
 	//CTM Eq. 2.5
 	return Angle::Degrees(90.0 - halfAngle().degs());
 }
@@ -132,8 +133,8 @@ const Angle Segment::externalAngle() {
  * ground and the boundaries of the image needed to render it curved.  See
  * Eq. 2.6
  */
-const double Segment::leftoverLength() {
-	double max_altitude = dataSource().dataProperties().max_altitude;
+double Segment::leftoverLength() const {
+	double max_altitude = dataSource()->dataProperties().max_altitude;
 	//CTM Eq. 2.6
 	return cos(externalAngle().rads()) * max_altitude;
 }
@@ -144,7 +145,7 @@ const double Segment::leftoverLength() {
  *
  * length() was already used by QVector
  */
-const double Segment::segLength() {
+double Segment::segLength() const {
 	//CTM Eq. 2.7
 	return 2.0 * leftoverLength() + fullAngleChord();
 }
@@ -153,8 +154,8 @@ const double Segment::segLength() {
  * seqWidth() is the required width of the image (in pixels) to hold the
  * curved LIDAR.
  */
-const double Segment::segWidth() {
-	double max_altitude = dataSource().dataProperties().max_altitude;
+double Segment::segWidth() const {
+	double max_altitude = dataSource()->dataProperties().max_altitude;
 	//CTM Eq. 2.8
 	return droppingDistance() + max_altitude;
 }
@@ -166,10 +167,11 @@ const double Segment::segWidth() {
  * two DataPoints are always appended to seed the heading.
  */
 bool Segment::appendOrStop(DataPoint* dp) {
-	if( length() > 1) {
-		heading1 = heading();
+	if( size() > 1) {
+		Angle heading1 = heading();
 		append(dp);
-		if( abs(heading1 - heading()) > partition_threshold ) {
+		if( abs(heading1.degs() - heading().degs())
+			       	> partition_threshold ) {
 			pop_back();
 			return false;
 		} else {
@@ -177,6 +179,7 @@ bool Segment::appendOrStop(DataPoint* dp) {
 		}
 	} else {
 		append(dp);
+		return true;
 	}
 }
 

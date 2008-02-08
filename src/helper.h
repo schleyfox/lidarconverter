@@ -1,3 +1,5 @@
+#ifndef HELPER_H
+#define HELPER_H
 #include "common.h"
 
 /**
@@ -5,10 +7,13 @@
  */
 class Helper {
 	public:
-	static QVector<DataPoint*> makeStraightLineDataPoints(double init_lat,
-			double init_lon, double heading, double spacing,
-		    	float* data, int n);
+	static QVector<DataPoint*> makeStraightLineDataPoints(
+			double init_lat, double init_lon,
+		       	double heading,  double spacing,
+		    	float* &data, int n);
 	static QVector< QPair<Angle,Angle> > makeStraightLineCoordinates(
-			double init_lat, double init_lon, double heading,
-			double spacing, int n);
-}
+			double init_lat, double init_lon, 
+			double heading, double spacing,
+		       	int n);
+};
+#endif

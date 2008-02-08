@@ -23,12 +23,6 @@ QVector<DataPoint*> Helper::makeStraightLineDataPoints(
 		dp->setData(data);
 		dps.append(dp);
 	}
-	qDebug() << QString("Start: %1, %2").arg(
-			dps.first()->lat().degs()).arg(
-			dps.first()->lon().degs());
-	qDebug() << QString("End: %1, %2").arg(
-			dps.last()->lat().degs()).arg(
-			dps.last()->lon().degs());
 	return dps;
 }
 

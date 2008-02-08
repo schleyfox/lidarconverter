@@ -23,6 +23,11 @@ void DataSourceTests::segment() {
 	QVector<Segment> segments = ds->segment();
 	QCOMPARE(segments.size(), 2);
 	
+	//write out sample kml
+	Helper::makeKMLPath(ds->data(), "kml/full_swath.kml");
+	Helper::makeKMLPath(segments.first(), "kml/jakarta_to_mecca.kml");
+	Helper::makeKMLPath(segments.last(), "kml/mecca_to_izmir.kml");
+	
 	//Jakarta to Mecca	
 	QVERIFY(segments.first().size() > 0);
 	QCOMPARE((int)segments.first().heading().degs()*100,

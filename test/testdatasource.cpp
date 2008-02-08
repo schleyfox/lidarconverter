@@ -25,7 +25,7 @@ bool TestDataSource::read() {
 	qDebug() << "Mecca: " << data_ary.last()->lat().degs() << ", "
 		<< data_ary.last()->lon().degs();
 	
-	// Mecca to Izmir
+	//Mecca to Izmir
 	data_ary.pop_back();
 	data_ary += Helper::makeStraightLineDataPoints(
 			21.254, //Latitude of Mecca

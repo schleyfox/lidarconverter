@@ -12,6 +12,7 @@ bool TestDataSource::read() {
 	for(int i = 0; i < 10; i++)
 		data_temp[i] = (i < 3 || i > 5)? 1.0 : 0.0;
 	
+	//Jakarta to Mecca
 	data_ary = Helper::makeStraightLineDataPoints(
 			-6.08, //Latitude of Jakarta
 			106.45, //Longitude of Jakarta
@@ -23,6 +24,8 @@ bool TestDataSource::read() {
 		<< data_ary.first()->lon().degs();
 	qDebug() << "Mecca: " << data_ary.last()->lat().degs() << ", "
 		<< data_ary.last()->lon().degs();
+	
+	//Mecca to Izmir
 	data_ary.pop_back();
 	data_ary += Helper::makeStraightLineDataPoints(
 			21.254, //Latitude of Mecca
@@ -33,6 +36,7 @@ bool TestDataSource::read() {
 			(int)ceil(2252400.0/dataProperties().base_horiz_res));
 	qDebug() << "Izmir: " << data_ary.last()->lat().degs() << ", "
 		<< data_ary.last()->lon().degs();
+	
 	return true;
 
 }

@@ -9,6 +9,8 @@
 #include <QString>
 #include <QPair>
 #include <QMap>
+#include <QFile>
+#include <QTextStream>
 #include <QtDebug>
 
 using namespace std;

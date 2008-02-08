@@ -15,5 +15,8 @@ class Helper {
 			double init_lat, double init_lon, 
 			double heading, double spacing,
 		       	int n);
+
+	static void makeKMLPath(QVector<DataPoint*> points, 
+			QString filename);
 };
 #endif

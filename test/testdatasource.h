@@ -1,4 +1,7 @@
+#ifndef TESTDATASOURCE_H
+#define TESTDATASOURCE_H
 #include "datasource.h"
+#include "testsegment.h"
 #include "helper.h"
 
 class TestDataSource : public DataSource {
@@ -13,4 +16,6 @@ class TestDataSource : public DataSource {
 
 
 	bool read();
+	QVector<Segment> segment();
 };
+#endif

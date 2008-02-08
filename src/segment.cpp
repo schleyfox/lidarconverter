@@ -11,6 +11,13 @@ Segment::Segment(DataSource* datasource) : QVector<DataPoint*>() {
 	partition_threshold = 0.1;
 }
 
+Angle Segment::heading() const {
+	if(size() == 0) {
+		return Angle::Radians(0);
+	}
+	return heading(first(), last());
+}
+
 /**
  * CTM Section 2.1.2
  *
@@ -21,28 +28,25 @@ Segment::Segment(DataSource* datasource) : QVector<DataPoint*>() {
  * heading (angle B) is calculated in Eq. 2.1 where A is the longitude 
  * difference
  */ 
-Angle Segment::heading() const {
-	if(size() == 0) {
-		return Angle::Radians(0);
-	}
+Angle Segment::heading(DataPoint* start, DataPoint* end){
 	Angle A, C, a, b, c;
 
 	//Calipso Technical Manual Equation 2.1
 	//Add or subtract longitude depending on relationship to prime meridian
-	if( first()->lon().degs() > 0.0 && last()->lon().degs() > 0.0) {
-		A = Angle::Degrees( first()->lon().degs()
-			      	- last()->lon().degs() 
+	if( start->lon().degs() > 0.0 && end->lon().degs() > 0.0) {
+		A = Angle::Degrees( start->lon().degs()
+			      	- end->lon().degs() 
 				); //same side of meridian
 	} else {
-		A = Angle::Degrees( first()->lon().degs()
-			      	+ last()->lon().degs() 
+		A = Angle::Degrees( start->lon().degs()
+			      	+ end->lon().degs() 
 				); //opposite sides of meridian
 	}
 	
-	c = Angle::Degrees( 90.0 - last()->lat().degs()
+	c = Angle::Degrees( 90.0 - end->lat().degs()
 			); //Polar Distance of end point
 
-	b = Angle::Degrees( 90.0 - first()->lat().degs()
+	b = Angle::Degrees( 90.0 - start->lat().degs()
 			); //Polar Distance of start point
 
 	a = Angle::Radians( acos(cos(b.rads()) * cos(c.rads())
@@ -168,13 +172,13 @@ double Segment::segWidth() const {
  */
 bool Segment::appendOrStop(DataPoint* dp) {
 	if( size() > 1) {
-		Angle heading1 = heading();
-		append(dp);
-		if( abs(heading1.degs() - heading().degs())
+		Angle heading1 = heading(at(size()-2), last());
+		Angle heading2 = heading(last(), dp);
+		if( abs(heading1.degs() - heading2.degs())
 			       	> partition_threshold ) {
-			pop_back();
 			return false;
 		} else {
+			append(dp);
 			return true;
 		}
 	} else {

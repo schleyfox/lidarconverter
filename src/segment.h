@@ -22,6 +22,7 @@ class Segment : public QVector<DataPoint*> {
 
 	//CTM Section 2.1.2
 	Angle heading() const;
+	static Angle heading(DataPoint* start, DataPoint* end);
 	bool appendOrStop(DataPoint* dp);  //partitions
 	
 	//CTM Section 2.1.3: Segment Geometry

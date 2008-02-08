@@ -21,11 +21,17 @@ void DataSourceTests::segment() {
 	DataSource* ds = new TestDataSource();
 	ds->read();
 	QVector<Segment> segments = ds->segment();
-	QCOMPARE(segments.size(), 1);
+	QCOMPARE(segments.size(), 2);
 	
+	//Jakarta to Mecca	
 	QVERIFY(segments.first().size() > 0);
-	QCOMPARE(segments.first().heading().degs(),
-		       	Angle::Degrees(65.04).degs());
+	QCOMPARE((int)segments.first().heading().degs()*100,
+		       	(int)Angle::Degrees(65.04).degs()*100); //fuck doubles
+
+	//Mecca to Izmir
+	QVERIFY(segments.last().size() > 0);
+	QCOMPARE((int)segments.last().heading().degs()*100,
+		       	(int)Angle::Degrees(29.5).degs()*100); //fuck doubles
 }
 
 QTEST_MAIN(DataSourceTests)

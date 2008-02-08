@@ -18,7 +18,7 @@ DataSource::DataSource(QString filename) {
  * changes by more than Segment#partition_threshold, a new segment
  * is started.  The final set of segments is returned as a vector.
  */
-QVector<Segment > DataSource::segment() {
+QVector<Segment> DataSource::segment() {
 	QVector<Segment> segments;
 	QVectorIterator<DataPoint*> i(data_ary);
 

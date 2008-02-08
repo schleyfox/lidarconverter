@@ -1,6 +1,6 @@
 #include "datasource.h"
 
-DataSource(QString filename) {
+DataSource::DataSource(QString filename) {
 	data_ary = QVector<DataPoint*>();
 	if(!filename.isEmpty()){
 		setFilename(filename);
@@ -18,14 +18,14 @@ DataSource(QString filename) {
  * changes by more than Segment#partition_threshold, a new segment
  * is started.  The final set of segments is returned as a vector.
  */
-virtual QVector<Segment> segment() {
-	QVector<Segment> segments();
-	QVectorIterator i(data_ary);
+QVector<Segment > DataSource::segment() {
+	QVector<Segment> segments;
+	QVectorIterator<DataPoint*> i(data_ary);
 
 	while(i.hasNext()) {
 		Segment s(this);
-		segments.append(s);
 		while(i.hasNext() && s.appendOrStop(i.next()));
+		segments.append(s);
 	}
 
 	return segments;

@@ -1,4 +1,8 @@
-#include <common.h>
+#ifndef DATASOURCE_H
+#define DATASOURCE_H
+
+#include "common.h"
+#include "segment.h"
 
 /**
  * The DataSourceProperties struct holds information that describes the data
@@ -10,24 +14,24 @@ typedef struct{
 	 * in meters, this is the resolution of a single datapoint on the 
 	 * ground
 	 */
-	const double base_horiz_res;
+	double base_horiz_res;
 	
 	/**
 	 * in meters, this is the highest altitude for which data is collected
 	 */
-	const double max_altitude;
+	double max_altitude;
 	
 	/**
 	 * in number of datapoints, this describes the size of a column of data
 	 */
-	const int height;
+	int height;
 	
 	/**
 	 * Many instruments have varying data resolutions by altitude.  This
 	 * maps the base height (in datapoints (or bins)) to the (horizontal,
 	 * vertical) resolution in meters at that level
 	 */
-	const QMap<int, QPair<double, double> > resolutions;
+	QMap<int, QPair<double, double> > resolutions;
 } DataSourceProperties;
 
 /**
@@ -41,13 +45,12 @@ typedef struct{
 class DataSource {
 	public:
 	DataSource(QString filename = "" );
-	virtual ~DataSource() = 0;
 
 	void setFilename(QString filename) {
 		m_filename = filename;
 	}
 
-	const QString filename() {
+	QString filename() const {
 		return m_filename;
 	}
 	
@@ -67,7 +70,7 @@ class DataSource {
 	 *
 	 * data is obtained through read()
 	 */
-	const QVector<DataPoint*> data() {
+	QVector<DataPoint*> data() const {
 		return data_ary;
 	}
 	
@@ -77,7 +80,7 @@ class DataSource {
 	 * subclasses should set m_properties to the appropriate struct
 	 * at creation
 	 */
-	const DataSourceProperties dataProperties() {
+	DataSourceProperties dataProperties() const {
 		return m_properties;
 	}
 
@@ -87,4 +90,5 @@ class DataSource {
 	QString m_filename;
 	DataSourceProperties m_properties;
 	QVector<DataPoint*> data_ary;
-}
+};
+#endif

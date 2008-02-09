@@ -11,6 +11,8 @@ INCLUDEPATH += . ../src
 LIBS += -L../bin/ -llidarconverter
 
 # Input
-HEADERS += testdatasource.h 
+HEADERS += testdatasource.h \
+	   datasourcetests.h
 SOURCES += datasourcetests.cpp \ 
-	   testdatasource.cpp 
+	   testdatasource.cpp \
+	   tests.cpp 

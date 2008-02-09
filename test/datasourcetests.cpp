@@ -1,14 +1,4 @@
-#include <QtTest/QtTest>
-#include "testdatasource.h"
-#include "segment.h"
-
-class DataSourceTests: public QObject {
-	Q_OBJECT
-	
-	private slots:
-	void read();
-	void segment();
-};
+#include "datasourcetests.h"
 
 void DataSourceTests::read() {
 	DataSource* ds = new TestDataSource();
@@ -38,7 +28,4 @@ void DataSourceTests::segment() {
 	QCOMPARE((int)segments.last().heading().degs()*100,
 		       	(int)Angle::Degrees(29.5).degs()*100); //fuck doubles
 }
-
-QTEST_MAIN(DataSourceTests)
-#include "datasourcetests.moc"
 

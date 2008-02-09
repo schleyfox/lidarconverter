@@ -23,7 +23,7 @@ using namespace std;
 /**
  * Delicious Pi
  */
-#define PI 3.14159265
+#define PI 3.14159265358979
 
 double fuzzy_round(double x, int y);
 

@@ -30,4 +30,8 @@ class Angle {
 
 	double formatAngle(double x) const;
 };
+
+class Latitude : public Angle {
+	private formatAngle(double x) const;
+}
 #endif

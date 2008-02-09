@@ -24,9 +24,20 @@ void Angle::setRadians(double x) {
  */
 double Angle::formatAngle(double x) const {
 	if(x < 0.0) {
-		x = (2*PI)+x;
+		x = (2.0*PI)+x;
 	}
-	double q = floor(x/(2*PI));
-	x = x - q*2*PI;
+	double q = floor(x/(2.0*PI));
+	x = x - q*2.0*PI;
+	return x;
+}
+
+double Latitude::formatAngle(double x) const {
+	x = Angle::formatAngle(x);
+	if(x > PI) {
+		x -= PI;
+	}
+	if(x > (PI/2.0)) {
+		x = -1.0*(x - (PI/2.0));
+	}
 	return x;
 }

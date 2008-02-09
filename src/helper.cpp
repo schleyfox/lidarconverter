@@ -12,7 +12,7 @@ QVector<DataPoint*> Helper::makeStraightLineDataPoints(
 		double init_lat, double init_lon,
 	       	double heading, double spacing,
 	    	float* &data, int n) {
-	QVector< QPair<Angle,Angle> > coords = 
+	QVector< QPair<Latitude,Angle> > coords = 
 		makeStraightLineCoordinates(init_lat, init_lon, heading,
 			       	spacing, n);
 	QVector<DataPoint*> dps;
@@ -44,10 +44,10 @@ QVector<DataPoint*> Helper::makeStraightLineDataPoints(
  *
  * \f$\lambda_1=\arcsin (\frac{\sin a\sin C}{\sin(90^\circ -\phi_1)})+\lambda_0\f$
  */
-QVector< QPair<Angle,Angle> > Helper::makeStraightLineCoordinates(
+QVector< QPair<Latitude,Angle> > Helper::makeStraightLineCoordinates(
 		double init_lat, double init_lon, 
 		double heading, double spacing, int n) {
-	QVector< QPair<Angle,Angle> > coords;
+	QVector< QPair<Latitude,Angle> > coords;
 	Angle A, B, C, a, b, c;
 	C = Angle::Degrees(-1.0 * heading);
 	b = Angle::Degrees(90.0 - init_lat);
@@ -62,8 +62,8 @@ QVector< QPair<Angle,Angle> > Helper::makeStraightLineCoordinates(
 		A = Angle::Radians( asin( sin(a.rads())*sin(C.rads()) /
 					sin(c.rads())) );
 
-		coords.append(QPair<Angle, Angle>(
-				Angle::Degrees(90.0 - c.degs()),
+		coords.append(QPair<Latitude, Angle>(
+				Latitude::Degrees(90.0 - c.degs()),
 				Angle::Degrees(A.degs() + init_lon)));
 	}
 	return coords;

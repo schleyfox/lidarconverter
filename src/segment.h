@@ -22,6 +22,7 @@ class Segment : public QVector<DataPoint*> {
 
 	//CTM Section 2.1.2
 	Angle heading() const;
+	static Angle longitudeDifference(DataPoint* start, DataPoint* end);
 	static Angle heading(DataPoint* start, DataPoint* end);
 	bool appendOrStop(DataPoint* dp);  //partitions
 	

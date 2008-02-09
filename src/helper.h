@@ -9,12 +9,12 @@
 class Helper {
 	public:
 	static QVector<DataPoint*> makeStraightLineDataPoints(
-			DataPoint* start, DataPoint* end,
-			double spacing);
-	static QVector<DataPoint*> makeStraightLineDataPoints(
 			double init_lat, double init_lon,
 		       	double heading,  double spacing,
 		    	float* &data, int n);
+	static QVector<DataPoint*> makeStraightLineDataPoints(
+			DataPoint* start, DataPoint* end,
+			double spacing, float* &data);
 	static QVector< QPair<Angle,Angle> > makeStraightLineCoordinates(
 			double init_lat, double init_lon, 
 			double heading, double spacing,

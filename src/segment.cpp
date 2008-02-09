@@ -18,6 +18,7 @@ Angle Segment::heading() const {
 	return heading(first(), last());
 }
 
+
 /**
  * CTM Section 2.1.2
  *
@@ -32,16 +33,8 @@ Angle Segment::heading(DataPoint* start, DataPoint* end){
 	Angle A, C, a, b, c;
 
 	//Calipso Technical Manual Equation 2.1
-	//Add or subtract longitude depending on relationship to prime meridian
-	if( start->lon().degs() > 0.0 && end->lon().degs() > 0.0) {
-		A = Angle::Degrees( start->lon().degs()
-			      	- end->lon().degs() 
-				); //same side of meridian
-	} else {
-		A = Angle::Degrees( start->lon().degs()
-			      	+ end->lon().degs() 
-				); //opposite sides of meridian
-	}
+	
+	A = longitudeDifference(start, end);
 	
 	c = Angle::Degrees( 90.0 - end->lat().degs()
 			); //Polar Distance of end point
@@ -57,6 +50,22 @@ Angle Segment::heading(DataPoint* start, DataPoint* end){
 			       	/ sin(a.rads())) ); //sine rule
 	return C;
 }
+
+Angle Segment::longitudeDifference(DataPoint* start, DataPoint* end) {
+	Angle A;
+	//Add or subtract longitude depending on relationship to prime meridian
+	if( start->lon().degs() > 0.0 && end->lon().degs() > 0.0) {
+		A = Angle::Degrees( start->lon().degs()
+			      	- end->lon().degs() 
+				); //same side of meridian
+	} else {
+		A = Angle::Degrees( start->lon().degs()
+			      	+ end->lon().degs() 
+				); //opposite sides of meridian
+	}
+	return A;
+}
+
 
 /**
  * CTM Section 2.1.3

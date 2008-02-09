@@ -1,15 +1,41 @@
 #include "helper.h"
 
-QVector<DataPoint*> makeStraightLineDataPoints(
+QVector<DataPoint*> Helper::makeStraightLineDataPoints(
 	DataPoint* start, DataPoint* end,
-	double spacing) {
+	double spacing, float* &data) {
+
+	QVector<DataPoint*> points;
 
 	Angle heading = Segment::heading(start, end);
-	//find distance with cosine rule
-//	if(abs(end->lon() - start->lon()) > 90.0) {
-		//divide in distance in half
-//	}
-	return QVector<DataPoint*>();
+	Angle A, b, c;
+	
+	//cosine rule
+	A = Segment::longitudeDifference(start,end);
+	b = Angle::Degrees(90.0 - start->lat().degs()); //polar distance
+	c = Angle::Degrees(90.0 - end->lat().degs()); //polar distance
+	
+	Angle distance = Angle::Radians( acos( cos(b.rads())*cos(c.rads()) +
+				sin(b.rads())*sin(c.rads())*cos(A.rads())) );
+	double distance_meters = distance.rads()*RADIUS;
+	int n = (int)ceil(distance_meters/spacing);
+
+	if(abs(A.degs()) > 90.0) {
+		int n1 = n/2;
+		points = makeStraightLineDataPoints(start->lat().degs(),
+				start->lon().degs(),
+				heading.degs(), spacing, data, n1);
+		DataPoint* l2 = points.last();
+		points.pop_back();
+		points += makeStraightLineDataPoints(l2,
+				end, spacing, data);
+
+	} else {
+		points = makeStraightLineDataPoints(start->lat().degs(),
+				start->lon().degs(),
+				heading.degs(), spacing, data, n);
+
+	}
+	return points; 
 }
 
 

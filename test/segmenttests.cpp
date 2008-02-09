@@ -15,7 +15,13 @@ void SegmentTests::heading() {
 	beijing->setLat(39.55); beijing->setLon(116.26);
 	QCOMPARE(fuzzy_round(Segment::heading(cape_town, beijing).degs(),2),
 		       	fuzzy_round(Angle::Degrees(-58.31).degs(),2)); //fuck doubles
-	
+	float* data = new float[10];
+	Segment cape_town_to_beijing;
+	cape_town_to_beijing += Helper::makeStraightLineDataPoints(cape_town,
+		       	beijing, 10000, data);
+	Helper::makeKMLPath(cape_town_to_beijing, "kml/cape_town_to_beijing.kml");
+	QCOMPARE(fuzzy_round(cape_town_to_beijing.heading().degs(), 2),
+			fuzzy_round(Angle::Degrees(-58.31).degs(),2));
 }
 
 void SegmentTests::fullAngle(){ }

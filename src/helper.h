@@ -1,8 +1,6 @@
 #ifndef HELPER_H
 #define HELPER_H
 #include "common.h"
-#include "angle.h"
-#include "datapoint.h"
 
 /**
  * Helper  utility class that holds random abilities that assist with things

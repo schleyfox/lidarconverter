@@ -1,8 +1,6 @@
 #ifndef SEGMENT_H
 #define SEGMENT_H
 #include "common.h"
-#include "angle.h"
-#include "datapoint.h"
 
 class DataSource;
 

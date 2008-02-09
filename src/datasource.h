@@ -3,8 +3,6 @@
 
 #include "common.h"
 #include "segment.h"
-#include "angle.h"
-#include "datapoint.h"
 
 /**
  * The DataSourceProperties struct holds information that describes the data

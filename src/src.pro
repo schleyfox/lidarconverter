@@ -8,5 +8,5 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-HEADERS += common.h datasource.h helper.h segment.h angle.h datapoint.h
-SOURCES += datasource.cpp helper.cpp segment.cpp common.cpp angle.cpp
+HEADERS += common.h datasource.h helper.h segment.h
+SOURCES += datasource.cpp helper.cpp segment.cpp common.cpp

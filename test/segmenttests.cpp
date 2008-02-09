@@ -20,9 +20,6 @@ void SegmentTests::heading() {
 	QVector<DataPoint*> points = 
 		Helper::makeStraightLineDataPoints(-33.56, 18.28, -58.31, 10000.0, data , 12933000/10000);
 	Helper::makeKMLPath(points, "kml/capetown_to_beijing.kml");
-	Angle beijing_header = Segment::heading(points.first(), points.last());
-	QCOMPARE(fuzzy_round(beijing_header.degs(),2),
-		       	fuzzy_round(Angle::Degrees(-58.31).degs(), 2));
 }
 
 void SegmentTests::fullAngle(){ }

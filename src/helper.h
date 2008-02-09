@@ -13,7 +13,7 @@ class Helper {
 			double init_lat, double init_lon,
 		       	double heading,  double spacing,
 		    	float* &data, int n);
-	static QVector< QPair<Latitude,Angle> > makeStraightLineCoordinates(
+	static QVector< QPair<Angle,Angle> > makeStraightLineCoordinates(
 			double init_lat, double init_lon, 
 			double heading, double spacing,
 		       	int n);

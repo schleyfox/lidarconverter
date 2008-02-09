@@ -25,21 +25,13 @@ class Angle {
 		a.setDegrees(x); return a; }
 	static Angle Radians(double x) { Angle a = Angle();
 		a.setRadians(x); return a; }
-
-	protected:
+	private:
 	double m_r;
 
-	virtual double formatAngle(double x) const;
+	double formatAngle(double x) const;
 };
 
 class Latitude : public Angle {
-	public:
-	static Latitude Degrees(double x) { Latitude a; 
-		a.setDegrees(x); return a; }
-	static Latitude Radians(double x) { Latitude a;
-		a.setRadians(x); return a; }
-	
-	protected:
-	virtual double formatAngle(double x) const;
-};
+	private formatAngle(double x) const;
+}
 #endif

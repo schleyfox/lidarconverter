@@ -13,8 +13,7 @@
 class DataPoint {
 	public:
 	DataPoint() { 
-		m_lat = Latitude::Degrees(0);
-		m_lon = Angle::Degrees(0);
+		m_lat = m_lon = Angle::Degrees(0);
 		m_data = 0;
        	}
 	Angle lon() const { return m_lon; }
@@ -22,12 +21,11 @@ class DataPoint {
 	float* data() const { return m_data; }
 	void setLon(double x) { m_lon = Angle::Degrees(x); }
 	void setLon(Angle x) { m_lon = x; }
-	void setLat(double x) { m_lat = Latitude::Degrees(x); }
-	void setLat(Latitude x) { m_lat = x; }
+	void setLat(double x) { m_lat = Angle::Degrees(x); }
+	void setLat(Angle x) { m_lat = x; }
 	void setData(float* &x) { m_data = x; }
 	private:
-	Angle m_lon;
-       	Latitude m_lat;
+	Angle m_lon, m_lat;
 	float* m_data;
 };
 

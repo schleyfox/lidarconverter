@@ -16,10 +16,6 @@ void SegmentTests::heading() {
 	QCOMPARE(fuzzy_round(Segment::heading(cape_town, beijing).degs(),2),
 		       	fuzzy_round(Angle::Degrees(-58.31).degs(),2)); //fuck doubles
 	
-	float* data = new float[10];
-	QVector<DataPoint*> points = 
-		Helper::makeStraightLineDataPoints(-33.56, 18.28, -58.31, 10000.0, data , 12933000/10000);
-	Helper::makeKMLPath(points, "kml/capetown_to_beijing.kml");
 }
 
 void SegmentTests::fullAngle(){ }

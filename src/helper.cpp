@@ -1,5 +1,18 @@
 #include "helper.h"
 
+QVector<DataPoint*> makeStraightLineDataPoints(
+	DataPoint* start, DataPoint* end,
+	double spacing) {
+
+	Angle heading = Segment::heading(start, end);
+	//find distance with cosine rule
+//	if(abs(end->lon() - start->lon()) > 90.0) {
+		//divide in distance in half
+//	}
+	return QVector<DataPoint*>();
+}
+
+
 /**
  * Wrapper around Helper::makeStraightLineCoordinates() that returns a vector
  * of DataPoints()
@@ -43,6 +56,9 @@ QVector<DataPoint*> Helper::makeStraightLineDataPoints(
  * a\sin (90^\circ -\phi_0)\cos C)\f$
  *
  * \f$\lambda_1=\arcsin (\frac{\sin a\sin C}{\sin(90^\circ -\phi_1)})+\lambda_0\f$
+ *
+ * @warning the difference in longitudes cannot be greater than 90degrees or things
+ * will screw up horridly
  */
 QVector< QPair<Angle,Angle> > Helper::makeStraightLineCoordinates(
 		double init_lat, double init_lon, 
@@ -60,11 +76,20 @@ QVector< QPair<Angle,Angle> > Helper::makeStraightLineCoordinates(
 
 		//law of sines
 		A = Angle::Radians( asin( sin(a.rads())*sin(C.rads()) /
-					sin(c.rads())) );
+					sin(c.rads())));
 
 		coords.append(QPair<Angle, Angle>(
 				Angle::Degrees(90.0 - c.degs()),
 				Angle::Degrees(A.degs() + init_lon)));
+		if(i >= 1210 && i <= 1225) {
+			qDebug() << i << ": A = " << A.degs() << ", C = " << C.degs()
+		       	<< ", a = " << a.degs()	<< ", b = " << b.degs()
+		       	<< ", c = " << c.degs() << ":: lat = " 
+			<< coords.last().first.degs() << ", lon = "
+			<< coords.last().second.degs();
+			qDebug() << sin(a.rads())*sin(C.rads()) /
+					sin(c.rads());
+		}
 	}
 	return coords;
 

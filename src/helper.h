@@ -1,12 +1,16 @@
 #ifndef HELPER_H
 #define HELPER_H
 #include "common.h"
+#include "segment.h"
 
 /**
  * Helper  utility class that holds random abilities that assist with things
  */
 class Helper {
 	public:
+	static QVector<DataPoint*> makeStraightLineDataPoints(
+			DataPoint* start, DataPoint* end,
+			double spacing);
 	static QVector<DataPoint*> makeStraightLineDataPoints(
 			double init_lat, double init_lon,
 		       	double heading,  double spacing,

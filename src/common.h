@@ -25,6 +25,8 @@ using namespace std;
  */
 #define PI 3.14159265
 
+double fuzzy_round(double x, int y);
+
 //mini-classes
 
 

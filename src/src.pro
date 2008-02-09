@@ -9,4 +9,4 @@ INCLUDEPATH += .
 
 # Input
 HEADERS += common.h datasource.h helper.h segment.h
-SOURCES += datasource.cpp helper.cpp segment.cpp
+SOURCES += datasource.cpp helper.cpp segment.cpp common.cpp

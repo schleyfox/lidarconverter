@@ -23,16 +23,16 @@ void SegmentTests::heading() {
 	QCOMPARE(fuzzy_round(cape_town_to_beijing.heading().degs(), 2),
 			fuzzy_round(Angle::Degrees(-58.31).degs(),2));
 
-	//Oslo to Douglas
+	//Oslo to Brussels
 	DataPoint* oslo = new DataPoint;
 	oslo->setLat(59.9333); oslo->setLon(10.75);
-	DataPoint* douglas = new DataPoint;
-	douglas->setLat(54.1452); douglas->setLon(-4.4817);
-	Segment oslo_to_douglas;
-	oslo_to_douglas += Helper::makeStraightLineDataPoints(oslo,
-		       	douglas, 10000, data);
-	Helper::makeKMLPath(oslo_to_douglas, "kml/oslo_to_douglas.kml");
-	QCOMPARE(fuzzy_round(oslo_to_douglas.heading().degs(), 2),
+	DataPoint* brussels = new DataPoint;
+	brussels->setLat(50.85); brussels->setLon(4.35);
+	Segment oslo_to_brussels;
+	oslo_to_brussels += Helper::makeStraightLineDataPoints(oslo,
+		       	brussels, 10000, data);
+	Helper::makeKMLPath(oslo_to_brussels, "kml/oslo_to_brussels.kml");
+	QCOMPARE(fuzzy_round(oslo_to_brussels.heading().degs(), 2),
 			fuzzy_round(Angle::Degrees(123.18).degs(),2));
 }
 

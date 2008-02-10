@@ -48,6 +48,12 @@ Angle Segment::heading(DataPoint* start, DataPoint* end){
 
 	C = Angle::Radians( asin(sin(A.rads()) * sin(c.rads())
 			       	/ sin(a.rads())) ); //sine rule
+	
+	//normalize to North heading
+	if(start->lat().degs() > end->lat().degs()) {
+		C = Angle::Degrees(180 - C.degs() );
+	}
+
 	return C;
 }
 

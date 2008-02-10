@@ -20,7 +20,7 @@ QVector<DataPoint*> Helper::makeStraightLineDataPoints(
 	int n = (int)ceil(distance_meters/spacing);
 
 	if(abs(A.degs()) > 90.0) {
-		int n1 = n/2;
+		int n1 = (int)floor((Angle::Degrees(89.0).rads()*RADIUS)/spacing);
 		points = makeStraightLineDataPoints(start->lat().degs(),
 				start->lon().degs(),
 				heading.degs(), spacing, data, n1);

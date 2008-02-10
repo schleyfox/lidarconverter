@@ -16,8 +16,7 @@ void SegmentTests::heading() {
 	QCOMPARE(fuzzy_round(Segment::heading(cape_town, beijing).degs(),2),
 		       	fuzzy_round(Angle::Degrees(-58.31).degs(),2)); //fuck doubles
 	
-	Segment cape_town_to_beijing;
-	cape_town_to_beijing = DRAW_TEST_LINE(cape_town, beijing);
+	Segment cape_town_to_beijing = DRAW_TEST_LINE(cape_town, beijing);
 	
 	QCOMPARE(fuzzy_round(cape_town_to_beijing.heading().degs(), 2),
 			fuzzy_round(Angle::Degrees(-58.31).degs(),2));
@@ -27,26 +26,33 @@ void SegmentTests::heading() {
 	oslo->setLat(59.9333); oslo->setLon(10.75);
 	DataPoint* brussels = new DataPoint;
 	brussels->setLat(50.85); brussels->setLon(4.35);
-	Segment oslo_to_brussels;
-	oslo_to_brussels += DRAW_TEST_LINE(oslo, brussels); 
+	Segment oslo_to_brussels = DRAW_TEST_LINE(oslo, brussels); 
 	QCOMPARE(fuzzy_round(oslo_to_brussels.heading().degs(), 2),
 			fuzzy_round(Angle::Degrees(155.51).degs(),2));
 
 	//Oslo to Douglas
 	DataPoint* douglas = new DataPoint;
 	douglas->setLat(54.14521); douglas->setLon(-4.48172);
-	Segment oslo_to_douglas;
-	oslo_to_douglas += DRAW_TEST_LINE(oslo, douglas); 
+	Segment oslo_to_douglas = DRAW_TEST_LINE(oslo, douglas); 
 	QCOMPARE(fuzzy_round(oslo_to_douglas.heading().degs(), 2),
 			fuzzy_round(Angle::Degrees(118.35).degs(),2));
 
 	//Douglas to Almaty
 	DataPoint* almaty = new DataPoint;
 	almaty->setLat(43.2775); almaty->setLon(76.8958);
-	Segment douglas_to_almaty;
-	douglas_to_almaty += DRAW_TEST_LINE(douglas, almaty); 
+	Segment douglas_to_almaty = DRAW_TEST_LINE(douglas, almaty); 
 	QCOMPARE(fuzzy_round(douglas_to_almaty.heading().degs(), 2),
 			fuzzy_round(Angle::Degrees(-66.49).degs(),2));
+
+	//Longyearbyen to Qaanaaq
+	DataPoint* longyearbyen = new DataPoint;
+	longyearbyen->setLat(78.21666); longyearbyen->setLon(15.55);
+	DataPoint* qaanaaq = new DataPoint;
+	qaanaaq->setLat(77.483333); qaanaaq->setLon(-69.33333);
+	Segment longyearbyen_to_qaanaaq = DRAW_TEST_LINE(longyearbyen, qaanaaq);
+	QCOMPARE(fuzzy_round(longyearbyen_to_qaanaaq.heading().degs(), 2),
+			fuzzy_round(Angle::Degrees(-66.49).degs(),2));
+
  
 
 }

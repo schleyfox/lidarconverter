@@ -50,9 +50,8 @@ Angle Segment::heading(DataPoint* start, DataPoint* end){
 			       	/ sin(a.rads())) ); //sine rule
 	
 	//normalize to North heading
-	if(start->lat().degs() > end->lat().degs()) {
+	if(start->lat().degs() > end->lat().degs() && C.degs() > 0.0) {
 		C = Angle::Degrees(180 - C.degs() );
-		qDebug() << "Travelling South " << C.degs();
 	}
 
 	return C;

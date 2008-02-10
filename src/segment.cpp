@@ -52,24 +52,14 @@ Angle Segment::heading(DataPoint* start, DataPoint* end){
 	//normalize to North heading
 	if(start->lat().degs() > end->lat().degs()) {
 		C = Angle::Degrees(180 - C.degs() );
+		qDebug() << "Travelling South " << C.degs();
 	}
 
 	return C;
 }
 
 Angle Segment::longitudeDifference(DataPoint* start, DataPoint* end) {
-	Angle A;
-	//Add or subtract longitude depending on relationship to prime meridian
-	if( start->lon().degs() > 0.0 && end->lon().degs() > 0.0) {
-		A = Angle::Degrees( start->lon().degs()
-			      	- end->lon().degs() 
-				); //same side of meridian
-	} else {
-		A = Angle::Degrees( start->lon().degs()
-			      	+ end->lon().degs() 
-				); //opposite sides of meridian
-	}
-	return A;
+	return Angle::Degrees( start->lon().degs() - end->lon().degs());
 }
 
 

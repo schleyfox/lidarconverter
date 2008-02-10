@@ -33,7 +33,18 @@ void SegmentTests::heading() {
 		       	brussels, 10000, data);
 	Helper::makeKMLPath(oslo_to_brussels, "kml/oslo_to_brussels.kml");
 	QCOMPARE(fuzzy_round(oslo_to_brussels.heading().degs(), 2),
+			fuzzy_round(Angle::Degrees(155.51).degs(),2));
+
+	//Oslo to Douglas
+	DataPoint* douglas = new DataPoint;
+	douglas->setLat(54.14521); douglas->setLon(-4.48172);
+	Segment oslo_to_douglas;
+	oslo_to_douglas += Helper::makeStraightLineDataPoints(oslo,
+		       	douglas, 10000, data);
+	Helper::makeKMLPath(oslo_to_douglas, "kml/oslo_to_douglas.kml");
+	QCOMPARE(fuzzy_round(oslo_to_douglas.heading().degs(), 2),
 			fuzzy_round(Angle::Degrees(123.18).degs(),2));
+
 }
 
 void SegmentTests::fullAngle(){ }

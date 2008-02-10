@@ -1,6 +1,7 @@
 #include <QtTest/QtTest>
 #include "testdatasource.h"
 #include "segment.h"
+#include "testhelper.h" 
 
 class SegmentTests: public QObject {
 	Q_OBJECT

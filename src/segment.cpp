@@ -30,7 +30,7 @@ Angle Segment::heading() const {
  * difference
  */ 
 Angle Segment::heading(DataPoint* start, DataPoint* end){
-	Angle A, C, a, b, c;
+	Angle A, B, C, a, b, c;
 
 	//Calipso Technical Manual Equation 2.1
 	
@@ -48,9 +48,12 @@ Angle Segment::heading(DataPoint* start, DataPoint* end){
 
 	C = Angle::Radians( asin(sin(A.rads()) * sin(c.rads())
 			       	/ sin(a.rads())) ); //sine rule
+
+	B = Angle::Degrees( 180.0 - (A.degs() + C.degs()));
 	
 	//normalize to North heading
-	if(start->lat().degs() > end->lat().degs() && C.degs() > 0.0) {
+	//TODO: Find out how the B.degs() > 90.0 clause makes it work mathematically
+	if(start->lat().degs() > end->lat().degs() && C.degs() > 0.0 && B.degs() > 90.0) {
 		C = Angle::Degrees(180 - C.degs() );
 		qDebug() << "Normalization engaged " << C.degs();
 	}

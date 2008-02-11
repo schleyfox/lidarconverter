@@ -8,6 +8,7 @@ void SegmentTests::heading() {
 	mecca->setLat(21.26); mecca->setLon(39.49);
 	QCOMPARE(fuzzy_round(Segment::heading(jakarta, mecca).degs(),2),
 		       	fuzzy_round(Angle::Degrees(65.04).degs(),2)); //fuck doubles
+	
 	//Cape Town to Beijing
 	DataPoint* cape_town = new DataPoint;
 	cape_town->setLat(-33.56); cape_town->setLon(18.28);
@@ -20,6 +21,7 @@ void SegmentTests::heading() {
 	
 	QCOMPARE(fuzzy_round(cape_town_to_beijing.heading().degs(), 2),
 			fuzzy_round(Angle::Degrees(-58.31).degs(),2));
+	
 
 	//Oslo to Brussels
 	DataPoint* oslo = new DataPoint;
@@ -51,7 +53,7 @@ void SegmentTests::heading() {
 	qaanaaq->setLat(77.483333); qaanaaq->setLon(-69.33333);
 	Segment longyearbyen_to_qaanaaq = DRAW_TEST_LINE(longyearbyen, qaanaaq);
 	QCOMPARE(fuzzy_round(longyearbyen_to_qaanaaq.heading().degs(), 2),
-			fuzzy_round(Angle::Degrees(-66.49).degs(),2));
+			fuzzy_round(Angle::Degrees(50.11).degs(),2));
 
  
 

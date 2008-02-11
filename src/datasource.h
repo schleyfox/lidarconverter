@@ -45,6 +45,12 @@ typedef struct{
 class DataSource {
 	public:
 	DataSource(QString filename = "" );
+	virtual ~DataSource() {
+		for(int i = 0; i < data_ary.size(); i++) {
+			delete data_ary.at(i);
+			data_ary.remove(i);
+		}
+	}
 
 	void setFilename(QString filename) {
 		m_filename = filename;

@@ -5,8 +5,17 @@
 TEMPLATE = lib 
 TARGET = ../bin/lidarconverter
 DEPENDPATH += .
-INCLUDEPATH += .
+INCLUDEPATH += . /usr/include/hdf
 
+LIBS += -lmfhdf
 # Input
-HEADERS += common.h datasource.h helper.h segment.h
-SOURCES += datasource.cpp helper.cpp segment.cpp common.cpp
+HEADERS += common.h \
+	   datasource.h \
+	   helper.h \
+	   segment.h \
+	   hdf4object.h
+SOURCES += datasource.cpp \
+	   helper.cpp \
+	   segment.cpp \
+	   common.cpp \
+	   hdf4object.cpp

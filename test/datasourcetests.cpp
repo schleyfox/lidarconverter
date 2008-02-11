@@ -13,7 +13,16 @@ void DataSourceTests::calipsoRead() {
 	QCOMPARE(ds->data().size(), 56175);
 	Helper::makeKMLPath(ds->data(), "kml/calipsol1test.kml");
 	QVector<Segment> segments = ds->segment();
+	qDebug() << segments.size() << " segments";
 	QVERIFY(segments.size() > 0);
+	
+	QVector<DataPoint*> segment_path;
+	for(int i = 0; i < segments.size(); i++) {
+		segment_path << segments.at(i).first();
+		segment_path << segments.at(i).last();
+	}
+	Helper::makeKMLPath(segment_path, "kml/calipsol1test-segment.kml");
+
 	delete ds;
 }
 

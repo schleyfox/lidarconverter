@@ -55,6 +55,16 @@ void SegmentTests::heading() {
 	QCOMPARE(fuzzy_round(longyearbyen_to_qaanaaq.heading().degs(), 2),
 			fuzzy_round(Angle::Degrees(50.11).degs(),2));
 
+	//Mt. Erebus to Montagu Island
+	DataPoint* mt_erebus = new DataPoint;
+	mt_erebus->setLat(-77.53); mt_erebus->setLon(167.17);
+	DataPoint* montagu = new DataPoint;
+	montagu->setLat(-58.416667); montagu->setLon(-26.383333);
+	Segment mt_erebus_to_montagu = DRAW_TEST_LINE(mt_erebus, montagu);
+	QCOMPARE(fuzzy_round(mt_erebus_to_montagu.heading().degs(), 2),
+			fuzzy_round(Angle::Degrees(50.11).degs(),2));
+
+
  
 
 }

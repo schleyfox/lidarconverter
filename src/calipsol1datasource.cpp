@@ -3,9 +3,10 @@
 
 bool CalipsoL1DataSource::read() {
 	hdf4object* data = new hdf4object(new string(filename().toAscii().data()));
+
 	
 	string* tab = new string("Total_Attenuated_Backscatter_532");
-	float** tab_array = data->setToArray<float>(tab);
+	float** tab_array = data->setToArray<float>(new string("Total_Attenuated_Backscatter_532")     );
 	string* lon = new string("Longitude");
 	float** tmplons = data->setToArray<float>(lon);
 	float* lons = tmplons[0];

@@ -55,7 +55,6 @@ Angle Segment::heading(DataPoint* start, DataPoint* end){
 	//TODO: Find out how the B.degs() > 90.0 clause makes it work mathematically
 	if(start->lat().degs() > end->lat().degs() && C.degs() > 0.0 && B.degs() > 90.0) {
 		C = Angle::Degrees(180 - C.degs() );
-		qDebug() << "Normalization engaged " << C.degs();
 	}
 
 	return C;

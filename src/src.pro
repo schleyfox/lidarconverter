@@ -7,7 +7,7 @@ TARGET = ../bin/lidarconverter
 DEPENDPATH += .
 INCLUDEPATH += . /usr/include/hdf
 
-LIBS += -lmfhdf
+LIBS += -lmfhdf -ldf -ljpeg -lz
 # Input
 HEADERS += common.h \
 	   datasource.h \

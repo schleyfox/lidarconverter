@@ -10,7 +10,10 @@ void DataSourceTests::read() {
 void DataSourceTests::calipsoRead() {
 	CalipsoL1DataSource* ds = new CalipsoL1DataSource("calipsol1test.hdf");
 	ds->read();
-	QVERIFY(ds->data().size() > 0);
+	QCOMPARE(ds->data().size(), 56175);
+	Helper::makeKMLPath(ds->data(), "kml/calipsol1test.kml");
+	QVector<Segment> segments = ds->segment();
+	QVERIFY(segments.size() > 0);
 	delete ds;
 }
 

@@ -34,11 +34,11 @@ class hdf4object
 		void freeArray(T** array);
 	
 	private:
-		int sd_id, sds_id;
-		int status;
-		int n_datasets, n_file_attrs, index;
-		int dim_sizes[MAX_VAR_DIMS];
-		int rank, data_type, n_attrs;
+		int32 sd_id, sds_id;
+		intn status;
+		int32 n_datasets, n_file_attrs, index;
+		int32 dim_sizes[MAX_VAR_DIMS];
+		int32 rank, data_type, n_attrs;
 
 		char name[MAX_NC_NAME];
 		std::string* setNames;
@@ -73,7 +73,7 @@ hdf4object::hdf4object(std::string* filename)
 		setRank[i] = rank;
 		setDimensions[i] = new int[rank];
 
-		for (int j = 0; j < rank; j++)
+		for (int j = 0; j < rank; j++) 
 			setDimensions[i][j] = dim_sizes[j];
 	}
 }
@@ -147,7 +147,7 @@ T** hdf4object::setToArray(std::string* setName)
 		if (setNames[i] == *setName)
 		{
 			sds_id = SDselect(sd_id, i);
-			int start[setRank[i]], edges[setRank[i]];
+			int32 start[setRank[i]], edges[setRank[i]];
 			
 			T** array = (T **)malloc(setDimensions[i][0] * sizeof(T *));
 			array[0] = (T *)malloc(setDimensions[i][0] * setDimensions[i][1] * sizeof(T));

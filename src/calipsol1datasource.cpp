@@ -1,13 +1,17 @@
+#include "calipsol1datasource.h"
+
 bool CalipsoL1DataSource::read() {
 	hdf4object* data = new hdf4object(new string(filename().toAscii().data()));
 	
 	string* tab = new string("Total_Attenuated_Backscatter_532");
-	float** tab_array = test->setToArray<float>(tab);
+	float** tab_array = data->setToArray<float>(tab);
 	string* lon = new string("Longitude");
-	float* lons = test->setToArray<float>(lon);
+	float** tmplons = data->setToArray<float>(lon);
+	float* lons = tmplons[0];
 	string* lat = new string("Latitude");
-	float* lats = test->setToArray<float>(lat);
-	int* dims = test->getSetDimensions(tab);
+	float** tmplats = data->setToArray<float>(lat);
+	float* lats = tmplats[0];
+	int* dims = data->getSetDimensions(tab);
 	delete tab;
 	delete lon;
 	delete lat;
@@ -24,9 +28,9 @@ bool CalipsoL1DataSource::read() {
 		dp->setData(dp_ary);
 		data_ary << dp;
 	}
-	test->freeArray<float>(tab_array);
-	test->freeArray<float>(lons);
-	test->freeArray<float>(lats);
+	data->freeArray<float>(tab_array);
+	data->freeArray<float>(tmplons);
+	data->freeArray<float>(tmplats);
 
 	return true;
 }

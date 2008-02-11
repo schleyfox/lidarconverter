@@ -1,4 +1,5 @@
 #include "calipsol1datasource.h"
+#include "hdf4object.h"
 
 bool CalipsoL1DataSource::read() {
 	hdf4object* data = new hdf4object(new string(filename().toAscii().data()));

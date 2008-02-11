@@ -7,6 +7,13 @@ void DataSourceTests::read() {
 	delete ds;
 }
 
+void DataSourceTests::calipsoRead() {
+	CalipsoL1DataSource* ds = new CalipsoL1DataSource("calipsol1test.hdf");
+	ds->read();
+	QVERIFY(ds->data().size() > 0);
+	delete ds;
+}
+
 void DataSourceTests::segment() {
 	DataSource* ds = new TestDataSource();
 	ds->read();

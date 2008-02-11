@@ -1,7 +1,6 @@
 #ifndef CALIPSOL1DATASOURCE_H
 #define CALIPSOL1DATASOURCE_H
 #include "datasource.h"
-#include "hdf4object.h"
 
 class CalipsoL1DataSource : public DataSource {
 	public:

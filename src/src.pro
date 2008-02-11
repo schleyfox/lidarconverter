@@ -13,11 +13,9 @@ HEADERS += common.h \
 	   datasource.h \
 	   helper.h \
 	   segment.h \
-	   hdf4object.h \
 	   calipsol1datasource.h
 SOURCES += datasource.cpp \
 	   helper.cpp \
 	   segment.cpp \
 	   common.cpp \
-	   hdf4object.cpp \
 	   calipsol1datasource.cpp

@@ -6,7 +6,7 @@ CONFIG += qtestlib
 TEMPLATE = app
 TARGET = ../bin/tests
 DEPENDPATH += . 
-INCLUDEPATH += . ../src
+INCLUDEPATH += . ../src /usr/include/hdf
 
 LIBS += -L../bin/ -llidarconverter
 

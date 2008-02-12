@@ -7,6 +7,7 @@
 #include "calipsol1datasource.h"
 #include "testhelper.h"
 #include "lcolorlookup.h"
+#include "curvetransform.h"
 
 class LidarConverterTests : public QObject {
 	Q_OBJECT 
@@ -148,6 +149,26 @@ class LidarConverterTests : public QObject {
 		//I hate floating point rounding
 		QCOMPARE(lut.colorify(1.51), qRgba(255,0,255,255));
 		QCOMPARE(lut.colorify(2.0), qRgba(255,255,0,255));
+	}
+
+	void CurveTransform_transform() {
+		QMap<float, uint> cm;
+		cm[-1.0e-6] = qRgba(255,255,255,255);
+		cm[1.0e-6] = qRgba(255,255,255,255);
+		
+		LColorLookup* lut = new LColorLookup;
+		lut->setColorMap(cm);
+		lut->compile();
+
+		CalipsoL1DataSource *ds =
+	    		new CalipsoL1DataSource("calipsol1test.hdf");
+		ds->read();
+		QCOMPARE(ds->data().size(), 56175);
+		QVector<Segment> segments = ds->segment();
+		qDebug() << segments.size() << " segments";
+		CurveTransform ct(segments.at(15), lut);
+		QVERIFY(ct.transform().save("test.png", "PNG"));
+		QVERIFY(segments.size() > 0);
 	}
 
 

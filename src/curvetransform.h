@@ -42,10 +42,9 @@ class CurveTransform {
 public:
 	
 	/**
-	 * \param img The image to be curved. 
 	 * \warning If theta (image's horizontal dimensions times the horizontal resolution divided by radius) is greater than 90 degrees, an exception will be thrown.
 	 */
-	CurveTransform(QImage img, Segment s, LColorLookup* lut);
+	CurveTransform(Segment s, LColorLookup* lut);
 	
 	/**
 	 * Convert rectangular image to a curved image
@@ -108,7 +107,6 @@ protected:
 
 	double altitude;
 
-	QImage image;
 	QImage out_image;
 
 	double height;

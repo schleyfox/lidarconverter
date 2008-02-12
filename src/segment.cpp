@@ -8,7 +8,7 @@
  */
 Segment::Segment(DataSource* datasource) : QVector<DataPoint*>() {
 	m_datasource = datasource;
-	partition_threshold = 0.25;
+	partition_threshold = 0.35;
 }
 
 Angle Segment::heading() const {

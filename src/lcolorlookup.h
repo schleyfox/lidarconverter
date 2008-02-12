@@ -5,13 +5,13 @@
 #define NEGINF -1000000000.0
 #define INF 1000000000.0
 
-typedef struct {
+struct CLUTNode {
 	double lbound;
 	double ubound;
 	uint color;
 	CLUTNode* less;
 	CLUTNode* more;
-} CLUTNode;
+};
 
 /**
  * ColorLookup Provides a simple interface to color a set of values based on
@@ -35,7 +35,7 @@ class LColorLookup {
 		m_colormap = colormap;
 	}
 
-	virtual uint colorify(float data);
+	virtual uint colorify(float data, CLUTNode* node = 0);
 	
 	/**
 	 *  Make colormap into Binary Search Tree
@@ -43,7 +43,7 @@ class LColorLookup {
 	void compile();
 
 	protected:
-	ClutNode* build(QVector<CLUTNode*> ranges);
+	CLUTNode* build(QList<CLUTNode*> ranges);
 
 	CLUTNode* colormap_root;
 	QMap<float, uint> m_colormap;

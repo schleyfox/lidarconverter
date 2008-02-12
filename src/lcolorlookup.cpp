@@ -3,15 +3,15 @@
 /**
  * Lookup data in colormap and return color
  */
-uint LColorLookup::colorify(float data, CLUTNode* node = 0) {
+uint LColorLookup::colorify(float data, CLUTNode* node) {
 	if(!node)
 		node = colormap_root;
 	if(data < node->lbound) {
 		return colorify(data, node->less);
-	} else if(data > note->ubound) {
+	} else if(data > node->ubound) {
 		return colorify(data, node->more);
 	}
-	return color;
+	return node->color;
 }
 
 void LColorLookup::compile() {
@@ -32,12 +32,12 @@ void LColorLookup::compile() {
 	colormap_root = build(ranges);
 }
 
-CLUTNode* build(QVector<CLUTNode*> ranges) {
+CLUTNode* LColorLookup::build(QList<CLUTNode*> ranges) {
 	if(ranges.size() == 0) {
 		return 0;
 	}
 
-	QList<CLUTNode*> p_1, p2;
+	QList<CLUTNode*> p_1, p_2;
 	CLUTNode* root;
 	int length_i = (int)floor((double)ranges.size()/2.0);
 	root = ranges.takeAt(length_i);

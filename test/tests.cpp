@@ -133,15 +133,21 @@ class LidarConverterTests : public QObject {
 	}
 
 	void LColorLookup_colorify() {
-		QList<QPair<float, uint> >cm;
-		cm << QPair<float, uint>(0.5, qRgba(255,255,255,255));
-		cm << QPair<float, uint>(1.0, qRgba(0,255,255,255));
-		cm << QPair<float, uint>(1.5, qRgba(255,0,255,255));
-		cm << QPair<float, uint>(2.0, qRgba(255,255,0,255));
+		QMap<float, uint> cm;
+		cm[0.5] = qRgba(255,255,255,255);
+		cm[1.0] = qRgba(0,255,255,255);
+		cm[1.5] = qRgba(255,0,255,255);
+		cm[2.0] = qRgba(255,255,0,255);
 
 		LColorLookup lut;
 		lut.setColorMap(cm);
-		QCOMPARE(lut.colorify(1.5), qRgba(255,0,255,255));
+		lut.compile();
+		QCOMPARE(lut.colorify(0.5), qRgba(255,255,255,255));
+		QCOMPARE(lut.colorify(1.0), qRgba(0,255,255,255));
+		QCOMPARE(lut.colorify(1.49), qRgba(0,255,255,255));
+		//I hate floating point rounding
+		QCOMPARE(lut.colorify(1.51), qRgba(255,0,255,255));
+		QCOMPARE(lut.colorify(2.0), qRgba(255,255,0,255));
 	}
 
 

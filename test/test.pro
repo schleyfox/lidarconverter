@@ -12,11 +12,7 @@ LIBS += -L../bin/ -llidarconverter
 
 # Input
 HEADERS += testdatasource.h \
-	   datasourcetests.h \
-	   segmenttests.h \
 	   testhelper.h
-SOURCES += datasourcetests.cpp \ 
-	   testdatasource.cpp \
-	   segmenttests.cpp \
+SOURCES += testdatasource.cpp \
 	   tests.cpp \
 	   testhelper.cpp

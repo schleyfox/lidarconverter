@@ -4,6 +4,8 @@
 #include "common.h"
 #include "segment.h"
 #include "datasource.h"
+#include "lcolorlookup.h"
+#include <QImage>
 #include <math.h>
 #include <iostream>
 #include <exception>
@@ -40,13 +42,10 @@ class CurveTransform {
 public:
 	
 	/**
-	 * \param img The image to be curved.
-	 * \param radius The radius to the bottom of the image arc (in <i>unit(s)</i>).
-	 * \param h_res Horizontal resolution (in <i>unit(s)</i> to pixel).
-	 * \param v_res Vertical resolution (in <i>unit(s)</i> to pixel).
+	 * \param img The image to be curved. 
 	 * \warning If theta (image's horizontal dimensions times the horizontal resolution divided by radius) is greater than 90 degrees, an exception will be thrown.
 	 */
-	CurveTransform(QImage img, Segment s);
+	CurveTransform(QImage img, Segment s, LColorLookup* lut);
 	
 	/**
 	 * Convert rectangular image to a curved image
@@ -119,6 +118,9 @@ protected:
 
 	double image_width;
 	double image_height;
+
+	Segment segment;
+	LColorLookup* lut;
 };
 
 

@@ -3,53 +3,48 @@
 /**
  * Lookup data in colormap and return color
  */
-uint LColorLookup::colorify(float data) {
-	int bucket = (int)floor(data*multiplier - b);
-	qDebug() << "Looking in Bucket " << bucket;
-	QMap<float, uint> colors = m_compcolormap.value(bucket);
-	qDebug() << colors.key(0);
-	if(data <= colors.key(0)) {
-		return colors.value(0);
+uint LColorLookup::colorify(float data, CLUTNode* node = 0) {
+	if(!node)
+		node = colormap_root;
+	if(data < node->lbound) {
+		return colorify(data, node->less);
+	} else if(data > note->ubound) {
+		return colorify(data, node->more);
 	}
-	for(int i = 1; i < colors.size()-1; i++) {
-		if(data <= colors.key(i))
-			return colors.value(i);
-	}
-
-	return colors.value(colors.size()-1);
+	return color;
 }
 
 void LColorLookup::compile() {
-	QList<float> keys = colorMap().keys();
-	double range = keys.last() - keys.first();
-	double total = 0;
-	for(int i = 0; i < keys.size(); i++) 
-		total += keys.at(i);
-	double average = total/((double)keys.size());
-	double tmp_v = 0;
-	for(int i = 0; i < keys.size(); i++) 
-		tmp_v += pow(keys.at(i) - average, 2.0);
-	double stdev = sqrt(tmp_v/((double)keys.size()));
+	//Pad to Infinity
+	m_colormap[NEGINF] = m_colormap.values().first();
+	m_colormap[INF] = m_colormap.values().last();
 	
-	double halfstd = stdev/2.0;
-
-	multiplier = 1.0/halfstd;
-	b = keys.first();
-	
-	
-	QMapIterator<float, uint> j(colorMap());
-	int buckets = (int)floor(range*multiplier);
-	for(int i = 0; i < buckets; i++) {
-		qDebug() << "Bucket " << i;
-		while(j.hasNext()) {
-			if(floor(j.peekNext().key()*multiplier - b) <= i) {
-				qDebug() << "  Adding " << j.peekNext().key() << " => " << j.peekNext().value();
-				(m_compcolormap[i])[j.peekNext().key()] = j.peekNext().value();
-				qDebug() << (m_compcolormap[i])[j.next().key()];
-			} else {
-				break;
-			}
-		}
+	QList<float> keys = m_colormap.keys();
+	QList<uint> values = m_colormap.values();
+	QList<CLUTNode*> ranges;
+	for(int i = 0; i < keys.size()-1; i++) {
+		CLUTNode* cn = new CLUTNode;
+		cn->lbound = keys.at(i);
+		cn->ubound = keys.at(i+1);
+		cn->color = values.at(i);
+		ranges << cn;
 	}
+	colormap_root = build(ranges);
 }
 
+CLUTNode* build(QVector<CLUTNode*> ranges) {
+	if(ranges.size() == 0) {
+		return 0;
+	}
+
+	QList<CLUTNode*> p_1, p2;
+	CLUTNode* root;
+	int length_i = (int)floor((double)ranges.size()/2.0);
+	root = ranges.takeAt(length_i);
+	p_1 = ranges.mid(0,length_i);
+	p_2 = ranges.mid(length_i);
+	
+	root->less = build(p_1);
+	root->more = build(p_2);
+	return root;
+}

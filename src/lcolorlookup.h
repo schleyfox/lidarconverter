@@ -2,11 +2,21 @@
 #define LCOLORLOOKUP_H
 #include "common.h"
 
+#define NEGINF -1000000000.0
+#define INF 1000000000.0
+
+typedef struct {
+	double lbound;
+	double ubound;
+	uint color;
+	CLUTNode* less;
+	CLUTNode* more;
+} CLUTNode;
+
 /**
  * ColorLookup Provides a simple interface to color a set of values based on
  * a range stored in m_colormap.
  */
-
 class LColorLookup {
 	public:
 	
@@ -28,15 +38,15 @@ class LColorLookup {
 	virtual uint colorify(float data);
 	
 	/**
-	 * Optimize colormap for fast lookups
+	 *  Make colormap into Binary Search Tree
 	 */
 	void compile();
 
 	protected:
-	QHash<int, QMap<float, uint> > m_compcolormap;
+	ClutNode* build(QVector<CLUTNode*> ranges);
+
+	CLUTNode* colormap_root;
 	QMap<float, uint> m_colormap;
-	double multiplier;
-	double b;
 
 
 };

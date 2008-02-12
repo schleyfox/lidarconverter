@@ -17,9 +17,9 @@ bool TestDataSource::read() {
 			-6.08, //Latitude of Jakarta
 			106.45, //Longitude of Jakarta
 			65.04, //heading from Jakarta to Mecca
-			dataProperties().base_horiz_res,
+			dataProperties().h_res,
 			data_temp,
-			(int)ceil(7912000.0/dataProperties().base_horiz_res));
+			(int)ceil(7912000.0/dataProperties().h_res));
 	qDebug() << "Jakarta: " << data_ary.first()->lat().degs() << ", "
 		<< data_ary.first()->lon().degs();
 	qDebug() << "Mecca: " << data_ary.last()->lat().degs() << ", "
@@ -31,9 +31,9 @@ bool TestDataSource::read() {
 			21.254, //Latitude of Mecca
 			39.5114, //Longitude of Mecca
 			29.0, //heading from Mecca to Izmir
-			dataProperties().base_horiz_res,
+			dataProperties().h_res,
 			data_temp,
-			(int)ceil(2252400.0/dataProperties().base_horiz_res));
+			(int)ceil(2252400.0/dataProperties().h_res));
 	qDebug() << "Izmir: " << data_ary.last()->lat().degs() << ", "
 		<< data_ary.last()->lon().degs();
 	

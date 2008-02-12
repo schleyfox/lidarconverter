@@ -37,8 +37,8 @@ class Segment : public QVector<DataPoint*> {
 	//CTM Section 2.1.4: Dimensions
 	Angle externalAngle() const; //theta_3
 	double leftoverLength() const;  //length_leftover
-	double segLength() const; //length, naming conflict :(
-	double segWidth() const ; //width
+	double length() const; //pixels 
+	double width() const ; //pixels
 	
 
 	protected:

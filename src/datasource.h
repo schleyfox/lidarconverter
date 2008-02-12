@@ -11,10 +11,14 @@
 typedef struct{
 	
 	/**
-	 * in meters, this is the resolution of a single datapoint on the 
-	 * ground
+	 * in meters, this is the horizontal resolution of a single datapoint
 	 */
-	double base_horiz_res;
+	double h_res;
+
+	/**
+	 * in meters, this is the vertical resolution of a single datapoint
+	 */
+	double v_res;
 	
 	/**
 	 * in meters, this is the highest altitude for which data is collected
@@ -26,12 +30,6 @@ typedef struct{
 	 */
 	int height;
 	
-	/**
-	 * Many instruments have varying data resolutions by altitude.  This
-	 * maps the base height (in datapoints (or bins)) to the (horizontal,
-	 * vertical) resolution in meters at that level
-	 */
-	QMap<int, QPair<double, double> > resolutions;
 } DataSourceProperties;
 
 /**

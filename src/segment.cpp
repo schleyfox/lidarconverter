@@ -77,7 +77,7 @@ Angle Segment::longitudeDifference(DataPoint* start, DataPoint* end) {
  */
 Angle Segment::fullAngle() const {
 	double horizontal_resolution = 
-		dataSource()->dataProperties().base_horiz_res;
+		dataSource()->dataProperties().h_res;
 	//CTM Eq. 2.2
 	return Angle::Radians((size() * horizontal_resolution)/RADIUS);
 }
@@ -156,7 +156,7 @@ double Segment::leftoverLength() const {
  *
  * length() was already used by QVector
  */
-double Segment::segLength() const {
+double Segment::length() const {
 	//CTM Eq. 2.7
 	return 2.0 * leftoverLength() + fullAngleChord();
 }
@@ -165,7 +165,7 @@ double Segment::segLength() const {
  * seqWidth() is the required width of the image (in pixels) to hold the
  * curved LIDAR.
  */
-double Segment::segWidth() const {
+double Segment::width() const {
 	double max_altitude = dataSource()->dataProperties().max_altitude;
 	//CTM Eq. 2.8
 	return droppingDistance() + max_altitude;

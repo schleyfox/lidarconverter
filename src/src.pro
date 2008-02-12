@@ -13,9 +13,11 @@ HEADERS += common.h \
 	   datasource.h \
 	   helper.h \
 	   segment.h \
+	   lcolorlookup.h \
 	   calipsol1datasource.h
 SOURCES += datasource.cpp \
 	   helper.cpp \
 	   segment.cpp \
+	   lcolorlookup.cpp \
 	   common.cpp \
 	   calipsol1datasource.cpp

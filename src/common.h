@@ -12,6 +12,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QtDebug>
+#include <QHash>
 
 using namespace std;
 

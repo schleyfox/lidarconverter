@@ -6,6 +6,7 @@
 #include "testsegment.h"
 #include "calipsol1datasource.h"
 #include "testhelper.h"
+#include "lcolorlookup.h"
 
 class LidarConverterTests : public QObject {
 	Q_OBJECT 
@@ -130,6 +131,20 @@ class LidarConverterTests : public QObject {
 		QVERIFY(segments.last().size() > 0);
 		QCOMPARE((int) segments.last().heading().degs() * 100, (int) Angle::Degrees(29.5).degs() * 100);	//fuck doubles
 	}
+
+	void LColorLookup_colorify() {
+		QMap<float, uint> cm;
+		cm[0.5] = qRgba(255,255,255,255);
+		cm[1.0] = qRgba(255,0,255,255);
+		cm[1.5] = qRgba(255,255,0,255);
+		cm[2.0] = qRgba(255,255,255,0);
+
+		LColorLookup lut;
+		lut.setColorMap(cm);
+		lut.compile();
+		QCOMPARE(lut.colorify(0.5), qRgba(255,255,255,255));
+	}
+
 
 };
 

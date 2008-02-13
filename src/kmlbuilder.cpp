@@ -117,6 +117,7 @@ bool KMLBuilder::relocateImages() {
 	filters << "*.png";
 
 	image_directory.setNameFilters(filters);
+	qDebug() << image_directory.entryList().size();
 	QDirIterator iterator(image_directory);
 	QFile *file;
 	QString name;
@@ -124,7 +125,8 @@ bool KMLBuilder::relocateImages() {
 	while(iterator.hasNext())
 	{
 		file = new QFile(iterator.next());
-		file->copy(fileDirs["images"]->absolutePath());
+		QString fn = QFileInfo(*file).fileName();
+		file->copy(fileDirs["images"]->absolutePath() + QDir::separator() + fn);
 		file->remove();
 		delete file;
 	}

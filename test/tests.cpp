@@ -126,7 +126,7 @@ class LidarConverterTests : public QObject {
 
 		//Mecca to Izmir
 		QVERIFY(segments.last().size() > 0);
-		QCOMPARE((int) segments.last().heading().degs() * 100, (int) Angle::Degrees(-29.5).degs() * 100);	//fuck doubles
+		QCOMPARE((int) segments.last().heading().degs() * 100, (int) Angle::Degrees(-29.5).degs() * 100);	//fuck doubles 
 	}
 
 	void LColorLookup_colorify() {
@@ -158,13 +158,13 @@ class LidarConverterTests : public QObject {
 		QVector<Segment> segments = ds->segment();
 		qDebug() << segments.size() << " segments";
 		//5 segments should be enough
-		for(int i = 0; i < 5; i++) {
+		for(int i = 0; i < segments.size(); i++) {
 			CurveTransform ct(segments.at(i), lut);
 			QVERIFY(ct.transform().save(
-				QString("images/test%1.png").arg(i), "PNG"));
+				QString("images/%1.png").arg(segments.at(i).segmentName()), "PNG"));
 		}
 		QVERIFY(segments.size() > 0);
-		KMLBuilder builder(QDir("./kmlbuilder/"), QDir("."));
+		KMLBuilder builder(QDir("./kmlbuilder/"), QDir("./images/"));
 		builder.generateFiles(segments);
 	}
 

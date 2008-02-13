@@ -22,9 +22,9 @@ class Segment : public QVector<DataPoint*> {
 
 	DataPoint* midpoint();
 
-	int segmentNumber();
+	int segmentNumber() const;
 	void setSegmentNumber(int i);
-	QString segmentName();
+	QString segmentName() const;
 
 	//CTM Section 2.1.2
 	Angle heading() const;

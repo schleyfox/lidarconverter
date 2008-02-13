@@ -11,7 +11,7 @@ Segment::Segment(DataSource* datasource) : QVector<DataPoint*>() {
 	partition_threshold = 0.35;
 }
 
-int Segment::segmentNumber() {
+int Segment::segmentNumber() const {
 	return m_segnum;
 }
 
@@ -19,7 +19,7 @@ void Segment::setSegmentNumber(int i) {
 	m_segnum = i;
 }
 
-QString Segment::segmentName() {
+QString Segment::segmentName() const {
 	QString s = dataSource()->filename();
 	s.chop(4);
 	return QString("%1-%2").arg(s).arg(segmentNumber());

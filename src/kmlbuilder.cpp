@@ -7,7 +7,6 @@ KMLBuilder::KMLBuilder(QDir output_dir, QDir image_dir) {
 	fileDirs["root"] = new QDir(output_dir);
 	readTemplates();
 	createDirectories();
-
 }
 
 /**
@@ -85,6 +84,8 @@ bool KMLBuilder::generateFiles(QVector<Segment> segments) {
 		delete c;
 	}
 	delete netlinkFile;
+	
+	relocateImages();
 	return 1;	
 }
 
@@ -111,30 +112,23 @@ container* KMLBuilder::readSegment(Segment s) {
 /*
  * Move the images to the images folder.
  */
-/*bool KMLBuilder::relocateImages()
-{
-	bool status = 1;
+bool KMLBuilder::relocateImages() {
 	QStringList filters;
 	filters << "*.png";
 
-	fileDirs[ROOT]->setNameFilters(filters);
-	QDirIterator iterator(*fileDirs[ROOT]);
+	image_directory.setNameFilters(filters);
+	QDirIterator iterator(image_directory);
 	QFile *file;
-	QString *name;
+	QString name;
 
-	while(iterator.hasNext() && status)
+	while(iterator.hasNext())
 	{
 		file = new QFile(iterator.next());
-		name = new QString(file->fileName());
-		name->remove(0, 
-		     name->lastIndexOf(QString(fileDirs[ROOT]->separator()))+1);
-		status = file->copy(fileDirs[IMAGES]->absolutePath() +
-			fileDirs[IMAGES]->separator() + *name);
+		file->copy(fileDirs["images"]->absolutePath());
 		file->remove();
 		delete file;
-		delete name;
 	}
 
-	return status;
-}*/
+	return true;
+}
 

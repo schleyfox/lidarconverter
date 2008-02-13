@@ -47,13 +47,13 @@ bool KMLBuilder::readTemplates() {
  * This function creates the directories where the files will be stored.
  */
 bool KMLBuilder::createDirectories() {
-	subDirNames << "ge_files" << "models" << "images";
-	for(int i = 0; i < subDirNames.size(); i++) {
-		if (!output_directory.mkdir(subDirNames[i])) {
-			qDebug() << "ERROR WHILE CREATING " << subDirNames[i];
+	subDirNames << "" << "ge_files" << "models" << "images";
+	for(int i = 0; i < subDirNames.size()-1; i++) {
+		if (!output_directory.mkdir(subDirNames[i+1])) {
+			qDebug() << "ERROR WHILE CREATING " << subDirNames[i+1];
 			return false;
 		} else {
-			output_directory.cd(subDirNames[i]);
+			output_directory.cd(subDirNames[i+1]);
 			fileDirs[i] =  new QDir(output_directory.absolutePath());
 			output_directory.cdUp();
 		}

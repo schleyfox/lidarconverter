@@ -20,8 +20,9 @@ void Segment::setSegmentNumber(int i) {
 }
 
 QString Segment::segmentName() {
-	return QString("%1-%2").arg(dataSource()->filename()).arg(
-			segmentNumber());
+	QString s = dataSource()->filename();
+	s.chop(4);
+	return QString("%1-%2").arg(s).arg(segmentNumber());
 }
 
 

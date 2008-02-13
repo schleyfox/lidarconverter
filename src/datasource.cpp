@@ -21,11 +21,14 @@ DataSource::DataSource(QString filename) {
 QVector<Segment> DataSource::segment() {
 	QVector<Segment> segments;
 	QVectorIterator<DataPoint*> i(data_ary);
+	int j = 0;
 
 	while(i.hasNext()) {
 		Segment s(this);
 		while(i.hasNext() && s.appendOrStop(i.next()));
+		s.setSegmentNumber(j);
 		segments.append(s);
+		j++;
 	}
 
 	return segments;

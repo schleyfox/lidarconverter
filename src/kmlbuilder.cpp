@@ -4,6 +4,7 @@ KMLBuilder::KMLBuilder(QDir output_dir, QDir image_dir) {
 	output_directory = output_dir;
 	image_directory = image_dir;
 	
+	fileDirs["root"] = new QDir(output_dir);
 	readTemplates();
 	createDirectories();
 
@@ -47,14 +48,14 @@ bool KMLBuilder::readTemplates() {
  * This function creates the directories where the files will be stored.
  */
 bool KMLBuilder::createDirectories() {
-	subDirNames << "" << "ge_files" << "models" << "images";
-	for(int i = 0; i < subDirNames.size()-1; i++) {
-		if (!output_directory.mkdir(subDirNames[i+1])) {
-			qDebug() << "ERROR WHILE CREATING " << subDirNames[i+1];
+	subDirNames << "ge_files" << "models" << "images";
+	for(int i = 0; i < subDirNames.size(); i++) {
+		if (!output_directory.mkdir(subDirNames[i])) {
+			qDebug() << "ERROR WHILE CREATING " << subDirNames[i];
 			return false;
 		} else {
-			output_directory.cd(subDirNames[i+1]);
-			fileDirs[i] =  new QDir(output_directory.absolutePath());
+			output_directory.cd(subDirNames[i]);
+			fileDirs[subDirNames.at(i)] =  new QDir(output_directory.absolutePath());
 			output_directory.cdUp();
 		}
 	}	
@@ -70,13 +71,13 @@ bool KMLBuilder::generateFiles(QVector<Segment> segments) {
 	kml *kmlFile;
 	collada *colladaFile;
 	netlink *netlinkFile;
-	netlinkFile = new netlink(fileDirs[ROOT], templates["header"],
+	netlinkFile = new netlink(fileDirs["root"], templates["header"],
 		templates["network_link"], templates["footer"]);
 	for(int i = 0; i < segments.size(); i++) {	
 		if ((c = readSegment(segments.at(i))) == NULL)
 			return 0;
-		kmlFile = new kml(fileDirs[GEFILES], c, templates["kml"]);
-		colladaFile = new collada(fileDirs[MODELS], c,
+		kmlFile = new kml(fileDirs["ge_files"], c, templates["kml"]);
+		colladaFile = new collada(fileDirs["models"], c,
 			templates["collada"]);
 		netlinkFile->addLink(c);
 		delete kmlFile;
@@ -109,7 +110,7 @@ container* KMLBuilder::readSegment(Segment s) {
 /*
  * Move the images to the images folder.
  */
-bool KMLBuilder::relocateImages()
+/*bool KMLBuilder::relocateImages()
 {
 	bool status = 1;
 	QStringList filters;
@@ -134,5 +135,5 @@ bool KMLBuilder::relocateImages()
 	}
 
 	return status;
-}
+}*/
 

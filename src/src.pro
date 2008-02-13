@@ -17,6 +17,7 @@ HEADERS += common.h \
 	   curvetransform.h \
 	   calipsol1datasource.h \
 	   calipsocolormap.h \
+	   kmlbuilder.h \
 	   kml/collada.h \
 	   kml/container.h \
 	   kml/kml.h \
@@ -29,6 +30,6 @@ SOURCES += datasource.cpp \
 	   curvetransform.cpp \
 	   calipsol1datasource.cpp \
 	   calipsocolormap.cpp \
-	   kml/kmlbuilder.cpp
+	   kmlbuilder.cpp
 
 RESOURCES += kml/kml.qrc

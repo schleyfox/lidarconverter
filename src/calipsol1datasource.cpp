@@ -22,6 +22,7 @@ bool CalipsoL1DataSource::read() {
 	for(int i = 0; i < dims[0]; i++) {
 		float* dp_ary = new float[dataProperties().height];
 		float* column = tab_array[i];
+		column += 80;
 		//crop array bounds to [298] - [698]
 		for(int j = 0; j < 200; j++)  {
 			dp_ary[(2*j)+1] = dp_ary[2*j] = column[j];

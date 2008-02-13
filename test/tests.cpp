@@ -8,6 +8,7 @@
 #include "testhelper.h"
 #include "lcolorlookup.h"
 #include "curvetransform.h"
+#include "calipsocolormap.h"
 
 class LidarConverterTests : public QObject {
 	Q_OBJECT 
@@ -152,13 +153,8 @@ class LidarConverterTests : public QObject {
 	}
 
 	void CurveTransform_transform() {
-		QMap<float, uint> cm;
-		cm[-1.0e-6] = qRgba(255,255,255,255);
-		cm[1.0e-6] = qRgba(255,255,255,255);
 		
-		LColorLookup* lut = new LColorLookup;
-		lut->setColorMap(cm);
-		lut->compile();
+		LColorLookup* lut = makeCalipsoColorMap();
 
 		CalipsoL1DataSource *ds =
 	    		new CalipsoL1DataSource("calipsol1test.hdf");

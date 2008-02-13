@@ -162,8 +162,11 @@ class LidarConverterTests : public QObject {
 		QCOMPARE(ds->data().size(), 56175);
 		QVector<Segment> segments = ds->segment();
 		qDebug() << segments.size() << " segments";
-		CurveTransform ct(segments.at(151), lut);
-		QVERIFY(ct.transform().save("test.png", "PNG"));
+		for(int i = 0; i < segments.size(); i++) {
+			CurveTransform ct(segments.at(i), lut);
+			QVERIFY(ct.transform().save(
+				QString("images/test%1.png").arg(i), "PNG"));
+		}
 		QVERIFY(segments.size() > 0);
 	}
 

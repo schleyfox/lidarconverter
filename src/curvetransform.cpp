@@ -42,6 +42,7 @@ CurveTransform::CurveTransform(Segment s, LColorLookup* lut){
 	width = (2*width_x)+ convertHCoord(c1);
 
 	out_image = QImage((int)ceil(width), (int)ceil(height), QImage::Format_ARGB32); 
+	out_image.fill(0);
 	
 	std::cout << "H: " << height << " W: " << width << " Theta " << theta << " Altitude " << altitude << " DropFactor " << drop_factor << std::endl;
 }
@@ -83,7 +84,7 @@ CartesianPair CurveTransform::convertToPixels(CartesianPair coords) {
 void CurveTransform::drawPixels(CartesianPair coords, CartesianPair source) {
 	//bounds check
 	if(coords.x < out_image.width() && coords.y < out_image.height() && coords.x >= 0 && coords.y >= 0) {
-		out_image.setPixel((int)coords.x, (int)(height - coords.y), 
+		out_image.setPixel((int)(width - coords.x), (int)(height - coords.y), 
 				lut->colorify(segment.at((int)source.x)->data()[(int)image_height - (int)source.y]));
 	} else {
 		std::cerr << "ERROR: Out of bounds pixel coordinate (" << coords.x << ", " << coords.y << ")." << std::endl;

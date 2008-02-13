@@ -1,6 +1,7 @@
 #ifndef KMLBUILDER_H
 #define KMLBUILDER_H
 #include "common.h"
+#include "segment.h"
 #include "kml/container.h"
 #include "kml/kml.h"
 #include "kml/collada.h"
@@ -26,8 +27,6 @@ class KMLBuilder {
 	QStringList templates;
 	QList<QDir*> fileDirs;
 	QString filePath;
-	QStringList subDirName;
+	QStringList subDirNames;
 };
-
-
-
+#endif

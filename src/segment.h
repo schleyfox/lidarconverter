@@ -20,6 +20,12 @@ class Segment : public QVector<DataPoint*> {
 		return m_datasource;
 	}
 
+	DataPoint* midpoint();
+
+	int segmentNumber();
+	void setSegmentNumber(int i);
+	QString segmentName();
+
 	//CTM Section 2.1.2
 	Angle heading() const;
 	static Angle longitudeDifference(DataPoint* start, DataPoint* end);
@@ -42,6 +48,7 @@ class Segment : public QVector<DataPoint*> {
 	
 
 	protected:
+	int m_segnum;
 	DataSource* m_datasource;
 	double partition_threshold;
 

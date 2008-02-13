@@ -11,6 +11,20 @@ Segment::Segment(DataSource* datasource) : QVector<DataPoint*>() {
 	partition_threshold = 0.35;
 }
 
+int Segment::segmentNumber() {
+	return m_segnum;
+}
+
+void Segment::setSegmentNumber(int i) {
+	m_segnum = i;
+}
+
+QString Segment::segmentName() {
+	return QString("%1-%2").arg(dataSource()->filename()).arg(
+			segmentNumber());
+}
+
+
 Angle Segment::heading() const {
 	if(size() == 0) {
 		return Angle::Radians(0);
@@ -18,6 +32,13 @@ Angle Segment::heading() const {
 	return heading(first(), last());
 }
 
+/**
+ * Returns the midpoint of the segment
+ */
+DataPoint* Segment::midpoint() {
+	int mid = (int)floor((double)size()/2.0);
+	return at(mid);
+}
 
 /**
  * CTM Section 2.1.2

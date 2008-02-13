@@ -105,12 +105,6 @@ class LidarConverterTests : public QObject {
 		qDebug() << segments.size() << " segments";
 		QVERIFY(segments.size() > 0);
 
-		QVector < DataPoint * >segment_path;
-		for (int i = 0; i < segments.size(); i++) {
-			segment_path << segments.at(i).first();
-			segment_path << segments.at(i).last();
-		}
-		Helper::makeKMLPath(segment_path, "kml/calipsol1test-segment.kml");
 		delete ds;
 	}
 
@@ -162,7 +156,8 @@ class LidarConverterTests : public QObject {
 		QCOMPARE(ds->data().size(), 56175);
 		QVector<Segment> segments = ds->segment();
 		qDebug() << segments.size() << " segments";
-		for(int i = 0; i < segments.size(); i++) {
+		//5 segments should be enough
+		for(int i = 0; i < 5; i++) {
 			CurveTransform ct(segments.at(i), lut);
 			QVERIFY(ct.transform().save(
 				QString("images/test%1.png").arg(i), "PNG"));

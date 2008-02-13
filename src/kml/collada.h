@@ -14,24 +14,23 @@
 class collada
 {
 	public:
-		collada(QDir* d, container* c, const QString* t);
+		collada(QDir* d, container* c, const QString t);
 		~collada();
 	private:
 		void applyGeometries();
 		bool writeFile();
-		QString* templateFile;
+		QString templateFile;
 		container ctr;
 		QDir dir;
 };
 
-collada::collada(QDir* d, container* c, const QString* t)
+collada::collada(QDir* d, container* c, const QString t)
 {
-	templateFile = new QString(*t);
+	templateFile = QString(t);
 	dir = *d;
 	ctr = *c;
 	applyGeometries();
 	writeFile();
-	delete templateFile;
 }
 
 collada::~collada() {}
@@ -53,11 +52,11 @@ void collada::applyGeometries()
 		(ctr.width - ctr.altitude));
 	geometry.append(str);
 	
-	templateFile->replace("#GEOM$", geometry);
-	templateFile->replace("#NAME$", ctr.name);
-	templateFile->replace("#TIME$",
+	templateFile.replace("#GEOM$", geometry);
+	templateFile.replace("#NAME$", ctr.name);
+	templateFile.replace("#TIME$",
 		QString(QTime::currentTime().toString("hh:mm:ss")));
-	templateFile->replace("#DATE$",
+	templateFile.replace("#DATE$",
 		QString(QDate::currentDate().toString("yyyy-MM-dd")));
 }
 
@@ -68,7 +67,7 @@ bool collada::writeFile()
 	if (!file.open(QIODevice::WriteOnly))
 		return 0;
 	QTextStream stream(&file);
-	stream << *templateFile << endl;
+	stream << templateFile << endl;
 
 	file.close();
 

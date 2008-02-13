@@ -1,6 +1,6 @@
 #include "kmlbuilder.h"
 
-KMLBuilder::KMLBuilder(QDir output_dir, QDir image_directory) {
+KMLBuilder::KMLBuilder(QDir output_dir, QDir image_dir) {
 	output_directory = output_dir;
 	image_directory = image_dir;
 	
@@ -14,7 +14,8 @@ KMLBuilder::KMLBuilder(QDir output_dir, QDir image_directory) {
  * operations.
  */
 bool KMLBuilder::readTemplates() {
-	templateNames <<  ":/kml_template.template" <<
+	QStringList templateNames;
+       templateNames <<  ":/kml_template.template" <<
 			  ":/collada_template.template" <<
   			  ":/network_link_template.template" <<
 			  ":/header_template.template" <<
@@ -24,7 +25,7 @@ bool KMLBuilder::readTemplates() {
 		QFile readFile(templateNames.at(i));
 		
 		if (!readFile.exists()) {
-			qDebug() << templateNames[i] << "\a DOES NOT EXIST "
+			qDebug() << templateNames[i] << "\a DOES NOT EXIST ";
 			return false;
 		} 
 		if (!readFile.open(QIODevice::ReadOnly)) {
@@ -48,13 +49,13 @@ bool KMLBuilder::readTemplates() {
 bool KMLBuilder::createDirectories() {
 	subDirNames << "ge_files" << "models" << "images";
 	for(int i = 0; i < subDirNames.size(); i++) {
-		if (!output_directory->mkdir(subDirName[i])) {
-			qDebug() << "ERROR WHILE CREATING " << subDirName[i];
+		if (!output_directory.mkdir(subDirNames[i])) {
+			qDebug() << "ERROR WHILE CREATING " << subDirNames[i];
 			return false;
 		} else {
-			output_directory>cd(subDirName[i+1]);
-			fileDirs << new QDir(output_directory->absolutePath());
-			output_directory->cdUp();
+			output_directory.cd(subDirNames[i]);
+			fileDirs << new QDir(output_directory.absolutePath());
+			output_directory.cdUp();
 		}
 	}	
 
@@ -69,13 +70,13 @@ bool KMLBuilder::generateFiles(QVector<Segment> segments) {
 	kml *kmlFile;
 	collada *colladaFile;
 	netlink *netlinkFile;
-	netlinkFile = new netlink(fileDir[ROOT], templates[HEAD],
+	netlinkFile = new netlink(fileDirs[ROOT], templates[HEAD],
 		templates[NETLINK], templates[FOOT]);
 	for(int i = 0; i < segments.size(); i++) {	
 		if ((c = readSegment(segments.at(i))) == NULL)
 			return 0;
-		kmlFile = new kml(fileDir[GEFILES], c, templates[KML]);
-		colladaFile = new collada(fileDir[MODELS], c,
+		kmlFile = new kml(fileDirs[GEFILES], c, templates[KML]);
+		colladaFile = new collada(fileDirs[MODELS], c,
 			templates[COLLADA]);
 		netlinkFile->addLink(c);
 		delete kmlFile;
@@ -97,8 +98,8 @@ container* KMLBuilder::readSegment(Segment s) {
 	c->endLong = s.last()->lon().degs();
 	c->midLat = s.midpoint()->lat().degs();
 	c->midLong = s.midpoint()->lon().degs();
-	c->heading = s.heading();
-	c->altitude s.altitude();
+	c->heading = s.heading().degs();
+	c->altitude = s.droppingDistance();
 	c->width = s.width();
 	c->length = s.length();	
 	c->name = s.segmentName();
@@ -114,8 +115,8 @@ bool KMLBuilder::relocateImages()
 	QStringList filters;
 	filters << "*.png";
 
-	fileDir[ROOT]->setNameFilters(filters);
-	QDirIterator iterator(*fileDir[ROOT]);
+	fileDirs[ROOT]->setNameFilters(filters);
+	QDirIterator iterator(*fileDirs[ROOT]);
 	QFile *file;
 	QString *name;
 
@@ -124,9 +125,9 @@ bool KMLBuilder::relocateImages()
 		file = new QFile(iterator.next());
 		name = new QString(file->fileName());
 		name->remove(0, 
-		     name->lastIndexOf(QString(fileDir[ROOT]->separator()))+1);
-		status = file->copy(fileDir[IMAGES]->absolutePath() +
-			fileDir[IMAGES]->separator() + *name);
+		     name->lastIndexOf(QString(fileDirs[ROOT]->separator()))+1);
+		status = file->copy(fileDirs[IMAGES]->absolutePath() +
+			fileDirs[IMAGES]->separator() + *name);
 		file->remove();
 		delete file;
 		delete name;

@@ -17,19 +17,20 @@ bool CalipsoL1DataSource::read() {
 	delete tab;
 	delete lon;
 	delete lat;
-
+	
+	//fucking data is upside down
 	for(int i = 0; i < dims[0]; i++) {
 		float* dp_ary = new float[dataProperties().height];
 		float* column = tab_array[i];
-		//crop array bounds to [8] - [298]
-		column += 8;
-		memcpy(dp_ary, column, 290*sizeof(float));
 		//crop array bounds to [298] - [698]
-		column += 200;
-		float* dp_ary2 = dp_ary + 290;
 		for(int j = 0; j < 200; j++)  {
-			dp_ary2[(2*j)+1] = dp_ary2[2*j] = column[j];
+			dp_ary[(2*j)+1] = dp_ary[2*j] = column[j];
 		}
+		
+		float* dp_ary2 = dp_ary + 400;
+		column += 200;
+		//crop array bounds to [8] - [298]
+		memcpy(dp_ary2, column, 290*sizeof(float));
 			
 		
 		DataPoint* dp = new DataPoint;

@@ -48,15 +48,16 @@ bool KMLBuilder::readTemplates() {
  * This function creates the directories where the files will be stored.
  */
 bool KMLBuilder::createDirectories() {
-	subDirNames << "ge_files" << "models" << "images";
-	for(int i = 0; i < subDirNames.size(); i++) {
-		if (!output_directory.mkdir(subDirNames[i])) {
+	subDirNames << "root" << "ge_files" << "models" << "images";
+	for(int i = 1; i < subDirNames.size(); i++) {
+		if (!fileDirs[subDirNames.at(i-1)]->mkdir(subDirNames[i])) {
 			qDebug() << "ERROR WHILE CREATING " << subDirNames[i];
 			return false;
 		} else {
-			output_directory.cd(subDirNames[i]);
-			fileDirs[subDirNames.at(i)] =  new QDir(output_directory.absolutePath());
-			output_directory.cdUp();
+			fileDirs[subDirNames.at(i-1)]->cd(subDirNames[i]);
+			fileDirs[subDirNames.at(i)] =  new QDir(fileDirs[subDirNames.at(i-1)]->absolutePath());
+			qDebug() << fileDirs[subDirNames.at(i)]->absolutePath();
+			fileDirs[subDirNames.at(i-1)]->cdUp();
 		}
 	}	
 
@@ -99,7 +100,7 @@ container* KMLBuilder::readSegment(Segment s) {
 	c->endLong = s.last()->lon().degs();
 	c->midLat = s.midpoint()->lat().degs();
 	c->midLong = s.midpoint()->lon().degs();
-	c->heading = s.heading().degs();
+	c->heading = -1.0*s.heading().degs();
 	c->altitude = s.droppingDistance();
 	c->width = s.width();
 	c->length = s.length();	

@@ -15,14 +15,14 @@ KMLBuilder::KMLBuilder(QDir output_dir, QDir image_dir) {
  */
 bool KMLBuilder::readTemplates() {
 	QStringList templateNames;
-       templateNames <<  ":/kml_template.template" <<
-			  ":/collada_template.template" <<
-  			  ":/network_link_template.template" <<
-			  ":/header_template.template" <<
-			  ":/footer_template.template";
+	templateNames <<  "kml" <<
+			  "collada" <<
+  			  "network_link" <<
+			  "header" <<
+			  "footer";
 	
 	for (int i = 0; i < templateNames.size(); i++) {
-		QFile readFile(templateNames.at(i));
+		QFile readFile(QString(":/%1_template.template").arg(templateNames.at(i)));
 		
 		if (!readFile.exists()) {
 			qDebug() << templateNames.at(i) << "\a DOES NOT EXIST ";
@@ -36,7 +36,7 @@ bool KMLBuilder::readTemplates() {
 		
 		QTextStream in(&readFile);
 		
-		templates[i] = in.readAll();
+		templates[templateNames.at(i)] = in.readAll();
 		readFile.close();
 	}
 	
@@ -70,14 +70,14 @@ bool KMLBuilder::generateFiles(QVector<Segment> segments) {
 	kml *kmlFile;
 	collada *colladaFile;
 	netlink *netlinkFile;
-	netlinkFile = new netlink(fileDirs[ROOT], templates[HEAD],
-		templates[NETLINK], templates[FOOT]);
+	netlinkFile = new netlink(fileDirs[ROOT], templates["header"],
+		templates["network_link"], templates["footer"]);
 	for(int i = 0; i < segments.size(); i++) {	
 		if ((c = readSegment(segments.at(i))) == NULL)
 			return 0;
-		kmlFile = new kml(fileDirs[GEFILES], c, templates[KML]);
+		kmlFile = new kml(fileDirs[GEFILES], c, templates["kml"]);
 		colladaFile = new collada(fileDirs[MODELS], c,
-			templates[COLLADA]);
+			templates["collada"]);
 		netlinkFile->addLink(c);
 		delete kmlFile;
 		delete c;

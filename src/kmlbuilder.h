@@ -24,8 +24,8 @@ class KMLBuilder {
 
 	QDir output_directory, image_directory;
 
-	QHash<int, QString> templates;
-	QHash<int, QDir*> fileDirs;
+	QHash<QString, QString> templates;
+	QHash<QString, QDir*> fileDirs;
 	QString filePath;
 	QStringList subDirNames;
 };

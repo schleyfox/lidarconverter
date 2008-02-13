@@ -25,11 +25,11 @@ bool KMLBuilder::readTemplates() {
 		QFile readFile(templateNames.at(i));
 		
 		if (!readFile.exists()) {
-			qDebug() << templateNames[i] << "\a DOES NOT EXIST ";
+			qDebug() << templateNames.at(i) << "\a DOES NOT EXIST ";
 			return false;
 		} 
 		if (!readFile.open(QIODevice::ReadOnly)) {
-			qDebug() << templateNames[i] << "\a I/O "
+			qDebug() << templateNames.at(i) << "\a I/O "
 				<< "ERROR";
 			return false;
 		} 
@@ -54,7 +54,7 @@ bool KMLBuilder::createDirectories() {
 			return false;
 		} else {
 			output_directory.cd(subDirNames[i]);
-			fileDirs << new QDir(output_directory.absolutePath());
+			fileDirs[i] =  new QDir(output_directory.absolutePath());
 			output_directory.cdUp();
 		}
 	}	

@@ -9,6 +9,7 @@
 #include "lcolorlookup.h"
 #include "curvetransform.h"
 #include "calipsocolormap.h"
+#include "kmlbuilder.h"
 
 class LidarConverterTests : public QObject {
 	Q_OBJECT 
@@ -163,6 +164,8 @@ class LidarConverterTests : public QObject {
 				QString("images/test%1.png").arg(i), "PNG"));
 		}
 		QVERIFY(segments.size() > 0);
+		KMLBuilder builder(QDir("./kmlbuilder/"), QDir("."));
+		builder.generateFiles(segments);
 	}
 
 

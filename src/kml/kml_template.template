@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://earth.google.com/kml/2.1'>
+
+<Document>
+	 <LookAt>
+		<heading>0</heading>
+		<tilt>69</tilt>
+		<latitude>#LAT$</latitude>
+		<longitude>#LONG$</longitude>
+		<range>160000</range>
+		<altitude>20000</altitude>
+ 	</LookAt>
+  	<Placemark>
+		<name>#NAME$</name>
+		<description><![CDATA[]]></description>
+		<Style id='default'>
+		</Style>
+		<Model>
+			<altitudeMode>relativeToGround</altitudeMode>
+				<Location>
+					<longitude>#LONG$</longitude>
+					<latitude>#LAT$</latitude>
+					<altitude>0</altitude>
+				</Location>
+				<Orientation>
+					<heading>#HEAD$</heading>
+					<tilt>0</tilt>
+					<roll>0</roll>
+				</Orientation>
+				<Scale>
+					<x>1</x>
+					<y>1</y>
+					<z>1</z>
+				</Scale>
+				<Link>
+					<href>models/#NAME$.dae</href>
+				</Link>
+		</Model>
+	  </Placemark>
+  </Document>
+
+</kml>

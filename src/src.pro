@@ -5,7 +5,7 @@
 TEMPLATE = lib 
 TARGET = ../bin/lidarconverter
 DEPENDPATH += .
-INCLUDEPATH += . /usr/include/hdf
+INCLUDEPATH += . ./kml /usr/include/hdf
 
 LIBS += -lmfhdf -ldf -ljpeg -lz
 # Input
@@ -16,7 +16,11 @@ HEADERS += common.h \
 	   lcolorlookup.h \
 	   curvetransform.h \
 	   calipsol1datasource.h \
-	   calipsocolormap.h
+	   calipsocolormap.h \
+	   kml/collada.h \
+	   kml/container.h \
+	   kml/kml.h \
+	   kml/netlink.h
 SOURCES += datasource.cpp \
 	   helper.cpp \
 	   segment.cpp \
@@ -24,4 +28,7 @@ SOURCES += datasource.cpp \
 	   common.cpp \
 	   curvetransform.cpp \
 	   calipsol1datasource.cpp \
-	   calipsocolormap.cpp
+	   calipsocolormap.cpp \
+	   kml/kmlbuilder.cpp
+
+RESOURCES += kml/kml.qrc

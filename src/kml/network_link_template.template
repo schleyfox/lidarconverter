@@ -1,0 +1,7 @@
+<NetworkLink>
+	
+        <name>#NAME$</name>
+
+	<Link><href>ge_files/#NAME$.kml</href></Link>
+
+</NetworkLink>

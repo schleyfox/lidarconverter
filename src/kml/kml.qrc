@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+<file>collada_template.template</file>
+<file>footer_template.template</file>
+<file>header_template.template</file>
+<file>kml_template.template</file>
+<file>network_link_template.template</file>
+</qresource>
+</RCC>

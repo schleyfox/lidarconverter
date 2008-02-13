@@ -91,7 +91,7 @@ QVector< QPair<Angle,Angle> > Helper::makeStraightLineCoordinates(
 		double heading, double spacing, int n) {
 	QVector< QPair<Angle,Angle> > coords;
 	Angle A, B, C, a, b, c;
-	C = Angle::Degrees(-1.0 * heading);
+	C = Angle::Degrees(heading);
 	b = Angle::Degrees(90.0 - init_lat);
 
 	for(int i = 0; i < n; i++) {

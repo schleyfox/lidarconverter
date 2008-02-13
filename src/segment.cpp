@@ -79,6 +79,10 @@ Angle Segment::heading(DataPoint* start, DataPoint* end){
 		C = Angle::Degrees(180 - C.degs() );
 	}
 
+	//We actually find heading counterclockwise from the meridian
+	//Correct this by negating
+	C = Angle::Radians(C.rads()*-1.0);
+
 	return C;
 }
 

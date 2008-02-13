@@ -21,7 +21,7 @@ class LidarConverterTests : public QObject {
 		DataPoint *mecca = new DataPoint;
 		mecca->setLat(21.26); mecca->setLon(39.49);
 		QCOMPARE(fuzzy_round(Segment::heading(jakarta, mecca).degs(), 2)
-				, fuzzy_round(Angle::Degrees(65.04).degs(), 2));
+				, fuzzy_round(Angle::Degrees(-65.04).degs(), 2));
 
 	
 		//Cape Town to Beijing
@@ -30,10 +30,10 @@ class LidarConverterTests : public QObject {
 		DataPoint *beijing = new DataPoint;
 		beijing->setLat(39.55); beijing->setLon(116.26);
 		QCOMPARE(fuzzy_round(Segment::heading(cape_town, beijing).degs()
-			, 2), fuzzy_round(Angle::Degrees(-58.31).degs(), 2));
+			, 2), fuzzy_round(Angle::Degrees(58.31).degs(), 2));
 		Segment cape_town_to_beijing = DRAW_TEST_LINE(cape_town, beijing);
 		QCOMPARE(fuzzy_round(cape_town_to_beijing.heading().degs(), 2),
-			fuzzy_round(Angle::Degrees(-58.31).degs(), 2));
+			fuzzy_round(Angle::Degrees(58.31).degs(), 2));
 
 
 		//Oslo to Brussels
@@ -43,21 +43,21 @@ class LidarConverterTests : public QObject {
 		brussels->setLat(50.85); brussels->setLon(4.35);
 		Segment oslo_to_brussels = DRAW_TEST_LINE(oslo, brussels);
 		QCOMPARE(fuzzy_round(oslo_to_brussels.heading().degs(), 2),
-		  fuzzy_round(Angle::Degrees(155.51).degs(), 2));
+		  fuzzy_round(Angle::Degrees(-155.51).degs(), 2));
 
 		//Oslo to Douglas
 		DataPoint *douglas = new DataPoint;
 		douglas->setLat(54.14521); douglas->setLon(-4.48172);
 		Segment oslo_to_douglas = DRAW_TEST_LINE(oslo, douglas);
 		QCOMPARE(fuzzy_round(oslo_to_douglas.heading().degs(), 2),
-		  fuzzy_round(Angle::Degrees(118.35).degs(), 2));
+		  fuzzy_round(Angle::Degrees(-118.35).degs(), 2));
 
 		//Douglas to Almaty
 		DataPoint *almaty = new DataPoint;
 		almaty->setLat(43.2775); almaty->setLon(76.8958);
 		Segment douglas_to_almaty = DRAW_TEST_LINE(douglas, almaty);
 		QCOMPARE(fuzzy_round(douglas_to_almaty.heading().degs(), 2),
-		  fuzzy_round(Angle::Degrees(-66.49).degs(), 2));
+		  fuzzy_round(Angle::Degrees(66.49).degs(), 2));
 
 		//Longyearbyen to Qaanaaq
 		DataPoint *longyearbyen = new DataPoint;
@@ -67,7 +67,7 @@ class LidarConverterTests : public QObject {
 		Segment longyearbyen_to_qaanaaq =
 			DRAW_TEST_LINE(longyearbyen, qaanaaq);
 		QCOMPARE(fuzzy_round(longyearbyen_to_qaanaaq.heading().degs(), 2),
-		  fuzzy_round(Angle::Degrees(50.11).degs(), 2));
+		  fuzzy_round(Angle::Degrees(-50.11).degs(), 2));
 
 	//Mt. Erebus to Montagu Island
 	//Fails miserably
@@ -122,11 +122,11 @@ class LidarConverterTests : public QObject {
 
 		//Jakarta to Mecca      
 		QVERIFY(segments.first().size() > 0);
-		QCOMPARE((int) segments.first().heading().degs() * 100, (int) Angle::Degrees(65.04).degs() * 100);	//fuck doubles
+		QCOMPARE((int) segments.first().heading().degs() * 100, (int) Angle::Degrees(-65.04).degs() * 100);	//fuck doubles
 
 		//Mecca to Izmir
 		QVERIFY(segments.last().size() > 0);
-		QCOMPARE((int) segments.last().heading().degs() * 100, (int) Angle::Degrees(29.5).degs() * 100);	//fuck doubles
+		QCOMPARE((int) segments.last().heading().degs() * 100, (int) Angle::Degrees(-29.5).degs() * 100);	//fuck doubles
 	}
 
 	void LColorLookup_colorify() {

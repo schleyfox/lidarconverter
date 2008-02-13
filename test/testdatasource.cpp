@@ -16,7 +16,7 @@ bool TestDataSource::read() {
 	data_ary = Helper::makeStraightLineDataPoints(
 			-6.08, //Latitude of Jakarta
 			106.45, //Longitude of Jakarta
-			65.04, //heading from Jakarta to Mecca
+			-65.04, //heading from Jakarta to Mecca
 			dataProperties().h_res,
 			data_temp,
 			(int)ceil(7912000.0/dataProperties().h_res));
@@ -30,7 +30,7 @@ bool TestDataSource::read() {
 	data_ary += Helper::makeStraightLineDataPoints(
 			21.254, //Latitude of Mecca
 			39.5114, //Longitude of Mecca
-			29.0, //heading from Mecca to Izmir
+			-29.0, //heading from Mecca to Izmir
 			dataProperties().h_res,
 			data_temp,
 			(int)ceil(2252400.0/dataProperties().h_res));

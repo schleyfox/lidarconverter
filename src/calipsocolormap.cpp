@@ -37,7 +37,7 @@ LColorLookup* makeCalipsoColorMap() {
 	double f;	
 	for(i = 0; i < numColors; i++)	
 	{
-		f = rangeIndexRunningSum[i] / (rangeIndexSum[rangeIndex[i]]);
+		f = (double)rangeIndexRunningSum[i] / ((double)rangeIndexSum[rangeIndex[i]]);
 		range = dataRange[rangeIndex[i]]*(1-f) + dataRange[rangeIndex[i]+1]*f;
 		red   = r[rangeIndex[i]]*(1-f) + r[rangeIndex[i]+1]*f;
 		green = g[rangeIndex[i]]*(1-f) + g[rangeIndex[i]+1]*f;

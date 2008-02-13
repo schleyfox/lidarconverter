@@ -16,8 +16,10 @@ uint LColorLookup::colorify(float data, CLUTNode* node) {
 
 void LColorLookup::compile() {
 	//Pad to Infinity
-	m_colormap[NEGINF] = m_colormap.values().first();
-	m_colormap[INF] = m_colormap.values().last();
+	uint neginf_col = m_colormap.values().first();
+	m_colormap[NEGINF] = neginf_col;
+	uint inf_col = m_colormap.values().last();
+	m_colormap[INF] = inf_col;
 	
 	QList<float> keys = m_colormap.keys();
 	QList<uint> values = m_colormap.values();

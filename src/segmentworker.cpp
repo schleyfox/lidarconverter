@@ -1,5 +1,4 @@
 #include "segmentworker.h"
-#include "kmlbuilder.h"
 
 void SegmentWorker::run() {
 	LColorLookup* lut = makeCalipsoColorMap();
@@ -9,6 +8,4 @@ void SegmentWorker::run() {
 			QString("images/%1.png").arg(
 				m_segments.at(i).segmentName()), "PNG");
 	}
-	KMLBuilder builder(QDir("./kmlbuilder/"), QDir("./images/"));
-	builder.generateFiles(m_segments);
 }

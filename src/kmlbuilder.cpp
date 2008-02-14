@@ -53,7 +53,8 @@ bool KMLBuilder::readTemplates() {
 bool KMLBuilder::createDirectories() {
 	subDirNames << "root" << "ge_files" << "models" << "images";
 	for(int i = 1; i < subDirNames.size(); i++) {
-		if (!fileDirs[subDirNames.at(i-1)]->mkdir(subDirNames[i])) {
+		if (!fileDirs[subDirNames.at(i-1)]->exists(subDirNames.at(i)) &&
+					!fileDirs[subDirNames.at(i-1)]->mkdir(subDirNames[i])) {
 			qDebug() << "ERROR WHILE CREATING " << subDirNames[i];
 			return false;
 		} else {

@@ -151,7 +151,6 @@ class LidarConverterTests : public QObject {
 
 	void CurveTransform_transform() {
 		
-		LColorLookup* lut = makeCalipsoColorMap();
 
 		CalipsoL1DataSource *ds =
 	    		new CalipsoL1DataSource("calipsol1test.hdf");
@@ -174,7 +173,7 @@ class LidarConverterTests : public QObject {
 			for(int j = 0; j < div; j++) {
 				sw.at(i)->addSegment(x.next());
 			}
-			sw.at(0)->start();
+			sw.at(i)->start();
 		}
 		
 		QVERIFY(segments.size() > 0);
@@ -189,6 +188,8 @@ class LidarConverterTests : public QObject {
 			if(quit == true)
 				break;
 		}
+		KMLBuilder builder(QDir("./kmlbuilder"), QDir("./images"));
+		builder.generateFiles(segments);
 	}
 
 

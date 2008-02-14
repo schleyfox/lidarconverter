@@ -1,4 +1,8 @@
 #include "kmlbuilder.h"
+#include "kml/container.h"
+#include "kml/kml.h"
+#include "kml/collada.h"
+#include "kml/netlink.h"
 
 KMLBuilder::KMLBuilder(QDir output_dir, QDir image_dir) {
 	output_directory = output_dir;

@@ -10,6 +10,8 @@
 #include "curvetransform.h"
 #include "calipsocolormap.h"
 #include "kmlbuilder.h"
+#include "segmentworker.h"
+#include <unistd.h>
 
 class LidarConverterTests : public QObject {
 	Q_OBJECT 
@@ -157,15 +159,36 @@ class LidarConverterTests : public QObject {
 		QCOMPARE(ds->data().size(), 56175);
 		QVector<Segment> segments = ds->segment();
 		qDebug() << segments.size() << " segments";
-		//5 segments should be enough
-		for(int i = 0; i < segments.size(); i++) {
-			CurveTransform ct(segments.at(i), lut);
-			QVERIFY(ct.transform().save(
-				QString("images/%1.png").arg(segments.at(i).segmentName()), "PNG"));
+		QVector<SegmentWorker*> sw;
+		sw.resize(QThread::idealThreadCount());
+
+		int div = (int)floor((double)segments.size()
+				/(double)sw.size());
+		qDebug() << "Segments per thread: " << div;
+		qDebug() << "Number of Threads: " << sw.size();
+		QVectorIterator<Segment> x(segments);
+		for(int i = 0; i < sw.size(); i++) {
+			sw[i] = new SegmentWorker;
+			if(i == sw.size()-1)
+				div = segments.size()-((sw.size()-1)*div);
+			for(int j = 0; j < div; j++) {
+				sw.at(i)->addSegment(x.next());
+			}
+			sw.at(0)->start();
 		}
+		
 		QVERIFY(segments.size() > 0);
-		KMLBuilder builder(QDir("./kmlbuilder/"), QDir("./images/"));
-		builder.generateFiles(segments);
+		while(true) {
+			sleep(2);
+			bool quit = true;
+			for(int i = 0; i < sw.size(); i++) {
+				if(sw.at(i)->isRunning())
+					quit = false;
+			}
+			qDebug("Spinning");
+			if(quit == true)
+				break;
+		}
 	}
 
 

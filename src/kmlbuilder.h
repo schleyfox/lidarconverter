@@ -2,10 +2,8 @@
 #define KMLBUILDER_H
 #include "common.h"
 #include "segment.h"
-#include "kml/container.h"
-#include "kml/kml.h"
-#include "kml/collada.h"
-#include "kml/netlink.h"
+
+class container;
 
 class KMLBuilder {
 	public:
@@ -18,9 +16,6 @@ class KMLBuilder {
 	bool relocateImages();
 	
 	container* readSegment(Segment s);
-
-	enum templateNameID { KML = 0, COLLADA, NETLINK, HEAD, FOOT };
-	enum subDirectories { ROOT = 0, GEFILES, MODELS, IMAGES };
 
 	QDir output_directory, image_directory;
 

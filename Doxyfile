@@ -28,7 +28,7 @@ FULL_PATH_NAMES        = YES
 STRIP_FROM_PATH        = /home/ben/projects/lidarconverter/
 STRIP_FROM_INC_PATH    = 
 SHORT_NAMES            = NO
-JAVADOC_AUTOBRIEF      = NO
+JAVADOC_AUTOBRIEF      = YES
 QT_AUTOBRIEF           = NO
 MULTILINE_CPP_IS_BRIEF = NO
 DETAILS_AT_TOP         = NO
@@ -38,7 +38,7 @@ TAB_SIZE               = 8
 ALIASES                = 
 OPTIMIZE_OUTPUT_FOR_C  = NO
 OPTIMIZE_OUTPUT_JAVA   = NO
-BUILTIN_STL_SUPPORT    = NO
+BUILTIN_STL_SUPPORT    = YES
 CPP_CLI_SUPPORT        = NO
 DISTRIBUTE_GROUP_DOC   = NO
 SUBGROUPING            = YES
@@ -181,7 +181,7 @@ TREEVIEW_WIDTH         = 250
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
 #---------------------------------------------------------------------------
-GENERATE_LATEX         = NO
+GENERATE_LATEX         = YES 
 LATEX_OUTPUT           = latex
 LATEX_CMD_NAME         = latex
 MAKEINDEX_CMD_NAME     = makeindex
@@ -189,8 +189,8 @@ COMPACT_LATEX          = NO
 PAPER_TYPE             = a4wide
 EXTRA_PACKAGES         = 
 LATEX_HEADER           = 
-PDF_HYPERLINKS         = NO
-USE_PDFLATEX           = NO
+PDF_HYPERLINKS         = YES
+USE_PDFLATEX           = YES
 LATEX_BATCHMODE        = NO
 LATEX_HIDE_INDICES     = NO
 #---------------------------------------------------------------------------

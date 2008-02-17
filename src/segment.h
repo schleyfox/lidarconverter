@@ -20,7 +20,7 @@ class Segment : public QVector<DataPoint*> {
 		return m_datasource;
 	}
 
-	DataPoint* midpoint();
+	DataPoint* midpoint() const;
 
 	int segmentNumber() const;
 	void setSegmentNumber(int i);

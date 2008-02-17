@@ -30,13 +30,17 @@ Angle Segment::heading() const {
 	if(size() == 0) {
 		return Angle::Radians(0);
 	}
-	return heading(first(), last());
+	Angle smooth = Angle::Radians( (heading(first(), last()).rads() +
+			       	heading(midpoint(), last()).rads() + 
+				heading(first(), midpoint()).rads()) /
+				3);
+	return smooth;
 }
 
 /**
  * Returns the midpoint of the segment
  */
-DataPoint* Segment::midpoint() {
+DataPoint* Segment::midpoint() const {
 	int mid = (int)floor((double)size()/2.0);
 	return at(mid);
 }
@@ -184,7 +188,8 @@ double Segment::leftoverLength() const {
  */
 double Segment::length() const {
 	//CTM Eq. 2.7
-	return 2.0 * leftoverLength() + fullAngleChord();
+	//fake it by adding a km
+	return 2.0 * leftoverLength() + fullAngleChord() + 1000.0;
 }
 
 /**
@@ -204,7 +209,9 @@ double Segment::width() const {
  * two DataPoints are always appended to seed the heading.
  */
 bool Segment::appendOrStop(DataPoint* dp) {
-	if( size() > 1) {
+ 	if(size() > 500)
+		return false;
+	if( size() > 100) {
 		Angle heading1 = heading(at(size()-2), last());
 		Angle heading2 = heading(last(), dp);
 		if( abs(heading1.degs() - heading2.degs())

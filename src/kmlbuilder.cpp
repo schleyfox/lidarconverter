@@ -106,7 +106,7 @@ container* KMLBuilder::readSegment(Segment s) {
 	c->endLong = s.last()->lon().degs();
 	c->midLat = s.midpoint()->lat().degs();
 	c->midLong = s.midpoint()->lon().degs();
-	c->heading = s.heading().degs();
+	c->heading = fuzzy_round(s.heading().degs(),0);
 	c->altitude = s.droppingDistance();
 	c->width = s.width();
 	c->length = s.length();	

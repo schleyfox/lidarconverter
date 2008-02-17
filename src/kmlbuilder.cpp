@@ -4,6 +4,13 @@
 #include "kml/collada.h"
 #include "kml/netlink.h"
 
+/**
+ * Creates the directory structure in output_dir/
+ *
+ * @param output_dir the directory into which the files should be placed
+ * @param image_dir the directory where the image files are located for
+ * relocation
+ */
 KMLBuilder::KMLBuilder(QDir output_dir, QDir image_dir) {
 	output_directory = output_dir;
 	image_directory = image_dir;

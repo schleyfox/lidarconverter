@@ -15,10 +15,17 @@ int Segment::segmentNumber() const {
 	return m_segnum;
 }
 
+/**
+ * sets the segment number to i. used to create segmentName()
+ */
 void Segment::setSegmentNumber(int i) {
 	m_segnum = i;
 }
 
+/**
+ * provides a name for the segment of filename-segmentNumber() to allow
+ * for easier image and kml filename generation.
+ */
 QString Segment::segmentName() const {
 	QString s = dataSource()->filename();
 	s.chop(4);
@@ -54,6 +61,15 @@ DataPoint* Segment::midpoint() const {
  * initial and final Earth surface points of a segment.  Using the sine rule,
  * heading (angle B) is calculated in Eq. 2.1 where A is the longitude 
  * difference
+ *
+ * \image html heading.png "Diagram of what heading is"
+ * \image latex heading.eps "Diagram of what heading is" 4cm
+ *
+ * The diagram shows the two possible triangles formed in the quest for 
+ * heading.  This also shows how a special case can be found.  If the direction
+ * of travel is southwest, in a spherical situation Heading will be obtuse.
+ * If we find B to be obtuse as well, it is an indication that we actually
+ * solved for B' and should correct Heading by subtracting it from 180.
  */ 
 Angle Segment::heading(DataPoint* start, DataPoint* end){
 	Angle A, B, C, a, b, c;
@@ -78,7 +94,6 @@ Angle Segment::heading(DataPoint* start, DataPoint* end){
 	B = Angle::Degrees( 180.0 - (A.degs() + C.degs()));
 	
 	//normalize to North heading
-	//TODO: Find out how the B.degs() > 90.0 clause makes it work mathematically
 	if(start->lat().degs() > end->lat().degs() && C.degs() > 0.0 && B.degs() > 90.0) {
 		C = Angle::Degrees(180 - C.degs() );
 	}
@@ -181,10 +196,11 @@ double Segment::leftoverLength() const {
 }
 
 /**
- * segLength() is the required length of the image (in pixels) to hold the 
+ * Length() is the required length of the image (in pixels) to hold the 
  * curved LIDAR.
  *
- * length() was already used by QVector
+ * We also add 1km for an unknown reason.
+ * TODO: more fully review length calculation
  */
 double Segment::length() const {
 	//CTM Eq. 2.7
@@ -193,7 +209,7 @@ double Segment::length() const {
 }
 
 /**
- * seqWidth() is the required width of the image (in pixels) to hold the
+ * Width() is the required width of the image (in pixels) to hold the
  * curved LIDAR.
  */
 double Segment::width() const {

@@ -1,6 +1,13 @@
 #include "calipsol1datasource.h"
 #include "hdf4object.h"
 
+/**
+ * Reads and normalizes CALIPSO Level 1 data from the HDFs.
+ * 
+ * @warning Care should be taken to ensure that this is run only on CALIPSO 
+ * Level 1 data as the pointer arithmetic and memcpy() usage could present 
+ * the risk of segmentation fault on other data sources.
+ */
 bool CalipsoL1DataSource::read() {
 	hdf4object* data = new hdf4object(new string(filename().toAscii().data()));
 

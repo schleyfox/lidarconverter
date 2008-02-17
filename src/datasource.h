@@ -4,7 +4,7 @@
 #include "common.h"
 #include "segment.h"
 
-/**
+/** @struct DataSource Properties
  * The DataSourceProperties struct holds information that describes the data
  * in the DataSource.  Calculations in Segment depend on these values
  */
@@ -61,9 +61,7 @@ class DataSource {
 	/**
 	 * Reads data from filename
 	 *
-	 * Note: reading is purely virtual and concrete classes must implement it
-	 *
-	 * @return true on success
+	 * @note reading is purely virtual and concrete classes must implement it
 	 *
 	 * Data is to be read into a QVector<DataPoint*> data_ary
 	 */

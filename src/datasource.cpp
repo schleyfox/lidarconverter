@@ -1,5 +1,8 @@
 #include "datasource.h"
 
+/**
+ * Creates a new DataSource object with the filename <i>filename</i>
+ */
 DataSource::DataSource(QString filename) {
 	data_ary = QVector<DataPoint*>();
 	if(!filename.isEmpty()){

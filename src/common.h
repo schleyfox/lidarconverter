@@ -68,6 +68,9 @@ class DataPoint {
 		m_lat = m_lon = Angle::Degrees(0);
 		m_data = 0;
        	}
+	~DataPoint() {
+		delete m_data;
+	}
 	Angle lon() const { return m_lon; }
 	Angle lat() const { return m_lat; }
 	float* data() const { return m_data; }

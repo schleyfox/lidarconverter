@@ -1,4 +1,11 @@
 #include "calipsocolormap.h"
+/**
+ * Creates an LColorLookup for CALIPSO data.
+ * This is a slightly modified version of the VTK ColorLookupTable code written
+ * by Jonathon Gleason.
+ *
+ * @author Jonathon Gleason
+ */
 LColorLookup* makeCalipsoColorMap() {
 	QMap<float, uint> cm;
 	int numRanges = 33;

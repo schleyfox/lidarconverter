@@ -10,13 +10,6 @@
 #include <iostream>
 #include <exception>
 
-/*! \mainpage CALIPSO converter
- * CALIPSO converter is a utility to convert CALIPSO backscatter curtain files into PNGs that can be viewed in Google Earth.  The program uses a polar coordinate conversion to curve the data to fit the earth.
- *
- * CALIPSO converter is designed to work with CALIPSO data but it can also process other data with a similar schema.
- */
-
-
 /** \struct CartesianPair
  * Represents a Cartesian coordinate pair
  */

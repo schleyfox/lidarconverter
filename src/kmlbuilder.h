@@ -5,6 +5,14 @@
 
 class container;
 
+/**
+ * Constructs a KML folder structure for a list of Segments.
+ * The swath created in the Segments can be loaded by loading the single
+ * networklink file created in the root directory of the KML folder structure
+ *
+ * @author T. Nelson Hillyer
+ * @see LidarConverterTests::CurveTransform_transform()
+ */
 class KMLBuilder {
 	public:
 	KMLBuilder(QDir output_dir, QDir image_dir);

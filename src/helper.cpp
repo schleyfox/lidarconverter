@@ -1,6 +1,7 @@
 #include "helper.h"
 
-QVector<DataPoint*> Helper::makeStraightLineDataPoints(
+namespace Helper {
+QVector<DataPoint*> makeStraightLineDataPoints(
 	DataPoint* start, DataPoint* end,
 	double spacing, float* &data) {
 
@@ -47,7 +48,7 @@ QVector<DataPoint*> Helper::makeStraightLineDataPoints(
  * @return a vector of DataPoints
  * @see makeStraightLineCoordinates()
  */ 
-QVector<DataPoint*> Helper::makeStraightLineDataPoints(
+QVector<DataPoint*> makeStraightLineDataPoints(
 		double init_lat, double init_lon,
 	       	double heading, double spacing,
 	    	float* &data, int n) {
@@ -86,7 +87,7 @@ QVector<DataPoint*> Helper::makeStraightLineDataPoints(
  * @warning the difference in longitudes cannot be greater than 90degrees or things
  * will screw up horridly
  */
-QVector< QPair<Angle,Angle> > Helper::makeStraightLineCoordinates(
+QVector< QPair<Angle,Angle> > makeStraightLineCoordinates(
 		double init_lat, double init_lon, 
 		double heading, double spacing, int n) {
 	QVector< QPair<Angle,Angle> > coords;
@@ -127,7 +128,7 @@ QVector< QPair<Angle,Angle> > Helper::makeStraightLineCoordinates(
  * @param points a Segment or other vector of DataPoint*s
  * @param filename the filename to write the kml to
  */
-void Helper::makeKMLPath(QVector<DataPoint*> points, QString filename) {
+void makeKMLPath(QVector<DataPoint*> points, QString filename) {
 	QFile file(filename);
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
 		return;
@@ -151,4 +152,5 @@ void Helper::makeKMLPath(QVector<DataPoint*> points, QString filename) {
 
 	out << "</Document>\n";
 	out << "</kml>";
+}
 }

@@ -34,6 +34,10 @@ void LColorLookup::compile() {
 	colormap_root = build(ranges);
 }
 
+/**
+ * internal helper used in LColorLookup::compile() to recursively build the
+ * binary search tree
+ */
 CLUTNode* LColorLookup::build(QList<CLUTNode*> ranges) {
 	if(ranges.size() == 0) {
 		return 0;

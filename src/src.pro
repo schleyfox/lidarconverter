@@ -15,6 +15,7 @@ HEADERS += common.h \
 	   segment.h \
 	   lcolorlookup.h \
 	   curvetransform.h \
+	   dynamicdatasource.h \
 	   calipsol1datasource.h \
 	   calipsocolormap.h \
 	   segmentworker.h \
@@ -30,6 +31,7 @@ SOURCES += datasource.cpp \
 	   common.cpp \
 	   curvetransform.cpp \
 	   calipsol1datasource.cpp \
+	   dynamicdatasource.cpp \
 	   calipsocolormap.cpp \
 	   segmentworker.cpp \
 	   kmlbuilder.cpp

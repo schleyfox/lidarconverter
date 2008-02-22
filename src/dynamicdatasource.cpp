@@ -28,7 +28,7 @@ bool DynamicDataSource::read() {
 	
 	//set properties
 	m_properties.max_altitude = maxAltitude();
-	m_properties.h_res = baseHorizontalResolution();
+	m_properties.h_res = baseHResolution();
 	m_properties.v_res = min_res;
 	m_properties.height = max_height;
 
@@ -50,7 +50,7 @@ bool DynamicDataSource::read() {
 
 	for(int i = 0; i < dims[0]; i++) {
 		float* dp_ary = new float[dataProperties().height];
-		copyData(tab_array[i], dp_ary);
+		copyData(tab_array[i]+bottomOffset(), dp_ary);
 		DataPoint* dp = new DataPoint;
 		dp->setLon(lons[i]); dp->setLat(lats[i]);
 		dp->setData(dp_ary);

@@ -89,11 +89,41 @@ class DynamicDataSource : public DataSource {
 		m_maxaltitude = maxaltitude;
 	}
 
+	/**
+	 * the Base Horizontal Resolution is the resolution of a pixel at
+	 * ground level.  The CurveTransform should handle the difference
+	 * in horizontal resolutions by altitude.
+	 * 
+	 * @return base horizontal resolution in meters
+	 */
+	int baseHResolution() {
+		return m_basehres;
+	}
+	/**
+	 * @param h_res horizontal resolution at ground level in meters
+	 */
+	void setBaseHResolution(int h_res) {
+		m_basehres = h_res;
+	}
+
+	/**
+	 * Offset from bottom of the data array. Can be used to bump up the
+	 * image to the surface.
+	 */
+	int bottomOffset() {
+		return m_offset;
+	}
+	/**
+	 * @param offset number of points to ignore at bottom of data array
+	 */
+	void setBottomOffset(int offset) {
+		m_offset = offset;
+	}
 
 	protected:
 	QMap<int, int> m_resolutionmap;
 	QString m_latitudedataname, m_longitudedataname, m_dataname;
-	int m_maxaltitude;
+	int m_maxaltitude, m_basehres, m_offset;
 };
 
 

@@ -51,7 +51,7 @@ class hdf4object
  * Constructor for the hdf4object class.  In the event of a file I/O error,
  * the program is terminated.
  */
-hdf4object::hdf4object(std::string* filename)
+inline hdf4object::hdf4object(std::string* filename)
 {
 	sd_id = SDstart(filename->c_str(), DFACC_READ);
 	status = SDfileinfo(sd_id, &n_datasets, &n_file_attrs);
@@ -82,7 +82,7 @@ hdf4object::hdf4object(std::string* filename)
  * Destructor for the hdf4object.
  * Closes access to the hdf4object.
  */
-hdf4object::~hdf4object()
+inline hdf4object::~hdf4object()
 {
 	status = SDendaccess(sds_id);
 	status = SDend(sd_id);
@@ -93,7 +93,7 @@ hdf4object::~hdf4object()
 /**
  * Get the names of the data sets stored in the working HDF4 file.
  */
-std::string* hdf4object::getDataSets()
+inline std::string* hdf4object::getDataSets()
 {
 	return setNames;
 }
@@ -102,7 +102,7 @@ std::string* hdf4object::getDataSets()
  * Get the rank (or number of dimensions) for the specified set.
  * Returns -1 for nonexistent set.
  */
-int hdf4object::getSetRank(std::string* setName)
+inline int hdf4object::getSetRank(std::string* setName)
 {
 	for (int i = 0; i < n_datasets; i++)
 	{
@@ -115,7 +115,7 @@ int hdf4object::getSetRank(std::string* setName)
 /**
  * Returns the number of sets in the HDF4 file.
  */
-int hdf4object::getNumberOfSets()
+inline int hdf4object::getNumberOfSets()
 {
 	return n_datasets;
 }
@@ -126,7 +126,7 @@ int hdf4object::getNumberOfSets()
  * EXAMPLE: For a set of dimensions 3x7x5, an array of integers
  * will be returned {3, 7, 5}.
  */
-int* hdf4object::getSetDimensions(std::string* setName)
+inline int* hdf4object::getSetDimensions(std::string* setName)
 {
 	for (int i = 0; i < n_datasets; i++)
 	{

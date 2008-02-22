@@ -63,7 +63,7 @@ DataPoint* Segment::midpoint() const {
  * difference
  *
  * \image html heading.png "Diagram of what heading is"
- * \image latex heading.eps "Diagram of what heading is" 4cm
+ * \image latex heading.eps "Diagram of what heading is" width=6cm
  *
  * The diagram shows the two possible triangles formed in the quest for 
  * heading.  This also shows how a special case can be found.  If the direction

@@ -1,4 +1,5 @@
 #include "dynamicdatasource.h"
+#include "hdf4object.h"
 
 /**
  * Read in data and set DataProperties to the proper values
@@ -86,7 +87,7 @@ void DynamicDataSource::copyData(float* source, float* sink) {
 		int m = multipliers.value(alts.at(i));
 		for(int j = 0; j < t; j++) {
 			for(int k = 0; k < m; k++) {
-				sink++ = source;
+				*sink++ = *source;
 			}
 			source++;
 		}

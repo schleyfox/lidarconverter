@@ -123,7 +123,9 @@ class DynamicDataSource : public DataSource {
 	protected:
 	QMap<int, int> m_resolutionmap;
 	QString m_latitudedataname, m_longitudedataname, m_dataname;
-	int m_maxaltitude, m_basehres, m_offset;
+	int m_maxaltitude, m_basehres, m_offset, min_res;
+
+	void copyData(float* source, float* sink);
 };
 
 

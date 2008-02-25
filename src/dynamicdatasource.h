@@ -6,6 +6,10 @@
 
 class DynamicDataSource : public DataSource {
 	public:
+	
+	DynamicDataSource(QString filename="") : DataSource(filename) {
+	}
+
 	bool read();
 
 	/**
@@ -121,7 +125,7 @@ class DynamicDataSource : public DataSource {
 	}
 
 	protected:
-	QMap<int, int> m_resolutionmap;
+	QMap<int, int> m_resolutionmap, multipliers;
 	QString m_latitudedataname, m_longitudedataname, m_dataname;
 	int m_maxaltitude, m_basehres, m_offset, min_res;
 

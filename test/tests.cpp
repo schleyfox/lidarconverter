@@ -200,7 +200,60 @@ class LidarConverterTests : public QObject {
 	}*/
 
 	void DynamicDataSource_read() {
+		QMap<int, int> res;
+		res[0] = 30;
+		res[8200] = 60;
+
 		//add actual test code here
+		DynamicDataSource* ds = 
+			new DynamicDataSource("calipsol1test.hdf");
+		ds->setResolutions(res);
+		ds->setBottomOffset(8);
+		ds->setMaxAltitude(20000);
+		ds->setBaseHResolution(333);
+		
+		ds->setLatitudeDataName("Latitude");
+		ds->setLongitudeDataName("Longitude");
+		ds->setDataName("Total_Attenuated_Backscatter_532");
+		ds->read();
+		
+		QVector<Segment> segments = ds->segment();
+		qDebug() << segments.size() << " segments";
+		QVector<SegmentWorker*> sw;
+		sw.resize(QThread::idealThreadCount());
+
+		int div = (int)floor((double)segments.size()
+				/(double)sw.size());
+		qDebug() << "Segments per thread: " << div;
+		qDebug() << "Number of Threads: " << sw.size();
+		QVectorIterator<Segment> x(segments);
+		for(int i = 0; i < sw.size(); i++) {
+			sw[i] = new SegmentWorker;
+			if(i == sw.size()-1)
+				div = segments.size()-((sw.size()-1)*div);
+			for(int j = 0; j < div; j++) {
+				sw.at(i)->addSegment(x.next());
+			}
+			sw.at(i)->start();
+		}
+		
+		QVERIFY(segments.size() > 0);
+		while(true) {
+			sleep(2);
+			bool quit = true;
+			for(int i = 0; i < sw.size(); i++) {
+				if(sw.at(i)->isRunning())
+					quit = false;
+			}
+			qDebug("Spinning");
+			if(quit == true)
+				break;
+		}
+		KMLBuilder builder(QDir("./kmlbuilder"), QDir("./images"));
+		builder.generateFiles(segments);
+
+
+
 	}
 
 

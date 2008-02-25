@@ -11,13 +11,15 @@ bool DynamicDataSource::read() {
 	qSort(res);
 	min_res = res.first();
 
+	qDebug() << "Minimum Resolution: " << min_res;
+
 	QList<int> alts = resolutions().keys();
 
 
 	int max_height = 0;
 	for(int i = 0; i < alts.size(); i++) {
-		if(alts.at(i+1) > alts.at(i) &&
-			       	alts.at(i+1) <  maxAltitude()) {
+		if( i+1 < alts.size() &&
+				alts.at(i+1) <  maxAltitude()) {
 			max_height += (int)ceil((alts.at(i+1) 
 						- alts.at(i))/min_res);
 		} else {
@@ -26,7 +28,7 @@ bool DynamicDataSource::read() {
 			break;
 		}
 	}
-	
+	qDebug() << "Max Height: " << max_height;
 	//set properties
 	m_properties.max_altitude = maxAltitude();
 	m_properties.h_res = baseHResolution();
@@ -48,6 +50,11 @@ bool DynamicDataSource::read() {
 	delete tab;
 	delete lon;
 	delete lat;
+	
+	for(int i = 0; i < alts.size(); i++) {
+		multipliers[alts.at(i)] = (int)fuzzy_round(
+				resolutions().value(alts.at(i))/min_res, 0);
+	}
 
 	for(int i = 0; i < dims[0]; i++) {
 		float* dp_ary = new float[dataProperties().height];
@@ -66,16 +73,11 @@ bool DynamicDataSource::read() {
 
 void DynamicDataSource::copyData(float* source, float* sink) {
 	QList<int> alts = resolutions().keys();
-	QMap<int, int> multipliers;
-	for(int i = 0; i < alts.size(); i++) {
-		multipliers[alts.at(i)] = (int)fuzzy_round(
-				resolutions().value(alts.at(i))/min_res, 0);
-	}
-	//copy data into the DataPoint float array
+		//copy data into the DataPoint float array
 	for(int i = 0; i < alts.size(); i++) {
 		int t = 0;
 		bool b = false;
-		if(alts.at(i+1) > alts.at(i) &&
+		if(i+1 < alts.size() &&
 				alts.at(i+1) < maxAltitude()) {
 			t = (int)fuzzy_round((alts.at(i+1)-alts.at(i))/
 				resolutions().value(alts.at(i)), 0);

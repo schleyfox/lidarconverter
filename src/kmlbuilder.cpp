@@ -75,8 +75,10 @@ bool KMLBuilder::createDirectories() {
 	return true;
 }
 
-/*
+/**
  * Creates the KML, COLLADA and Network Link KML files for use in Google Earth.
+ *
+ * @param segments A vector of individual swath segments for processing.
  */
 bool KMLBuilder::generateFiles(QVector<Segment> segments) {
 	container* c;
@@ -101,8 +103,10 @@ bool KMLBuilder::generateFiles(QVector<Segment> segments) {
 	return 1;	
 }
 
-/* FIX ME ----> ADD IN READ I/O CHECKS!!!
+/**
  * Reads in the text file containing CALIPSO geometric data.
+ *
+ * @param s segment to used to create a container object.
  */
 container* KMLBuilder::readSegment(Segment s) {
 	container *c = new container();
@@ -121,7 +125,7 @@ container* KMLBuilder::readSegment(Segment s) {
 	return c;
 }
 
-/*
+/**
  * Move the images to the images folder.
  */
 bool KMLBuilder::relocateImages() {

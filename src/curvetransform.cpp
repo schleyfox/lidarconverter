@@ -85,7 +85,7 @@ void CurveTransform::drawPixels(CartesianPair coords, CartesianPair source) {
 	//bounds check
 	if(coords.x < out_image.width() && coords.y < out_image.height() && coords.x >= 0 && coords.y >= 0) {
 		out_image.setPixel((int)fuzzy_round(width - coords.x, 0.0), (int)(height - coords.y), 
-				lut->colorify(segment.at((int)source.x)->data()[(int)image_height - (int)source.y]));
+				lut->colorify(segment.at((int)source.x)->data()[(int)source.y]));
 	} else {
 		std::cerr << "ERROR: Out of bounds pixel coordinate (" << coords.x << ", " << coords.y << ")." << std::endl;
 	}

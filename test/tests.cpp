@@ -208,7 +208,7 @@ class LidarConverterTests : public QObject {
 		DynamicDataSource* ds = 
 			new DynamicDataSource("calipsol1test.hdf");
 		ds->setResolutions(res);
-		ds->setBottomOffset(8);
+		ds->setBottomOffset(21);
 		ds->setMaxAltitude(20000);
 		ds->setBaseHResolution(333);
 		ds->setInverted(true);

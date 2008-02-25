@@ -2,8 +2,8 @@
 #define LCOLORLOOKUP_H
 #include "common.h"
 
-#define NEGINF -1000000000.0
-#define INF 1000000000.0
+#define NEGINF -1000000000000000000000000000000000000000000000000000000000000.0
+#define INF     1000000000000000000000000000000000000000000000000000000000000.0
 
 /** @struct CLUTNode
  * Forms a node in the binary search tree that forms the lookup table

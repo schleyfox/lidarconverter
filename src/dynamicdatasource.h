@@ -124,10 +124,22 @@ class DynamicDataSource : public DataSource {
 		m_offset = offset;
 	}
 
+	/**
+	 * Reverse the coordinate system for data?
+	 */
+	bool inverted() {
+		return m_invert;
+	}
+	
+	void setInverted(bool invert) {
+		m_invert = invert;
+	}
+
 	protected:
 	QMap<int, int> m_resolutionmap, multipliers;
 	QString m_latitudedataname, m_longitudedataname, m_dataname;
-	int m_maxaltitude, m_basehres, m_offset, min_res;
+	int m_maxaltitude, m_basehres, m_offset, min_res, orig_height;
+	bool m_invert;
 
 	void copyData(float* source, float* sink);
 };

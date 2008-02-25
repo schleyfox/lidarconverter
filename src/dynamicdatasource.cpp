@@ -55,10 +55,11 @@ bool DynamicDataSource::read() {
 		multipliers[alts.at(i)] = (int)fuzzy_round(
 				resolutions().value(alts.at(i))/min_res, 0);
 	}
+	orig_height = dims[1];
 
 	for(int i = 0; i < dims[0]; i++) {
 		float* dp_ary = new float[dataProperties().height];
-		copyData(tab_array[i]+bottomOffset(), dp_ary);
+		copyData(tab_array[i], dp_ary);
 		DataPoint* dp = new DataPoint;
 		dp->setLon(lons[i]); dp->setLat(lats[i]);
 		dp->setData(dp_ary);
@@ -73,7 +74,19 @@ bool DynamicDataSource::read() {
 
 void DynamicDataSource::copyData(float* source, float* sink) {
 	QList<int> alts = resolutions().keys();
-		//copy data into the DataPoint float array
+
+	//reverse array if invert is true
+	if(inverted()) {
+		float* source2 = new float[orig_height];
+		source2 += orig_height-1;
+		for(int i = 0; i < orig_height; i++) {
+			*source2-- = *source++;
+		}
+		source = source2;
+	}
+	
+	source+=bottomOffset();
+	//copy data into the DataPoint float array
 	for(int i = 0; i < alts.size(); i++) {
 		int t = 0;
 		bool b = false;
@@ -87,11 +100,12 @@ void DynamicDataSource::copyData(float* source, float* sink) {
 			b = true;
 		}
 		int m = multipliers.value(alts.at(i));
+		
 		for(int j = 0; j < t; j++) {
 			for(int k = 0; k < m; k++) {
 				*sink++ = *source;
 			}
-			source++;
+				source++;
 		}
 		
 		if(b)

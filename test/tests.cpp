@@ -211,6 +211,7 @@ class LidarConverterTests : public QObject {
 		ds->setBottomOffset(8);
 		ds->setMaxAltitude(20000);
 		ds->setBaseHResolution(333);
+		ds->setInverted(true);
 		
 		ds->setLatitudeDataName("Latitude");
 		ds->setLongitudeDataName("Longitude");

@@ -44,7 +44,7 @@ CurveTransform::CurveTransform(Segment s, LColorLookup* lut){
 	out_image = QImage((int)ceil(width), (int)ceil(height), QImage::Format_ARGB32); 
 	out_image.fill(0);
 	
-	std::cout << "H: " << height << " W: " << width << " Theta " << theta << " Altitude " << altitude << " DropFactor " << drop_factor << std::endl;
+	//std::cout << "H: " << height << " W: " << width << " Theta " << theta << " Altitude " << altitude << " DropFactor " << drop_factor << std::endl;
 }
 
 QImage CurveTransform::transform() {

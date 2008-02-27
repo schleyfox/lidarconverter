@@ -9,7 +9,6 @@ class ResolutionMapWidget : public QTableWidget {
 	void fromMap(QMap<int, int> map);
 	
 	QString toXml();
-	void fromXml(QString xml);
 
 	public slots:
 	void insertRow() {

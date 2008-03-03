@@ -13,8 +13,8 @@
  *
  * @author T. Nelson Hillyer, DEVELOP National Program, NASA
  * 
- * date: August 15, 2007
- * version: 0.3 (BETA)
+ * date: March 3, 2008
+ * version: 0.4 (BETA)
  */
 class hdf4object
 {
@@ -143,9 +143,22 @@ template <class T>
 T** hdf4object::setToArray(std::string* setName)
 {
 	for (int i = 0; i < n_datasets; i++)
-	{	
+	{
 		if (setNames[i] == *setName)
 		{
+			if (setDimensions[i][1] == 0)
+			{
+				sds_id = SDselect(sd_id, i);
+				int32 start[setRank[i]], edges[setRank[i]];
+
+				T** array = (T **)malloc(setDimensions[i][0] * sizeof(T *));
+				array[0] = (T *)malloc(setDimensions[i][0] * sizeof(T));
+				
+				start[0] = 0; start[1] = 0;
+				edges[0] = setDimensions[i][0]; edges[1] = 1;
+				status = SDreaddata(sds_id, start, NULL, edges, (VOIDP)*array);
+				return array;
+			}
 			sds_id = SDselect(sd_id, i);
 			int32 start[setRank[i]], edges[setRank[i]];
 			
@@ -153,7 +166,9 @@ T** hdf4object::setToArray(std::string* setName)
 			array[0] = (T *)malloc(setDimensions[i][0] * setDimensions[i][1] * sizeof(T));
 			
 			for (int j = 1; j < setDimensions[i][0]; j++)
+			{
 				array[j] = array[0] + j * setDimensions[i][1];
+			}
 			start[0] = 0; start[1] = 0;
 			edges[0] = setDimensions[i][0]; edges[1] = setDimensions[i][1];
 			status = SDreaddata(sds_id, start, NULL, edges, (VOIDP)*array);

@@ -225,9 +225,9 @@ double Segment::width() const {
  * two DataPoints are always appended to seed the heading.
  */
 bool Segment::appendOrStop(DataPoint* dp) {
- 	if(size() > 500)
-		return false;
-	if( size() > 100) {
+ 	/*if(size() > 500)
+		return false;*/
+	if( size() > 5 /*100*/) {
 		Angle heading1 = heading(at(size()-2), last());
 		Angle heading2 = heading(last(), dp);
 		if( abs(heading1.degs() - heading2.degs())

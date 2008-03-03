@@ -5,6 +5,7 @@ class ConfigFileParser {
 	public:
 	ConfigFileParser(DataSourceWidget* ds, ResolutionMapWidget* rm,
 		       ColorMapWidget* cm);	
+	bool parseFile(QString fn);
 	bool parse(QString xml);
 
 	protected:

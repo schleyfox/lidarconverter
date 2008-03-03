@@ -113,12 +113,43 @@ bool ConfigFileParser::parseResolutions(QDomNode node) {
 	return true;
 }
 			
+bool ConfigFileParser::parseColorMap(QDomNode node) {
+	if(!colormap) 
+		return true;
 
+	QDomNodeList children = node.childNodes();
+	QMap<int, int> colors;
+	for(int i = 0; i < children.size(); i++) {
+		QDomNode child = children.at(i);
+		if(child.tagName() == "colorrange") {
+			QDomNodeList subchildren = child.childNodes();
+			QPair<int, int> key_val;
+			for(int j = 0; j < subchildren.size(); j++) {
+				QDomNode subchild = subchildren.at(i);
+				QDomNode txt = subchild.firstChild();
+				if(!txt.isText()) {
+					return false;
+				}
+				int str = txt.toText().data().toInt();
+				if(subchild.tagName == "base_value") {
+					key_val.first = str;
+				} else if(subchild.tagName == 
+						"color") {
+					key_val.second = str;
+				}
+			}
+			colors[key_val.first] = key_val.second;
+		}
+	}
+	colormap->fromMap(resolutions);
+	return true;
+}
 
+bool ConfigFileParser::parseFile(QString fn) {
+	QFile file(fn);
+	if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+		return false;
 
-
-
-
-
-	
-
+	QTextStream in(&file);
+	return parse(in.readAll());
+}

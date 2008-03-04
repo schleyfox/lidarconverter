@@ -6,29 +6,18 @@ class ColorMapWidget : public QTableWidget {
 	ColorMapWidget(QWidget* parent = 0);
 
 	QMap<double, uint> toMap();
-	void fromMap(QMap<int, int> map);
+	void fromMap(QMap<double, uint> map);
 	
 	QString toXml();
 	
 	public slots:
+	void colorCell(int row, int column);
+	void findColorForCell();
 	void insertRow() {
 		insertRow(rowCount());
 	}
 	void removeRow() {
 		removeRow(rowCount()-1);
-	}
-};
-
-class ColorMapDelegate : public QItemDelegate {
-	public:
-	ColorMapWidgetDelegate(QObject* parent = 0) :  QItemDelegate(parent) {
-	}
-
-	QWidget* createEditor( QWidget* parent, const QStyleOptionViewItem & option, const QModelIndex & index) const;
-};
-
-class ColorMapEditor : public QWidget {
-	ColorMapEditor(QWidget* parent) : QWidget(parent) {
 	}
 };
 

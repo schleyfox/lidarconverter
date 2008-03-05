@@ -1,21 +1,33 @@
 #include "datasourcewidget.h"
 #include "configfileparser.h"
+#define MAX_SPIN 999999
+
 DataSourceWidget::DataSourceWidget(QString filename, QWidget* parent) : 
 	QWidget(parent) {
 
-		import(filename);
+	import(filename);
 	
 
 	//Oh huzzay, widget layout
 	QVBoxLayout* root_layout = new QVBoxLayout;
 	 QHBoxLayout* top_layout = new QHBoxLayout;
-	  resmap = new ResolutionMapWidget(this);
-	  top_layout->addWidget(resmap);
+	  QVBoxLayout* resmap_layout = new QVBoxLayout;
+	   resmap = new ResolutionMapWidget(this);
+	   resmap_layout->addWidget(resmap);
+	   QHBoxLayout* resmap_buttons_layout = new QHBoxLayout;
+	    QPushButton* addrow_button = new QPushButton("Add");
+	    QPushButton* remrow_button = new QPushButton("Remove");
+	    resmap_buttons_layout->addStretch();
+	    resmap_buttons_layout->addWidget(addrow_button);
+	    resmap_buttons_layout->addWidget(remrow_button);
+	   resmap_layout->addLayout(resmap_buttons_layout);
+	  top_layout->addLayout(resmap_layout);
 	  QVBoxLayout* res_layout = new QVBoxLayout;
 	   QHBoxLayout* base_horiz_layout = new QHBoxLayout;
 	    base_horiz_label = 
 		new QLabel("Base Horizontal Resolution (m)",this);
 	    base_horiz_spin = new QSpinBox(this);
+	    base_horiz_spin->setMaximum(MAX_SPIN);
 	    base_horiz_layout->addWidget(base_horiz_label);
 	    base_horiz_layout->addWidget(base_horiz_spin);
 	   res_layout->addLayout(base_horiz_layout);
@@ -23,12 +35,14 @@ DataSourceWidget::DataSourceWidget(QString filename, QWidget* parent) :
 	    max_alt_label = 
 		    new QLabel("Maximum Altitude (m)", this);
 	    max_alt_spin = new QSpinBox(this);
+	    max_alt_spin->setMaximum(MAX_SPIN);
 	    max_alt_layout->addWidget(max_alt_label);
 	    max_alt_layout->addWidget(max_alt_spin);
 	   res_layout->addLayout(max_alt_layout);
 	   QHBoxLayout* offset_layout = new QHBoxLayout;
 	    offset_label = new QLabel("Offset (bins)", this);
 	    offset_spin = new QSpinBox(this);
+	    offset_spin->setMaximum(MAX_SPIN);
 	    offset_layout->addWidget(offset_label);
 	    offset_layout->addWidget(offset_spin);
 	   res_layout->addLayout(offset_layout);
@@ -70,8 +84,14 @@ DataSourceWidget::DataSourceWidget(QString filename, QWidget* parent) :
 
 	connect(import_button, SIGNAL(clicked()), this, SLOT(import()));
 	connect(save_button, SIGNAL(clicked()), this, SLOT(save()));
+	connect(addrow_button, SIGNAL(clicked()), resmap, SLOT(insertRow()));
+	connect(remrow_button, SIGNAL(clicked()), resmap, SLOT(removeRow()));
 
 }
+
+QString DataSourceWidget::toXml() {
+	return resmap->toXml();
+}	
 
 void DataSourceWidget::import(QString filename) {
 	if(!filename.isEmpty()) {

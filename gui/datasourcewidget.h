@@ -46,6 +46,8 @@ class DataSourceWidget : public QWidget {
 	void save(QString filename) {
 	}
 	void save() {
+		QMessageBox::information(this, "DataSource Properties",
+				toXml());
 	}
 	//DynamicDataSource wrapping, setters
 	void setResolutions(QMap<int, int> resolutions) {

@@ -1,12 +1,13 @@
 #include "colormapwidget.h"
 
-ColorMapWidget::ColorMapWidget(QWidget* parent = 0) :
+ColorMapWidget::ColorMapWidget(QWidget* parent) :
        	QTableWidget(parent) {
 	
 	setColumnCount(2);
 	setHorizontalHeaderLabels(QStringList() 
 				<< "Base Value" << "RGBA Color");
-	connect(this, SIGNAL(cellChanged(int,int)), this, colorCell(int,int));
+	connect(this, SIGNAL(cellChanged(int,int)),
+		       	this, SLOT(colorCell(int,int)));
 
 
 }
@@ -15,9 +16,9 @@ QMap<double, uint> ColorMapWidget::toMap() {
 	QMap<double, uint> colors;
 
 	for(int i = 0; i < rowCount(); i++) {
-		int val = item(i, 0)->text().toDouble();
-		int color = item(i, 1)->text().toUInt(0,16);
-		color[val] = color;
+		double val = item(i, 0)->text().toDouble();
+		uint color = item(i, 1)->text().toUInt(0,16);
+		colors[val] = color;
 	}
 
 	return colors;
@@ -57,9 +58,9 @@ QString ColorMapWidget::toXml() {
 		QDomElement color = doc.createElement("color");
 		QDomText c = doc.createTextNode(QString::number(i.value(),16));
 		layer.appendChild(base_val);
-		base_alt.appendChild(val);
+		base_val.appendChild(val);
 		layer.appendChild(color);
-		v_res.appendChild(c);
+		color.appendChild(c);
 	}
 
 	return doc.toString();
@@ -70,7 +71,7 @@ void ColorMapWidget::colorCell(int row, int column) {
 		QTableWidgetItem* i = item(row,column);
 		if(i) {
 			i->setBackground( QBrush( QColor(
-				i->text().toUint(0,16))));
+				i->text().toUInt(0,16))));
 		}
 	}
 }

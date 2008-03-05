@@ -36,13 +36,14 @@ bool ConfigFileParser::parse(QString xml) {
 bool ConfigFileParser::parseLidarProject(QDomNode node) {
 	QDomNodeList children = node.childNodes();
 	for(int i = 0; i < children.size(); i++) {
-		if(children.at(i).tagName() == "datasource") {
+		QDomElement child = children.at(i).toElement();
+		if(child.tagName() == "datasource") {
 			if(!parseDataSource(children.at(i)))
 				return false;
-		} else if(children.at(i).tagName() == "colormap") {
+		} else if(child.tagName() == "colormap") {
 			if(!parseColorMap(children.at(i)))
 				return false;
-		} else if(children.at(i).tagName() == "resolutions") {
+		} else if(child.tagName() == "resolutions") {
 			if(!parseResolutions(children.at(i)))
 				return false;
 		}
@@ -54,9 +55,9 @@ bool ConfigFileParser::parseDataSource(QDomNode node) {
 	QDomNodeList children = node.childNodes();
 	for(int i = 0; i < children.size(); i++) {
 		QDomNode txt = children.at(i).firstChild();
-		QDomNode child = children.at(i);
+		QDomElement child = children.at(i).toElement();
 		if(child.tagName() == "resolutions") {
-			if(!parseResolutions(child))
+			if(!parseResolutions(children.at(i)))
 				return false;
 		} else if(!txt.isNull() && txt.isText() && datasource) {
 			QString str = txt.toText().data();
@@ -89,19 +90,22 @@ bool ConfigFileParser::parseResolutions(QDomNode node) {
 	QMap<int, int> resolutions;
 	for(int i = 0; i < children.size(); i++) {
 		QDomNode child = children.at(i);
-		if(child.tagName() == "layer") {
+		QDomElement child_elem = child.toElement();
+		if(child_elem.tagName() == "layer") {
 			QDomNodeList subchildren = child.childNodes();
 			QPair<int, int> key_val;
 			for(int j = 0; j < subchildren.size(); j++) {
 				QDomNode subchild = subchildren.at(i);
 				QDomNode txt = subchild.firstChild();
+				QDomElement subchild_elem = 
+					subchild.toElement();
 				if(!txt.isText()) {
 					return false;
 				}
 				int str = txt.toText().data().toInt();
-				if(subchild.tagName == "base_altitude") {
+				if(subchild_elem.tagName() == "base_altitude") {
 					key_val.first = str;
-				} else if(subchild.tagName == 
+				} else if(subchild_elem.tagName() == 
 						"vertical_resolution") {
 					key_val.second = str;
 				}
@@ -118,30 +122,33 @@ bool ConfigFileParser::parseColorMap(QDomNode node) {
 		return true;
 
 	QDomNodeList children = node.childNodes();
-	QMap<int, int> colors;
+	QMap<double, uint> colors;
 	for(int i = 0; i < children.size(); i++) {
 		QDomNode child = children.at(i);
-		if(child.tagName() == "colorrange") {
+		QDomElement child_elem = child.toElement();
+		if(child_elem.tagName() == "colorrange") {
 			QDomNodeList subchildren = child.childNodes();
-			QPair<int, int> key_val;
+			QPair<double, uint> key_val;
 			for(int j = 0; j < subchildren.size(); j++) {
 				QDomNode subchild = subchildren.at(i);
 				QDomNode txt = subchild.firstChild();
+				QDomElement subchild_elem = 
+					subchild.toElement();
 				if(!txt.isText()) {
 					return false;
 				}
-				int str = txt.toText().data().toInt();
-				if(subchild.tagName == "base_value") {
-					key_val.first = str;
-				} else if(subchild.tagName == 
+				QString str = txt.toText().data();
+				if(subchild_elem.tagName() == "base_value") {
+					key_val.first = str.toDouble();
+				} else if(subchild_elem.tagName() == 
 						"color") {
-					key_val.second = str;
+					key_val.second = str.toUInt();
 				}
 			}
 			colors[key_val.first] = key_val.second;
 		}
 	}
-	colormap->fromMap(resolutions);
+	colormap->fromMap(colors);
 	return true;
 }
 

@@ -1,7 +1,9 @@
 #ifndef COLORMAPWIDGET_H
 #define COLORMAPWIDGET_H
+#include "gui_common.h"
 
 class ColorMapWidget : public QTableWidget {
+	Q_OBJECT
 	public:
 	ColorMapWidget(QWidget* parent = 0);
 
@@ -14,10 +16,10 @@ class ColorMapWidget : public QTableWidget {
 	void colorCell(int row, int column);
 	void findColorForCell();
 	void insertRow() {
-		insertRow(rowCount());
+		QTableWidget::insertRow(rowCount());
 	}
 	void removeRow() {
-		removeRow(rowCount()-1);
+		QTableWidget::removeRow(rowCount()-1);
 	}
 };
 

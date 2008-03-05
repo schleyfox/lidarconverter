@@ -1,7 +1,10 @@
 #ifndef RESOLUTIONMAPWIDGET_H
 #define RESOLUTIONMAPWIDGET_H
+#include "gui_common.h"
+
 
 class ResolutionMapWidget : public QTableWidget {
+	Q_OBJECT
 	public:
 	ResolutionMapWidget(QWidget* parent = 0);
 
@@ -12,10 +15,10 @@ class ResolutionMapWidget : public QTableWidget {
 
 	public slots:
 	void insertRow() {
-		insertRow(rowCount());
+		QTableWidget::insertRow(rowCount());
 	}
 	void removeRow() {
-		removeRow(rowCount()-1);
+		QTableWidget::removeRow(rowCount()-1);
 	}
 };
 

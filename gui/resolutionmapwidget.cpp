@@ -1,6 +1,6 @@
 #include "resolutionmapwidget.h"
 
-ResolutionMapWidget::ResolutionMapWidget(QWidget* parent = 0) :
+ResolutionMapWidget::ResolutionMapWidget(QWidget* parent) :
        	QTableWidget(parent) {
 		setColumnCount(2);
 		setHorizontalHeaderLabels(QStringList() 

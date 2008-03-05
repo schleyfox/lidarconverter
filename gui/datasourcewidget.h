@@ -1,5 +1,8 @@
 #ifndef DATASOURCEWIDGET_H
 #define DATASOURCEWIDGET_H
+#include "gui_common.h"
+#include "dynamicdatasource.h"
+#include "resolutionmapwidget.h"
 
 class DataSourceWidget : public QWidget {
 	Q_OBJECT
@@ -23,7 +26,7 @@ class DataSourceWidget : public QWidget {
 		return data_line->text();
 	}
 	int maxAltitude() {
-		max_alt_spin->value();
+		return max_alt_spin->value();
 	}
 	int baseHResolution() {
 		return base_horiz_spin->value();
@@ -38,9 +41,12 @@ class DataSourceWidget : public QWidget {
 
 	public slots:
 	void import(QString filename);
-	void import();
-	void save(QString filename);
-	void save();
+	void import() {
+	}
+	void save(QString filename) {
+	}
+	void save() {
+	}
 	//DynamicDataSource wrapping, setters
 	void setResolutions(QMap<int, int> resolutions) {
 		resmap->fromMap(resolutions);
@@ -70,12 +76,12 @@ class DataSourceWidget : public QWidget {
 	protected:
 	DynamicDataSource* ds;
 	ResolutionMapWidget* resmap;
-	QLabel* base_horiz_label, max_alt_label, offset_label, hdf_label,
-		lat_label, lon_label, data_label;
-	QSpin* base_horiz_spin, max_alt_spin, offset_spin;
-	QLineEdit* lat_line, lon_line, data_line;
-	QCheckBox* invert_box;
-	QPushButton* import_button, QPushButton* save_button;
+	QLabel *base_horiz_label, *max_alt_label, *offset_label, *hdf_label,
+		*lat_label, *lon_label, *data_label;
+	QSpinBox *base_horiz_spin, *max_alt_spin, *offset_spin;
+	QLineEdit *lat_line, *lon_line, *data_line;
+	QCheckBox *invert_box;
+	QPushButton *import_button, *save_button;
 
 };
 #endif

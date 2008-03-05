@@ -1,6 +1,6 @@
 #include "datasourcewidget.h"
-
-DataSourceWidget::DataSourceWidget(QString filename = "", QWidget* parent = 0) : 
+#include "configfileparser.h"
+DataSourceWidget::DataSourceWidget(QString filename, QWidget* parent) : 
 	QWidget(parent) {
 
 		import(filename);
@@ -19,7 +19,7 @@ DataSourceWidget::DataSourceWidget(QString filename = "", QWidget* parent = 0) :
 	    base_horiz_layout->addWidget(base_horiz_label);
 	    base_horiz_layout->addWidget(base_horiz_spin);
 	   res_layout->addLayout(base_horiz_layout);
-	   QHboxLayout* max_alt_layout = new QHBoxLayout;
+	   QHBoxLayout* max_alt_layout = new QHBoxLayout;
 	    max_alt_label = 
 		    new QLabel("Maximum Altitude (m)", this);
 	    max_alt_spin = new QSpinBox(this);
@@ -35,7 +35,7 @@ DataSourceWidget::DataSourceWidget(QString filename = "", QWidget* parent = 0) :
 	   invert_box = new QCheckBox("Invert", this);
 	   res_layout->addWidget(invert_box);
 	  top_layout->addLayout(res_layout);
-	 main_layout->addLayout(top_layout);
+	 root_layout->addLayout(top_layout);
 	 QVBoxLayout* bottom_layout = new QVBoxLayout;
 	  QVBoxLayout* hdf_layout = new QVBoxLayout;
 	   hdf_label = new QLabel("Enter the HDF data set names that correspond to each field", this);
@@ -65,17 +65,17 @@ DataSourceWidget::DataSourceWidget(QString filename = "", QWidget* parent = 0) :
 	   import_save_layout->addStretch();
 	   import_save_layout->addWidget(save_button);
 	 bottom_layout->addLayout(import_save_layout);
-	main_layout->addLayout(bottom_layout);
-	setLayout(main_layout);
+	root_layout->addLayout(bottom_layout);
+	setLayout(root_layout);
 
 	connect(import_button, SIGNAL(clicked()), this, SLOT(import()));
 	connect(save_button, SIGNAL(clicked()), this, SLOT(save()));
 
 }
 
-void DataSourceWidget::import(filename) {
+void DataSourceWidget::import(QString filename) {
 	if(!filename.isEmpty()) {
-		ConfigFileParser conf(this,0,0);
+		ConfigFileParser conf(this);
 		conf.parseFile(filename);
 	}
 }

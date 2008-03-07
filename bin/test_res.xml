@@ -1,0 +1,30 @@
+<lidar_project>
+<resolutions>
+ <layer>
+  <base_altitude>0</base_altitude>
+  <vertical_resolution>30</vertical_resolution>
+ </layer>
+ <layer>
+  <base_altitude>8200</base_altitude>
+  <vertical_resolution>60</vertical_resolution>
+ </layer>
+</resolutions>
+<colormap>
+ <color_range>
+  <base_value>3.1</base_value>
+  <color>ffffaa00</color>
+ </color_range>
+ <color_range>
+  <base_value>3.56</base_value>
+  <color>ff0000ff</color>
+ </color_range>
+ <color_range>
+  <base_value>4.9</base_value>
+  <color>ffffaaff</color>
+ </color_range>
+ <color_range>
+  <base_value>13.37</base_value>
+  <color>ffaaffff</color>
+ </color_range>
+</colormap>
+</lidar_project>

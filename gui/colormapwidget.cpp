@@ -35,6 +35,11 @@ void ColorMapWidget::fromMap(QMap<double, uint> map) {
 	int j = 0;
 	while(i.hasNext()) {
 		i.next();
+		if(!item(j, 0) || !item(j, 1)) {
+			QTableWidget::insertRow(j);
+			setItem(j, 0, new QTableWidgetItem);
+			setItem(j, 1, new QTableWidgetItem);
+		}
 		item(j, 0)->setText(QString::number(i.key()));
 		item(j, 1)->setText(QString::number(i.value(),16));
 		colorCell(j, 1);

@@ -15,6 +15,9 @@ class ColorMapWidget : public QTableWidget {
 	public slots:
 	void colorCell(int row, int column);
 	void findColorForCell();
+	void save() {
+		qDebug() << toXml();
+	}
 	void insertRow() {
 		QTableWidget::insertRow(rowCount());
 	}

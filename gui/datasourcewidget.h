@@ -4,7 +4,7 @@
 #include "dynamicdatasource.h"
 #include "resolutionmapwidget.h"
 
-class DataSourceWidget : public QWidget {
+class DataSourceWidget : public QGroupBox {
 	Q_OBJECT
 	public:
 	DataSourceWidget(QString filename = "", QWidget* parent = 0); 

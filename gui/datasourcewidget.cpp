@@ -3,10 +3,9 @@
 #define MAX_SPIN 999999
 
 DataSourceWidget::DataSourceWidget(QString filename, QWidget* parent) : 
-	QWidget(parent) {
+	QGroupBox(parent) {
 
-	import(filename);
-	
+	setTitle("Data Source");	
 
 	//Oh huzzay, widget layout
 	QVBoxLayout* root_layout = new QVBoxLayout;
@@ -87,6 +86,8 @@ DataSourceWidget::DataSourceWidget(QString filename, QWidget* parent) :
 	connect(addrow_button, SIGNAL(clicked()), resmap, SLOT(insertRow()));
 	connect(remrow_button, SIGNAL(clicked()), resmap, SLOT(removeRow()));
 
+
+	import(filename);
 }
 
 QString DataSourceWidget::toXml() {

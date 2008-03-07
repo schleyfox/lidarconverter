@@ -5,7 +5,7 @@ ColorMapWidget::ColorMapWidget(QWidget* parent) :
 	
 	setColumnCount(2);
 	setHorizontalHeaderLabels(QStringList() 
-				<< "Base Value" << "RGBA Color");
+				<< "Base Value" << "ARGB Color");
 	connect(this, SIGNAL(cellChanged(int,int)),
 		       	this, SLOT(colorCell(int,int)));
 
@@ -16,9 +16,11 @@ QMap<double, uint> ColorMapWidget::toMap() {
 	QMap<double, uint> colors;
 
 	for(int i = 0; i < rowCount(); i++) {
-		double val = item(i, 0)->text().toDouble();
-		uint color = item(i, 1)->text().toUInt(0,16);
-		colors[val] = color;
+		if(item(i,0) && item(i,1)) {
+			double val = item(i, 0)->text().toDouble();
+			uint color = item(i, 1)->text().toUInt(0,16);
+			colors[val] = color;
+		}
 	}
 
 	return colors;

@@ -11,9 +11,11 @@ QMap<int, int> ResolutionMapWidget::toMap() {
 	QMap<int, int> resolutions;
 	
 	for(int i = 0; i < rowCount(); i++) {
-		int alt = item(i, 0)->text().toInt();
-		int res = item(i, 1)->text().toInt();
-		resolutions[alt] = res;
+		if(item(i,0) && item(i,1)) {
+			int alt = item(i, 0)->text().toInt();
+			int res = item(i, 1)->text().toInt();
+			resolutions[alt] = res;
+		}
 	}
 
 	return resolutions;

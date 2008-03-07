@@ -45,13 +45,9 @@ class DataSourceWidget : public QGroupBox {
 
 	public slots:
 	void import(QString filename);
-	void import() {
-	}
-	void save(QString filename) {
-	}
-	void save() {
-		qDebug() << toXml();
-	}	
+	void import();
+	void save(QString filename);
+	void save();	
 	//DynamicDataSource wrapping, setters
 	void setResolutions(QMap<int, int> resolutions) {
 		resmap->fromMap(resolutions);
@@ -87,6 +83,8 @@ class DataSourceWidget : public QGroupBox {
 	QLineEdit *lat_line, *lon_line, *data_line;
 	QCheckBox *invert_box;
 	QPushButton *import_button, *save_button;
+
+	QString save_to_filename;
 
 };
 #endif

@@ -1,14 +1,23 @@
 <lidar_project>
-<resolutions>
- <layer>
-  <base_altitude>0</base_altitude>
-  <vertical_resolution>30</vertical_resolution>
- </layer>
- <layer>
-  <base_altitude>8200</base_altitude>
-  <vertical_resolution>60</vertical_resolution>
- </layer>
-</resolutions>
+<datasource>
+ <resolutions>
+  <layer>
+   <base_altitude>0</base_altitude>
+   <vertical_resolution>30</vertical_resolution>
+  </layer>
+  <layer>
+   <base_altitude>8200</base_altitude>
+   <vertical_resolution>60</vertical_resolution>
+  </layer>
+ </resolutions>
+ <longitude_name>Longitude</longitude_name>
+ <latitude_name>Latitude</latitude_name>
+ <data_name>Total_Attenuated_Backscatter_532</data_name>
+ <base_h_res>333</base_h_res>
+ <bottom_offset>8</bottom_offset>
+ <max_altitude>20000</max_altitude>
+ <inverted>true</inverted>
+</datasource>
 <colormap>
  <color_range>
   <base_value>3.1</base_value>

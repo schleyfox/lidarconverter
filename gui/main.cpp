@@ -17,8 +17,8 @@ int main(int argc, char *argv[]) {
 	//save_button->show();
 	ConfigFileParser* cfp = new ConfigFileParser;
 	cfp->readFile("test_res.xml");
-	cfp->parseResolutions(ds->resolutionMapWidget());
 	cfp->parseColorMap(cmb->colorMap());
+	cfp->parseDataSource(ds);
 	w->setLayout(z);
 	w->show();
 	return app.exec();

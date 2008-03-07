@@ -91,14 +91,82 @@ DataSourceWidget::DataSourceWidget(QString filename, QWidget* parent) :
 }
 
 QString DataSourceWidget::toXml() {
-	return resmap->toXml();
-}	
+	QDomDocument doc;
+	QDomElement root = doc.createElement("datasource");
+	doc.appendChild(root);
 
+	QDomDocument resolutions;
+	resolutions.setContent(resmap->toXml());
+	root.appendChild(resolutions.documentElement());
+
+	QDomElement longitude_name = doc.createElement("longitude_name");
+	QDomText longitude_name_txt = doc.createTextNode(longitudeDataName());
+	longitude_name.appendChild(longitude_name_txt);
+	root.appendChild(longitude_name);
+
+	QDomElement latitude_name = doc.createElement("latitude_name");
+	QDomText latitude_name_txt = doc.createTextNode(latitudeDataName());
+	latitude_name.appendChild(latitude_name_txt);
+	root.appendChild(latitude_name);
+
+	QDomElement data_name = doc.createElement("data_name");
+	QDomText data_name_txt = doc.createTextNode(dataName());
+	data_name.appendChild(data_name_txt);
+	root.appendChild(data_name);
+
+	QDomElement base_h_res = doc.createElement("base_h_res");
+	QDomText base_h_res_txt = doc.createTextNode(QString::number(baseHResolution()));
+	base_h_res.appendChild(base_h_res_txt);
+	root.appendChild(base_h_res);
+
+	QDomElement bottom_offset = doc.createElement("bottom_offset");
+	QDomText bottom_offset_txt = doc.createTextNode(QString::number(bottomOffset()));
+	bottom_offset.appendChild(bottom_offset_txt);
+	root.appendChild(bottom_offset);
+
+	QDomElement max_altitude = doc.createElement("max_altitude");
+	QDomText max_altitude_txt = doc.createTextNode(QString::number(maxAltitude()));
+	max_altitude.appendChild(max_altitude_txt);
+	root.appendChild(max_altitude);
+
+
+	QDomElement inverted1 = doc.createElement("inverted");
+	QDomText inverted_txt = doc.createTextNode((inverted()) ? "true" : "false");
+	inverted1.appendChild(inverted_txt);
+	root.appendChild(inverted1);
+
+	return doc.toString();
+}
+
+void DataSourceWidget::import() {
+	QString filename = QFileDialog::getOpenFileName(this,
+				"Import Data Source from File", "",
+			       	"XML (*.xml)");
+	import(filename);
+}
 void DataSourceWidget::import(QString filename) {
 	if(!filename.isEmpty()) {
 		ConfigFileParser conf;
 		conf.readFile(filename);
-		//conf.parseDataSource(this);
+		conf.parseDataSource(this);
 	}
 }
 
+void DataSourceWidget::save() {
+	if(save_to_filename.isEmpty()) {
+		save_to_filename = QFileDialog::getSaveFileName(this,
+				"Save Data Source", "",
+				"XML (*.xml)");
+	}
+	save(save_to_filename);
+}
+
+void DataSourceWidget::save(QString filename) {
+	if(!filename.isEmpty()) {
+		QFile file(filename);
+		if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+			return;
+		QTextStream out(&file);
+		out << toXml();
+	}
+}

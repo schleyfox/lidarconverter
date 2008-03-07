@@ -10,7 +10,7 @@ class ConfigFileParser {
 	bool readFile(QString fn);
 	bool read(QString xml);
 	
-	bool parseDataSource(DataSourceWidget* datasource);
+	bool parseDataSource(DataSourceWidget* ds);
 	bool parseColorMap(ColorMapWidget* colormap);
 	bool parseResolutions(ResolutionMapWidget* resmap);
 

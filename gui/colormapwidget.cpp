@@ -96,7 +96,3 @@ void ColorMapWidget::findColorForCell() {
 	}
 	QMessageBox::warning(this, "No Cell Selected", "Please select a cell from the \"Color RGBA\" column and then try to set the color");
 }
-
-
-		
-

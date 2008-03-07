@@ -96,8 +96,9 @@ QString DataSourceWidget::toXml() {
 
 void DataSourceWidget::import(QString filename) {
 	if(!filename.isEmpty()) {
-		ConfigFileParser conf(this);
-		conf.parseFile(filename);
+		ConfigFileParser conf;
+		conf.readFile(filename);
+		//conf.parseDataSource(this);
 	}
 }
 

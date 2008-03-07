@@ -11,6 +11,10 @@ class DataSourceWidget : public QGroupBox {
 	
 	DynamicDataSource* toDataSource();
 	QString toXml();
+
+	ResolutionMapWidget* resolutionMapWidget() {
+		return resmap;
+	}
 	
 	//DynamicDataSource wrapping, getters
 	QMap<int, int> resolutions() {
@@ -46,9 +50,8 @@ class DataSourceWidget : public QGroupBox {
 	void save(QString filename) {
 	}
 	void save() {
-		QMessageBox::information(this, "DataSource Properties",
-				toXml());
-	}
+		qDebug() << toXml();
+	}	
 	//DynamicDataSource wrapping, setters
 	void setResolutions(QMap<int, int> resolutions) {
 		resmap->fromMap(resolutions);

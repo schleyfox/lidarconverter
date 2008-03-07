@@ -7,21 +7,15 @@
 
 class ConfigFileParser {
 	public:
-	ConfigFileParser(DataSourceWidget* ds = 0, ResolutionMapWidget* rm = 0,
-		       ColorMapWidget* cm = 0);	
-	bool parseFile(QString fn);
-	bool parse(QString xml);
+	bool readFile(QString fn);
+	bool read(QString xml);
+	
+	bool parseDataSource(DataSourceWidget* datasource);
+	bool parseColorMap(ColorMapWidget* colormap);
+	bool parseResolutions(ResolutionMapWidget* resmap);
 
 	protected:
-	bool parseLidarProject(QDomNode node);
-	bool parseDataSource(QDomNode node);
-	bool parseColorMap(QDomNode node);
-	bool parseResolutions(QDomNode node);
 
-	DataSourceWidget* datasource;
-       	ResolutionMapWidget* resmap;
-	ColorMapWidget* colormap;
-
-	QDomDocument* doc;
+	QDomDocument doc;
 };
 #endif

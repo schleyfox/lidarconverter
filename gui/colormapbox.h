@@ -6,6 +6,10 @@
 class ColorMapBox : public QGroupBox {
 	public:
 	ColorMapBox(QWidget* parent = 0);
+
+	ColorMapWidget* colorMap() {
+		return colormap;
+	}
 	protected:
 	ColorMapWidget* colormap;
 	QPushButton *add_button, *remove_button, *findcolor_button;

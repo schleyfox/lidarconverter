@@ -1,4 +1,7 @@
-ColorMapBox(QWidget* parent) : QGroupBox(parent) {
+#include "colormapbox.h"
+
+ColorMapBox::ColorMapBox(QWidget* parent) : QGroupBox(parent) {
+	setTitle("Color Map");
 	colormap = new ColorMapWidget();
 	QVBoxLayout* root = new QVBoxLayout;
 	root->addWidget(colormap);

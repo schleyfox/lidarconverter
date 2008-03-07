@@ -1,5 +1,7 @@
 #ifndef COLORMAPBOX_H
 #define COLORMAPBOX_H
+#include "gui_common.h"
+#include "colormapwidget.h"
 
 class ColorMapBox : public QGroupBox {
 	public:

@@ -15,9 +15,11 @@ HEADERS += colormapwidget.h \
            configfileparser.h \
            datasourcewidget.h \
            resolutionmapwidget.h \
+	   colormapbox.h \
 	   gui_common.h
 SOURCES += colormapwidget.cpp \
            configfileparser.cpp \
            datasourcewidget.cpp \
            main.cpp \
+	   colormapbox.cpp \
            resolutionmapwidget.cpp

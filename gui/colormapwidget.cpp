@@ -30,7 +30,10 @@ QMap<double, uint> ColorMapWidget::toMap() {
 
 void ColorMapWidget::fromMap(QMap<double, uint> map) {
 	QMapIterator<double, uint> i(map);
-	clearContents();
+
+	for(int k = 0; k < rowCount(); k++) {
+		removeRow();
+	}
 
 	int j = 0;
 	while(i.hasNext()) {

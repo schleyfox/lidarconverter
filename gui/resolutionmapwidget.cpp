@@ -23,7 +23,10 @@ QMap<int, int> ResolutionMapWidget::toMap() {
 
 void ResolutionMapWidget::fromMap(QMap<int, int> map) {
 	QMapIterator<int, int> i(map);
-	clearContents();
+
+	for(int k = 0; k < rowCount(); k++) {
+		removeRow();
+	}
 
 	int j = 0;
 	while(i.hasNext()) {

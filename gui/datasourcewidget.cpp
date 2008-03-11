@@ -138,6 +138,20 @@ QString DataSourceWidget::toXml() {
 	return doc.toString();
 }
 
+DynamicDataSource* DataSourceWidget::toDataSource() {
+	DynamicDataSource* ds = new DynamicDataSource();
+	ds->setResolutions(resolutions());
+	ds->setLongitudeDataName(longitudeDataName());
+	ds->setLatitudeDataName(latitudeDataName());
+	ds->setDataName(dataName());
+	ds->setMaxAltitude(maxAltitude());
+	ds->setBaseHResolution(baseHResolution());
+	ds->setBottomOffset(bottomOffset());
+	ds->setInverted(inverted());
+
+	return ds;
+}
+
 void DataSourceWidget::import() {
 	QString filename = QFileDialog::getOpenFileName(this,
 				"Import Data Source from File", "",

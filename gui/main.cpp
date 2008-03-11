@@ -19,6 +19,10 @@ int main(int argc, char *argv[]) {
 	cfp->readFile("test_res.xml");
 	cfp->parseColorMap(cmb->colorMap());
 	cfp->parseDataSource(ds);
+	DynamicDataSource* dds = ds->toDataSource();
+	dds->setFilename("calipsol1test.hdf");
+	qDebug() << dds->read();
+	qDebug() << dds->segment().size();
 	w->setLayout(z);
 	w->show();
 	return app.exec();

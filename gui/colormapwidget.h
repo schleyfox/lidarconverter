@@ -9,6 +9,8 @@ class ColorMapWidget : public QTableWidget {
 
 	QMap<float, uint> toMap();
 	void fromMap(QMap<float, uint> map);
+
+	QMap<float, uint> toBlendedMap();
 	
 	QString toXml();
 	
@@ -24,6 +26,8 @@ class ColorMapWidget : public QTableWidget {
 	void removeRow() {
 		QTableWidget::removeRow(rowCount()-1);
 	}
+	protected:
+	int num_colors;
 };
 
 #endif

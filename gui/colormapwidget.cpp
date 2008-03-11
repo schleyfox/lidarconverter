@@ -8,6 +8,7 @@ ColorMapWidget::ColorMapWidget(QWidget* parent) :
 				<< "Base Value" << "ARGB Color");
 	connect(this, SIGNAL(cellChanged(int,int)),
 		       	this, SLOT(colorCell(int,int)));
+	num_colors = 1024;
 
 
 }
@@ -48,6 +49,38 @@ void ColorMapWidget::fromMap(QMap<float, uint> map) {
 		colorCell(j, 1);
 		j++;
 	}
+}
+
+//FIXME: This is broken
+QMap<float, uint> ColorMapWidget::toBlendedMap() {
+	QMap<float, uint> map = toMap();
+	QMap<float, uint> cm;
+	
+	QList<float> ranges = map.keys();
+	QList<uint> colors = map.values();
+
+	int div = (int)floor((double)num_colors/(double)map.size());
+
+	int start = 0;
+	int upto = 0;
+	for(int i = 0; i < map.size()-1; i++) {
+		start += upto;
+		upto += div;
+		for(int j = start; j < upto; j++) {
+			double frac = (double)(j-start)/(double)(upto-start);
+			float val = ranges.at(i)*(1-frac) + 
+				ranges.at(i+1)*frac;
+			QColor c1(colors.at(i));
+			QColor c2(colors.at(i+1));
+			uint color = qRgba(
+					c1.red()*(1-frac)+c2.red()*frac,
+					c1.green()*(1-frac)+c2.green()*frac,
+					c1.blue()*(1-frac)+c2.blue()*frac,
+					c1.alpha()*(1-frac)+c2.alpha()*frac);
+			cm[val] = color;
+		}
+	}
+	return cm;
 }
 
 QString ColorMapWidget::toXml() {

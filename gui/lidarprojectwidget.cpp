@@ -112,6 +112,7 @@ void LidarProjectWidget::toKml(QString output_dir) {
 	progress->show();
 	LColorLookup* lut = new LColorLookup();
 	lut->setColorMap(colorMapWidget()->toMap());
+	qDebug() << lut->colorMap().size();
 	lut->compile();
 	if(out.exists()) {
 		QVector<Segment> all_segments;

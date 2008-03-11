@@ -148,6 +148,7 @@ class LidarConverterTests : public QObject {
 		LColorLookup lut;
 		lut.setColorMap(cm);
 		lut.compile();
+		makeCalipsoColorMap();
 		QCOMPARE(lut.colorify(0.5), qRgba(255,255,255,255));
 		QCOMPARE(lut.colorify(1.0), qRgba(0,255,255,255));
 		QCOMPARE(lut.colorify(1.49), qRgba(0,255,255,255));
@@ -199,7 +200,7 @@ class LidarConverterTests : public QObject {
 		builder.generateFiles(segments);
 	}*/
 
-	void DynamicDataSource_read() {
+	/*void DynamicDataSource_read() {
 		QMap<int, int> res;
 		res[0] = 30;
 		res[8200] = 60;
@@ -255,7 +256,8 @@ class LidarConverterTests : public QObject {
 
 
 
-	}
+	}*/
+
 
 
 };

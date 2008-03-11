@@ -17,7 +17,7 @@ LColorLookup* makeCalipsoColorMap() {
 	double dataRange[] = {0.0001, 0.0002, 0.0003, 0.0004, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009, 0.001, 0.0015, 0.002, 0.0025, 0.003, 0.0035, 0.004, 0.0045, 0.005, 0.0055, 0.006, 0.0065, 0.007, 0.0075, 0.008, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1};
 
 
-	int numColors = 1024;
+	int numColors = 33;
 	
 	int i,j;
 	double dataValue;
@@ -51,12 +51,13 @@ LColorLookup* makeCalipsoColorMap() {
 		blue  = b[rangeIndex[i]]*(1-f) + b[rangeIndex[i]+1]*f;
 		alpha = a[rangeIndex[i]]*(1-f) + a[rangeIndex[i]+1]*f;
 		cm[range] = qRgba(red*255, green*255, blue*255, alpha*255);
+		qDebug() << "<color_range>";
+		qDebug() << "  <base_value>" << range << "</base_value>";
+		qDebug() << "  <color>"<< QString::number(cm[range], 16) << "</color>";
+		qDebug() << "</color_range>";
 	}
 
 	LColorLookup* lut = new LColorLookup;
-	qDebug() << cm.size();
-	lut->setColorMap(cm);
-	lut->compile();
-	
+
 	return lut;
 }

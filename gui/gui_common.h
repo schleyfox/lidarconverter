@@ -31,6 +31,7 @@
 #include <QProcess>
 #include <QUuid>
 #include <QListWidget>
+#include <QColor>
 
 
 #endif

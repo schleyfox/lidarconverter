@@ -18,11 +18,12 @@ class LidarProjectWidget : public QWidget {
 	void addFile();
 	void removeFile();
 	void save();
-	void save(QString fn);
+	void save(QString filename);
 
 	void import();
-	void import(QString fn);
+	void import(QString filename);
 
+	void toKml();
 	void toKml(QString output_dir);
 	void launchGoogleEarth();
 
@@ -30,7 +31,11 @@ class LidarProjectWidget : public QWidget {
 	DataSourceWidget* datasource;
 	ColorMapBox* colormapbox;
 	QListWidget* filelist;
-	QPushButton *tokml_button, *launchge_button;
+	QPushButton *tokml_button, *launchge_button, *addfile_button, 
+		    *removefile_button;
+	QProcess* googleearth;
+
+	QString save_to_filename;
 };
 #endif
 

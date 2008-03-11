@@ -27,8 +27,7 @@ void Segment::setSegmentNumber(int i) {
  * for easier image and kml filename generation.
  */
 QString Segment::segmentName() const {
-	QString s = dataSource()->filename();
-	s.chop(4);
+	QString s = QFileInfo(dataSource()->filename()).baseName();
 	return QString("%1-%2").arg(s).arg(segmentNumber());
 }
 

@@ -41,7 +41,7 @@ bool ConfigFileParser::parseResolutions(ResolutionMapWidget* resmap) {
 }
 
 bool ConfigFileParser::parseColorMap(ColorMapWidget* colormap) {
-	QMap<double,uint> map;
+	QMap<float,uint> map;
 	QDomElement colors = doc.elementsByTagName("colormap").item(0).toElement();
 	if(!colors.isNull()) {
 		QDomNodeList color_ranges = colors.elementsByTagName("color_range");

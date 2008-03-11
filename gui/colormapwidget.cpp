@@ -12,12 +12,12 @@ ColorMapWidget::ColorMapWidget(QWidget* parent) :
 
 }
 
-QMap<double, uint> ColorMapWidget::toMap() {
-	QMap<double, uint> colors;
+QMap<float, uint> ColorMapWidget::toMap() {
+	QMap<float, uint> colors;
 
 	for(int i = 0; i < rowCount(); i++) {
 		if(item(i,0) && item(i,1)) {
-			double val = item(i, 0)->text().toDouble();
+			float val = item(i, 0)->text().toFloat();
 			uint color = item(i, 1)->text().toUInt(0,16);
 			colors[val] = color;
 		}
@@ -28,8 +28,8 @@ QMap<double, uint> ColorMapWidget::toMap() {
 
 
 
-void ColorMapWidget::fromMap(QMap<double, uint> map) {
-	QMapIterator<double, uint> i(map);
+void ColorMapWidget::fromMap(QMap<float, uint> map) {
+	QMapIterator<float, uint> i(map);
 
 	for(int k = 0; k < rowCount(); k++) {
 		removeRow();
@@ -51,8 +51,8 @@ void ColorMapWidget::fromMap(QMap<double, uint> map) {
 }
 
 QString ColorMapWidget::toXml() {
-	QMap<double, uint> colors = toMap();
-	QMapIterator<double, uint> i(colors);
+	QMap<float, uint> colors = toMap();
+	QMapIterator<float, uint> i(colors);
 	
 	QDomDocument doc;
 	QDomElement root = doc.createElement("colormap");

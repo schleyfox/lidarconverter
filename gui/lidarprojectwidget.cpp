@@ -1,6 +1,6 @@
 #include "lidarprojectwidget.h"
 
-LidarProjectWidget::LidarProjectWidget(QWidget* parent = 0) : QWidget(parent) {
+LidarProjectWidget::LidarProjectWidget(QWidget* parent) : QWidget(parent) {
 	QHBoxLayout* root_layout = new QHBoxLayout;
 	 QVBoxLayout* right_layout = new QVBoxLayout;
 	  QHBoxLayout* main_project_layout = new QHBoxLayout;
@@ -15,7 +15,7 @@ LidarProjectWidget::LidarProjectWidget(QWidget* parent = 0) : QWidget(parent) {
 	     project_button_layout->addWidget(removefile_button);
 	    project_layout->addLayout(project_button_layout);
 	   main_project_layout->addLayout(project_layout);
-	   QVBoxLayout kml_layout = new QVBoxLayout;
+	   QVBoxLayout* kml_layout = new QVBoxLayout;
 	    tokml_button = new QPushButton("Export KML", this);
 	    launchge_button = new QPushButton("Launch Google Earth", this);
 	    kml_layout->addWidget(tokml_button);
@@ -97,12 +97,7 @@ void LidarProjectWidget::addFile() {
 }
 
 void LidarProjectWidget::removeFile() {
-	if(filelist->currentItem() != 0) {
-		filelist->removeItemWidget(filelist->currentItem());
-	} else {
-		filelist->removeItemWidget(filelist->item(
-					filelist->count()-1));
-	}
+	filelist->takeItem(filelist->count()-1);
 }
 
 void LidarProjectWidget::toKml() {
@@ -113,11 +108,14 @@ void LidarProjectWidget::toKml(QString output_dir) {
 	QDir out(output_dir);
 	int thread_count = QThread::idealThreadCount();
 	QProgressBar* progress = new QProgressBar(this);
-	progress->setMaximum(filelist.count());
-	progess->show();
+	progress->setMaximum(filelist->count());
+	progress->show();
+	LColorLookup* lut = new LColorLookup();
+	lut->setColorMap(colorMapWidget()->toMap());
+	lut->compile();
 	if(out.exists()) {
 		QVector<Segment> all_segments;
-		for(int i = 0; i < filelist.count(); i++) {
+		for(int i = 0; i < filelist->count(); i++) {
 			DynamicDataSource* ds = 
 				dataSourceWidget()->toDataSource();
 			ds->setFilename(filelist->item(i)->text());
@@ -130,7 +128,7 @@ void LidarProjectWidget::toKml(QString output_dir) {
 					/(double)sw.size());
 			QVectorIterator<Segment> x(segments);
 			for(int i = 0; i < sw.size(); i++) {
-				sw[i] = new SegmentWorker;
+				sw[i] = new SegmentWorker(lut);
 				if(i == sw.size()-1)
 					div = segments.size()-
 						((sw.size()-1)*div);
@@ -165,7 +163,7 @@ void LidarProjectWidget::launchGoogleEarth() {
 	if(googleearth->state() != QProcess::NotRunning) {
 		googleearth->terminate();
 	}
-	googleearth->start("googleearth", QDir(dir).absoluteFilePath("calipso.kml"));
+	googleearth->start("googleearth", QStringList() << QDir(dir).absoluteFilePath("calipso.kml"));
 }
 
 

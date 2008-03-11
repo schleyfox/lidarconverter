@@ -7,8 +7,8 @@ class ColorMapWidget : public QTableWidget {
 	public:
 	ColorMapWidget(QWidget* parent = 0);
 
-	QMap<double, uint> toMap();
-	void fromMap(QMap<double, uint> map);
+	QMap<float, uint> toMap();
+	void fromMap(QMap<float, uint> map);
 	
 	QString toXml();
 	

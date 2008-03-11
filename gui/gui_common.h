@@ -27,6 +27,10 @@
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QFileDialog>
+#include <QProgressBar>
+#include <QProcess>
+#include <QUuid>
+#include <QListWidget>
 
 
 #endif

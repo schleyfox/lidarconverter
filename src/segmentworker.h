@@ -10,6 +10,9 @@
 
 class SegmentWorker : public QThread {
 	public:
+	SegmentWorker(LColorLookup* cl) : QThread() {
+		lut = cl;
+	}
 	QVector<Segment> segments() {
 		return m_segments;
 	}
@@ -21,6 +24,7 @@ class SegmentWorker : public QThread {
 	
 	protected:
 	QVector<Segment> m_segments;
+	LColorLookup* lut;
 };
 	
 #endif

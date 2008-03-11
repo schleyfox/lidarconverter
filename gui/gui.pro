@@ -16,10 +16,12 @@ HEADERS += colormapwidget.h \
            datasourcewidget.h \
            resolutionmapwidget.h \
 	   colormapbox.h \
+	   lidarprojectwidget.h \
 	   gui_common.h
 SOURCES += colormapwidget.cpp \
            configfileparser.cpp \
            datasourcewidget.cpp \
            main.cpp \
 	   colormapbox.cpp \
+	   lidarprojectwidget.cpp \
            resolutionmapwidget.cpp

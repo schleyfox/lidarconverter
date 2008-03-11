@@ -1,8 +1,16 @@
 #ifndef LIDARPROJECTWIDGET_H
 #define LIDARPROJECTWIDGET_H
 #include "gui_common.h"
-
+#include "datasourcewidget.h"
+#include "colormapbox.h"
+#include "dynamicdatasource.h"
+#include "segmentworker.h"
+#include "segment.h"
+#include "configfileparser.h"
+#include "kmlbuilder.h"
+#include <unistd.h>
 class LidarProjectWidget : public QWidget {
+	Q_OBJECT
 	public:
 	LidarProjectWidget(QWidget* parent = 0);
 

@@ -51,35 +51,64 @@ void ColorMapWidget::fromMap(QMap<float, uint> map) {
 	}
 }
 
-//FIXME: This is broken
+//FIXME: This is broken, lulz
 QMap<float, uint> ColorMapWidget::toBlendedMap() {
 	QMap<float, uint> map = toMap();
 	QMap<float, uint> cm;
 	
-	QList<float> ranges = map.keys();
+	QList<float> dataRange = map.keys();
 	QList<uint> colors = map.values();
-
-	int div = (int)floor((double)num_colors/(double)map.size());
-
-	int start = 0;
-	int upto = 0;
-	for(int i = 0; i < map.size()-1; i++) {
-		start += upto;
-		upto += div;
-		for(int j = start; j < upto; j++) {
-			double frac = (double)(j-start)/(double)(upto-start);
-			float val = ranges.at(i)*(1-frac) + 
-				ranges.at(i+1)*frac;
-			QColor c1(colors.at(i));
-			QColor c2(colors.at(i+1));
-			uint color = qRgba(
-					c1.red()*(1-frac)+c2.red()*frac,
-					c1.green()*(1-frac)+c2.green()*frac,
-					c1.blue()*(1-frac)+c2.blue()*frac,
-					c1.alpha()*(1-frac)+c2.alpha()*frac);
-			cm[val] = color;
-		}
+	QList<QColor> colors2;
+	QList<float> r,g,b,a;
+	for(int i = 0; i < colors.size(); i++) {
+		colors2 << QColor(colors.at(i));
+		r << (double)colors2.at(i).red()/255.0;
+		g << (double)colors2.at(i).green()/255.0;
+		b << (double)colors2.at(i).blue()/255.0;
+		a << (double)colors2.at(i).alpha()/255.0;
 	}
+	//From code written by Jonathan Gleason
+	//This code survives every revision even though it isn't particularly
+	//elegant or fitting for the style of code.  Its major advantage is
+	//that it works.
+	int numColors = num_colors;
+	int numRanges = map.size()-1;
+
+	double dataValue;
+	int *rangeIndex = new int[numColors];
+	int *rangeIndexRunningSum = new int[numColors];
+	int *rangeIndexSum = new int[numRanges];
+	int indexPtr = 0;
+	for(int i = 0; i < numRanges; i++)
+		rangeIndexSum[i] = 0;
+
+	for(int i = 0; i < numColors; i++)
+	{
+		dataValue = dataRange[0] + ((double)i)/((double)(numColors-1))
+			*(dataRange[numRanges] - dataRange[0]);
+		while (dataValue > dataRange[indexPtr+1])
+			indexPtr++;
+		rangeIndex[i] = indexPtr;
+		rangeIndexSum[indexPtr] += 1; 
+		rangeIndexRunningSum[i] = rangeIndexSum[indexPtr];
+	}
+	
+	
+	double red, green, blue, alpha, range;
+	double f;	
+	for(int i = 0; i < numColors; i++)	
+	{
+		f = (double)rangeIndexRunningSum[i] / 
+			((double)rangeIndexSum[rangeIndex[i]]);
+		range = dataRange[rangeIndex[i]]*(1-f) + 
+			dataRange[rangeIndex[i]+1]*f;
+		red   = r[rangeIndex[i]]*(1-f) + r[rangeIndex[i]+1]*f;
+		green = g[rangeIndex[i]]*(1-f) + g[rangeIndex[i]+1]*f;
+		blue  = b[rangeIndex[i]]*(1-f) + b[rangeIndex[i]+1]*f;
+		alpha = a[rangeIndex[i]]*(1-f) + a[rangeIndex[i]+1]*f;
+		cm[range] = qRgba(red*255, green*255, blue*255, alpha*255);
+	}
+	qDebug() << "Blended Colors: " << cm.size();
 	return cm;
 }
 

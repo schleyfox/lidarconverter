@@ -107,16 +107,24 @@ void LidarProjectWidget::toKml() {
 void LidarProjectWidget::toKml(QString output_dir) {
 	QDir out(output_dir);
 	int thread_count = QThread::idealThreadCount();
-	QProgressBar* progress = new QProgressBar(this);
-	progress->setMaximum(filelist->count());
-	progress->show();
+	//FIXME: Can find no documented reason that the progbar isn't displaying
+	QProgressDialog progress("Processing Files...", "Abort", 0,
+		       	filelist->count());
+	progress.setWindowModality(Qt::WindowModal);
+	progress.setMinimumDuration(0);
+
 	LColorLookup* lut = new LColorLookup();
-	lut->setColorMap(colorMapWidget()->toMap());
+	lut->setColorMap(colorMapWidget()->toBlendedMap());
 	qDebug() << lut->colorMap().size();
 	lut->compile();
 	if(out.exists()) {
 		QVector<Segment> all_segments;
 		for(int i = 0; i < filelist->count(); i++) {
+			progress.setValue(i);
+			qDebug() << "Progress " << progress.value();
+			if(progress.wasCanceled())
+				return;
+
 			DynamicDataSource* ds = 
 				dataSourceWidget()->toDataSource();
 			ds->setFilename(filelist->item(i)->text());
@@ -128,15 +136,15 @@ void LidarProjectWidget::toKml(QString output_dir) {
 			int div = (int)floor((double)segments.size()
 					/(double)sw.size());
 			QVectorIterator<Segment> x(segments);
-			for(int i = 0; i < sw.size(); i++) {
-				sw[i] = new SegmentWorker(lut);
-				if(i == sw.size()-1)
+			for(int j = 0; j < sw.size(); j++) {
+				sw[j] = new SegmentWorker(lut);
+				if(j == sw.size()-1)
 					div = segments.size()-
 						((sw.size()-1)*div);
-				for(int j = 0; j < div; j++) {
-					sw.at(i)->addSegment(x.next());
+				for(int k = 0; k < div; k++) {
+					sw.at(j)->addSegment(x.next());
 				}
-				sw.at(i)->start();
+				sw.at(j)->start();
 			}
 			while(true) {
 				sleep(1);
@@ -149,13 +157,11 @@ void LidarProjectWidget::toKml(QString output_dir) {
 				if(quit == true)
 					break;
 			}
-			progress->setValue(progress->value() + 1);
 		}
+		progress.setValue(filelist->count());
 		KMLBuilder builder(out, QDir("./images"));
 		builder.generateFiles(all_segments);
 	}
-	progress->hide();
-	delete progress;
 }
 
 void LidarProjectWidget::launchGoogleEarth() {

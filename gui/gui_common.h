@@ -33,6 +33,10 @@
 #include <QUuid>
 #include <QListWidget>
 #include <QColor>
+#include <QMainWindow>
+#include <QMenu>
+#include <QMenuBar>
+#include <QAction>
 
 
 #endif

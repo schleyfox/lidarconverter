@@ -1,4 +1,5 @@
 #include "colormapwidget.h"
+#include "configfileparser.h"
 
 ColorMapWidget::ColorMapWidget(QWidget* parent) :
        	QTableWidget(parent) {
@@ -160,4 +161,37 @@ void ColorMapWidget::findColorForCell() {
 		}
 	}
 	QMessageBox::warning(this, "No Cell Selected", "Please select a cell from the \"Color RGBA\" column and then try to set the color");
+}
+
+void ColorMapWidget::import() {
+	QString filename = QFileDialog::getOpenFileName(this,
+				"Import Color Map from File", "",
+			       	"XML (*.xml)");
+	import(filename);
+}
+void ColorMapWidget::import(QString filename) {
+	if(!filename.isEmpty()) {
+		ConfigFileParser conf;
+		conf.readFile(filename);
+		conf.parseColorMap(this);
+	}
+}
+
+void ColorMapWidget::save() {
+	if(save_to_filename.isEmpty()) {
+		save_to_filename = QFileDialog::getSaveFileName(this,
+				"Save Color Map", "",
+				"XML (*.xml)");
+	}
+	save(save_to_filename);
+}
+
+void ColorMapWidget::save(QString filename) {
+	if(!filename.isEmpty()) {
+		QFile file(filename);
+		if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+			return;
+		QTextStream out(&file);
+		out << toXml();
+	}
 }

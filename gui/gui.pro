@@ -7,6 +7,7 @@ TEMPLATE = app
 TARGET = ../bin/lcgui 
 DEPENDPATH += .
 INCLUDEPATH += . ../src
+RESOURCES += gui.qrc
 
 LIBS += -L../bin/ -llidarconverter
 
@@ -17,6 +18,7 @@ HEADERS += colormapwidget.h \
            resolutionmapwidget.h \
 	   colormapbox.h \
 	   lidarprojectwidget.h \
+	   mainwindow.h \
 	   gui_common.h
 SOURCES += colormapwidget.cpp \
            configfileparser.cpp \
@@ -24,4 +26,5 @@ SOURCES += colormapwidget.cpp \
            main.cpp \
 	   colormapbox.cpp \
 	   lidarprojectwidget.cpp \
+	   mainwindow.cpp \
            resolutionmapwidget.cpp

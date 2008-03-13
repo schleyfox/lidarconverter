@@ -5,7 +5,6 @@ MainWindow::MainWindow() {
 	setCentralWidget(lidar_project);
 
 	save_action = new QAction("Save", this);
-	save_action->setShortcut("Ctrl+S");
 	connect(save_action, SIGNAL(triggered()), this, SLOT(save()));
 
 	saveAs_action = new QAction("Save As", this);
@@ -58,7 +57,7 @@ void MainWindow::save() {
 void MainWindow::saveAs() {
 	QString fn = QFileDialog::getSaveFileName(this,
 		"Save Lidar Project", "", "XML (*.xml)");
-	fn->save(fn);
+	lidar_project->save(fn);
 }
 
 void MainWindow::open() {
